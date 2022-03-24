@@ -1,0 +1,54 @@
+<div class="row max-width-web-view">
+    <div class="col-md-12">
+        <div class="tag-head d-flex align-items-center  mt-3">
+            <span>Profile</span>
+            <span>Description</span>
+        </div>
+        <div class="basic-profile mt-5">
+            <div class="sub-title">
+                <h5>Description</h5>
+            </div>
+            <div class="cll">
+                Highlights your professional achievement to attract clients.
+            </div>
+
+            <div class="desc-text mt-3">
+                Description
+            </div>
+
+            <form style="padding: 5px;">
+                <perfect-scrollbar style="max-height: 132px;"
+                    class="px-1"
+                    [config]="{}">
+                    <textarea (input)="limit();error='';"
+                        maxlength="1000"
+                        cdkTextareaAutosize
+                        #autosize="cdkTextareaAutosize"
+                        cdkAutosizeMinRows="1"
+                        class="form-control desc-text-area scrool-container p-0"
+                        [formControl]="desc"></textarea>
+                </perfect-scrollbar>
+
+                <span class="ml-2">{{desc.value.length}}/1000</span>
+                <span style="display: block;margin-top: 0.5rem;"
+                    class="len-error"
+                    *ngIf="!desc.pristine && desc.value.length < 100 && desc.value.length > 0">min 100 characters required</span>
+                <span style="display: block;margin-top: 0.5rem;"
+                    class="len-error"
+                    *ngIf="!desc.pristine && error != ''">{{error}}</span>
+            </form>
+
+
+            <div class="d-flex skill-buttons">
+                <button [disabled]="desc.value.length < 100 || desc.value == prevDesc"
+                    type="submit"
+                    class="btn btn-save mr-3"
+                    (click)="save()">Save</button>
+                <button type="button"
+                    [disabled]="desc.value == prevDesc"
+                    (click)="cancel()"
+                    class="btn btn-cancel ml-10 cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

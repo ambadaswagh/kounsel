@@ -1,0 +1,94 @@
+.video-container {
+
+    // flex: 1;
+    video {
+        border-color: #757575 !important;
+    }
+}
+
+.hide {
+    display: none !important;
+}
+
+.tileMenu {
+    top: 0px;
+    right: 0px;
+}
+
+.menu-txt {
+    font-family: GothamRounded-Book;
+    font-size: 14px;
+    color: #002452;
+}
+
+::ng-deep {
+
+    .dropdown-item.active,
+    .dropdown-item:active {
+        span {
+            color: #ffffff !important;
+        }
+        text-decoration: none;
+        background-color: #1565c0 !important;
+    }
+}
+
+.context-menu-button {
+    background: rgba(0, 0, 0, 0.35);
+    padding: 0px;
+    justify-content: flex-start;
+    width: auto;
+}
+
+.only-name {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-family: GothamRounded-Book;
+}
+
+.video-context-pos {
+    top: 100% !important;
+    right: 0 !important;
+    left: auto;
+    margin-top: 0;
+    margin-right: 0.125rem;
+}
+
+.dis {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.persona {
+    font-size: inherit !important;
+    height: inherit !important;
+    width: inherit !important;
+    color: #525252;
+}
+
+.context-icon {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    height: 19px;
+    width: 19px;
+}
+
+.context-text {
+    font-family: GothamRounded-Book;
+    font-size: 14px;
+    font-weight: normal;
+    color: #002452;
+    margin-right: 2rem;
+}
+
+.gridDevice{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    img{
+        height: 18px;
+        margin-right: 1.5rem;
+    }
+}

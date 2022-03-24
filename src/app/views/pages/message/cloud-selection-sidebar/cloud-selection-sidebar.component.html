@@ -1,0 +1,151 @@
+<div id="message-cloud-selection" class="select-right-sideBar pt-5 d-flex flex-column"
+    [class.tablet-width]="innerWidth < 1025">
+    <div class="select-head" translate="SELECT_FROM_CLOUD.kounselCloud"></div>
+
+    <div class="vc flex-fill" *ngIf="!initialLoad && loading">
+            <div>
+                <div class="vc"><mat-spinner diameter="40"></mat-spinner></div>
+                <div style="margin-left: 1rem;" translate="COMMON.loading"></div>
+            </div>
+    </div>
+
+    <div class="flex-fill"
+        *ngIf="initialLoad && !loading && !attachments.length">
+        <div>
+            <div class="no-file-in-cloud" translate="SELECT_FROM_CLOUD.noFiles"></div>
+        </div>
+    </div>
+
+    <perfect-scrollbar *ngIf="initialLoad"
+        class="flex-fill"
+        (psYReachEnd)="scrollDownHandle()">
+        <div class="row cloud-container"
+            style="margin: 0px">
+            <ng-container *ngFor="let item of attachments;let i = index">
+                <div class="col-6 mx-0" style="padding: 8px;">
+                    <ng-container *ngTemplateOutlet="rowItem; context:{item: item, idx: i}"></ng-container>
+                </div>
+            </ng-container>
+        </div>
+        <div *ngIf="loading && initialLoad"
+            class="vc my-4"
+            style="height: 36px;">
+            <div>
+                <div class="vc">
+                    <mat-spinner diameter="40"></mat-spinner>
+                </div>
+                <div style="margin-left: 1rem;" translate="COMMON.loading"></div>
+            </div>
+        </div>
+    </perfect-scrollbar>
+
+    
+
+    <div>
+        <div class="dead-center d-flex right-sidebar-button-container" >
+            <button class="btn" [disabled]="!isFileSelected()" (click)="select()" translate="SELECT_FROM_CLOUD.select"></button>
+            <button class="btn btn-cl cancel"
+                (click)="close.emit(null)" translate="COMMON.cancel"></button>
+        </div>
+    </div>
+    
+
+</div>
+
+<ng-template #rowItem
+    let-item="item"
+    let-idx="idx">
+    <ng-container *ngIf="ifTablet()">
+        <ng-container *ngTemplateOutlet="tablet; context:{item: item, idx: idx}"></ng-container>
+    </ng-container>
+    <ng-container *ngIf="!ifTablet()">
+        <ng-container *ngTemplateOutlet="web; context:{item: item, idx: idx}"></ng-container>
+    </ng-container>
+</ng-template>
+
+<ng-template #tablet
+    let-item="item"
+    let-idx="idx">
+    <ng-container *ngIf="item.media_type == 577; else noImage">
+        <ng-container *ngTemplateOutlet="image; context:{item: item, idx: idx}"></ng-container>
+    </ng-container>
+    <ng-template #noImage>
+        <ng-container *ngTemplateOutlet="file; context:{item: item, idx: idx}"></ng-container>
+    </ng-template>
+</ng-template>
+
+<ng-template #web
+    let-item="item"
+    let-idx="idx">
+    <ng-container *ngIf="item.media_type == 577; else noImage">
+        <ng-container *ngTemplateOutlet="image; context:{item: item, idx: idx}"></ng-container>
+    </ng-container>
+    <ng-template #noImage>
+        <ng-container *ngTemplateOutlet="file; context:{item: item, idx: idx}"></ng-container>
+    </ng-template>
+</ng-template>
+
+<ng-template #image
+    let-item="item"
+    let-idx="idx">
+    <div #cont
+        class="file-container test-fit"
+        [class.tablet-contHeight]="innerWidth < 1025"
+        (mouseenter)="cont.hov = true;cdr.detectChanges()"
+        (mouseleave)="cont.hov = false;cdr.detectChanges()"
+        [ngStyle]="{'background-image': 'url(\'' + item.original + '\')'}">
+
+        <div class="desktop-detail-image" [class.detail-image-hov]="cont.hov || innerWidth<=1024">
+            <div class="mb-2 mx-2 position-absolute" style="bottom: 0;">
+                <div class="name"
+                    matTooltip="{{item.title}}">
+                    {{item.title | slice:0:10}}
+                </div>
+
+                <div class="size">
+                    {{bytesToBigUnits(item.size)}}
+                </div>
+            </div>
+        </div>
+        <mat-checkbox class="mr-2 mb-2 over-check"
+            (change)="change()"
+            style="position: absolute; bottom: 0px; right: 0px; z-index: 3;"
+            [(ngModel)]="item['selected']"></mat-checkbox>
+    </div>
+</ng-template>
+
+<ng-template #file
+    let-item="item"
+    let-idx="idx">
+    <div #cont
+        class="file-container">
+        <div class="desktop-detail-file file-detail h-100">
+
+            <div class="d-flex"
+                style="justify-content: space-between;">
+                <div class="mt-2 ml-2">
+                    <img [src]="iconService.getIconForAttachment(item)">
+                </div>
+            </div>
+
+            <div class="mb-2 mx-2 position-absolute" style="bottom: 0;">
+                <div class="name"
+                    matTooltip="{{item.title}}">
+                    {{item.title | slice:0:10}}
+                </div>
+
+                <div class="size">
+                    {{bytesToBigUnits(item.size)}}
+                </div>
+            </div>
+        </div>
+        <mat-checkbox class="mr-2 mb-2 over-check"
+            (change)="change()"
+            style="position: absolute; bottom: 0px; right: 0px; z-index: 3;"
+            [(ngModel)]="item['selected']"></mat-checkbox>
+    </div>
+</ng-template>
+
+<div class=""
+    [class.dropShadowForTablet]="innerWidth < 1025"
+    (click)="close.emit(null)"></div>

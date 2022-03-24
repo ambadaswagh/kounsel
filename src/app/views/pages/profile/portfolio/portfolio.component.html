@@ -1,0 +1,99 @@
+<div class="row max-width-web-view mb-2">
+    <div class="col-md-12">
+        <div class="tag-head d-flex align-items-center  mt-3">
+            <span>Profile</span>
+            <span>Portfolio</span>
+        </div>
+        <div class="basic-profile mt-5">
+            <div class="sub-title">
+                <h5>Portfolio</h5>
+            </div>
+            <div class="cll">
+                Telling people about your skills is great, but showing them is even better. Add link to your portfolio and let your work speak for itself.
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <ng-container *ngFor="let pf of portfolio; let i = index">
+                <div class="d-flex portfolio-row"
+                    [class.border-bottom]="i != portfolio.length-1">
+                    <div class="d-flex">
+                        <div class="Rectangle-Copy-9">
+                            <img class="ikon"
+                                src="../../../../../assets/media/icons/svg/Profile/{{pf.svgName}}.svg">
+                        </div>
+                        <span class="txt ml-3">{{pf.name}}</span>
+                    </div>
+
+                    <div class="fill-space"></div>
+
+                    <div class="d-flex">
+                        <span class="txt-2"
+                            *ngIf="pf.value !== '' && !pf.editing">
+                            <span class="text-of">
+                                @{{pf.value}}
+                            </span>
+                        </span>
+
+                        <div class="d-flex username mr-1" style="position: relative;"
+                            *ngIf="pf.editing">
+                            <input
+                                (input)="isValid();pf['dirty']=true;"
+                                type="text"
+                                class="form-control"
+                                [placeholder]="pf.key == 'web' ? 'Enter URL':'Enter Username'"
+                                [(ngModel)]="pf.value">
+                            <span class="ml-3 point" style="color:#aecbec"
+                                *ngIf="screenWidth > 1024  && pf['error']">Submit</span>
+                            <span class="ml-3 point"
+                                *ngIf="screenWidth > 1024 && !pf['error']"
+                                (click)="pf.editing = false">Submit</span>
+                            <small *ngIf="pf['error'] && pf['dirty']" style="color:red;position: absolute;bottom: -13px;">Field is required</small>
+                        </div>
+
+                        <div class="bin ml-3 point"
+                            *ngIf="(pf.editing || pf.value !== '') && screenWidth > 1024 "
+                            (click)="pf.value = ''; pf.editing = false">
+                            <img class=""
+                                matTooltip="delete link"
+                                src="../../../../../assets/media/icons/svg/Profile/bin.svg">
+                        </div>
+
+                        <div class="bin ml-3 point"
+                            *ngIf="!pf.editing && pf.value != '' && screenWidth < 1024 "
+                            (click)="pf.value = ''; pf.editing = false">
+                            <img class=""
+                                matTooltip="delete link"
+                                src="../../../../../assets/media/icons/svg/Profile/bin.svg">
+                        </div>
+
+                        <div class="plus point"
+                            *ngIf="pf.value === '' && !pf.editing"
+                            (click)="pf.editing = true">
+                            <img class="ikon"
+                                src="../../../../../assets/media/icons/svg/Profile/plus.svg">
+                        </div>
+
+                        <span class="add-new-link ml-2 point"
+                            *ngIf="pf.value == '' && !pf.editing"
+                            (click)="pf.editing = true">
+                            Add New Link
+                        </span>
+                    </div>
+                </div>
+                
+            </ng-container>
+        </div>
+
+        <div class="d-flex portfoloio-buttons">
+            <button type="submit"
+                [disabled]="!isChanged() || !formValid"
+                class="btn btn-save mr-3 point"
+                (click)="save()">Save</button>
+            <button type="button"
+                [disabled]="!isChanged()"
+                class="btn btn-cancel ml-10 cancel point"
+                (click)="cancel()">Cancel</button>
+        </div>
+    </div>
+</div>

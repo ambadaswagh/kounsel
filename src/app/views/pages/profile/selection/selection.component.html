@@ -1,0 +1,79 @@
+<div class="select-right-sideBar pt-5"
+    [class.tablet-width]="innerWidth < 1025">
+    <div class="select-head mb-3">{{title}}</div>
+
+    <div class="loading"
+        *ngIf="loading">
+        <div class="spinner-border text-primary"
+            role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <!-- scrool-container -->
+
+    <perfect-scrollbar [config]="{}">
+        <div id="#style-3"
+            class=""
+            style="flex: 1 1 auto;">
+            <ul id="right-menu-page"
+                class="list-group list-group-flush">
+                <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ $implicit: _metaData }"></ng-container>
+            </ul>
+
+            <ng-template #recursiveListTmpl
+                let-list>
+                <li *ngFor="let item of list"
+                    [class.custom-margin]="item.items.length == 0"
+                    class="list-group-item p-0 "
+                    [class.py-3]="!item.opened"
+                    [class.pt-3]="item.opened">
+                    <div class="point"
+                        [class.pb-3]="item.opened && item.items.length > 0"
+                        [class.custom-border]="item.opened && item.items.length > 0"
+                        [class.custom-padding]="item.items.length > 0"
+                        [class.custom-space]="item.items.length > 0"
+                        (click)="itemClicked(item)">
+                        <!-- (dblclick)="doubleClick(item)" -->
+                        <span>
+                            <div class="space_between">
+                                <span [class.selection-value]="item.items.length === 0">{{item.name}}</span>
+
+                                <span *ngIf="item.selected"
+                                    class="myCategory">My Category</span>
+                            </div>
+                        </span>
+                        <div *ngIf=" item.items.length > 0 "
+                            class="pr-3">
+                            <img src="../../../../../assets/media/icons/svg/Profile/pathClose.svg"
+                                *ngIf="!item.opened"
+                                alt="">
+                            <img src="../../../../../assets/media/icons/svg/Profile/pathOpen.svg"
+                                *ngIf="item.opened"
+                                alt="">
+                        </div>
+                    </div>
+                    <ul class="list-group list-group-flush"
+                        *ngIf="item.items.length > 0 && item.opened">
+                        <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ $implicit: item.items }"></ng-container>
+                    </ul>
+                </li>
+            </ng-template>
+        </div>
+    </perfect-scrollbar>
+
+
+    <div class="dead-center d-flex my-3">
+        <button class="btn mx-3"
+            [disabled]="selectedValue == _oldValue"
+            (click)="_save()">Select</button>
+        <button class="btn mx-3 btn-cl"
+            (click)="_close()">Cancel</button>
+    </div>
+
+
+</div>
+
+<div class=""
+    [class.dropShadowForTablet]="innerWidth < 1025"
+    (click)="close.emit(null)"></div>

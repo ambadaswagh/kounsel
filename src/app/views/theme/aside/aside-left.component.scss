@@ -1,0 +1,33 @@
+:host {
+	.kt-aside {
+		height: 100%;
+
+		.kt-aside-menu {
+			margin: 0;
+		}
+	}
+
+	// fixed text line break issue on minimized aside hover
+	.kt-menu__link-text {
+		white-space: nowrap;
+	}
+}
+
+
+.dis {
+	opacity: 0.3;
+	pointer-events: none;
+}
+
+.ver{
+	display: flex;
+	justify-content: center;
+	font-family: GothamRounded-Medium;
+    color: white;
+}
+
+.min{
+	bottom: 0;
+    position: absolute;
+    width: 100%;
+}

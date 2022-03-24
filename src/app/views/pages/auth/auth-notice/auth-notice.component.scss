@@ -1,0 +1,28 @@
+::ng-deep .alert.alert-danger {
+  border-radius: 8px !important;
+  background-color: rgba(238, 184, 180, 0.53) !important;
+  color: #ef2a2a !important;
+  border: none;
+
+}
+
+::ng-deep .alert-text {
+  color: #ef2a2a !important;
+  font-family: GothamRounded-Book;
+}
+
+::ng-deep .alert.alert-success {
+  border-radius: 8px !important;
+  background-color: rgba(23, 203, 121, 0.1) !important;
+  color: #1eac6b !important;
+  border: none;
+}
+
+::ng-deep .alert-success-text {
+  color: #1eac6b !important;
+  font-family: GothamRounded-Book;
+}
+
+img {
+  margin-right: 8px;
+}

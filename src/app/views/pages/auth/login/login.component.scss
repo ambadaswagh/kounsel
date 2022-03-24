@@ -1,0 +1,262 @@
+// import login css
+@import "sass/pages/login/login-1.scss";
+
+.Sign-In-to-Kounsel {
+  margin-top: 3rem;
+  text-align: center;
+  font-family: GothamRounded-Medium;
+  font-size: 28px;
+  font-weight: bold;
+  letter-spacing: 0.21px;
+  color: #002452;
+}
+.login_label {
+  height: 21px;
+  font-family: GothamRounded-Book;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 21px;
+  letter-spacing: normal;
+  color: #002452 !important;
+  font-size: 14px !important;
+}
+
+.login_field {
+  height: 37px !important;
+  opacity: 0.8 !important;
+  font-family: GothamRounded-Light;
+  font-size: 14px !important;
+  font-weight: 300;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 20px;
+  letter-spacing: normal;
+  color: #002452;
+  padding-right: 32px;
+  border-radius: 8px;
+  border-color: rgba(21, 101, 192, 0.1);
+}
+.kt-login {
+  &__body {
+    @include kt-mobile {
+      margin-top: 32px !important;
+      margin-bottom: 24px !important;
+    }
+  }
+  &__form {
+    @include kt-tablet {
+      max-width: 316px !important;
+    }
+    .form-group {
+      @include kt-mobile {
+        margin-bottom: 20px !important;
+      }
+    }
+    .kt-login__actions {
+      @include kt-tablet {
+        margin-top: 43px !important;
+        margin-bottom: 16px !important;
+      }
+      @include kt-mobile {
+        margin-top: 20px !important;
+        margin-bottom: 16px !important;
+      }
+
+      .loginbtn {
+        flex: 0 0 50%;
+        max-width: 50%;
+        @include kt-tablet-and-mobile {
+          // flex: 0 0 100%;
+          // max-width: 100%;
+        }
+        .signin {
+          width: 99% !important;
+          height: 40px !important;
+          border-radius: 8px !important;
+          background-color: #1565c0 !important;
+          padding: 0px !important;
+        }
+      }
+    }
+
+    .kt-login__options {
+      @include kt-tablet {
+        flex-direction: column;
+        margin-bottom: 13px !important;
+      }
+      @include kt-mobile {
+        justify-content: center !important;
+        margin-bottom: 0 !important;
+      }
+      .kt-btn {
+        height: 40px !important;
+        border-radius: 8px !important;
+        border: solid 1px #dae2eb !important;
+        background-color: #ffffff !important;
+        cursor: pointer;
+        @include kt-tablet {
+          width: 100% !important;
+          margin-bottom: 13px;
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+        @include kt-mobile {
+          width: auto !important;
+          margin-right: 20px;
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+        label {
+          height: 16px;
+          font-family: GothamRounded-Medium;
+          font-size: 14px;
+          font-weight: 500;
+          font-stretch: normal;
+          font-style: normal;
+          letter-spacing: normal;
+          color: #1565c0;
+          cursor: pointer;
+          @include kt-mobile {
+            display: none;
+          }
+        }
+
+        img {
+          margin-right: 3px !important;
+        }
+      }
+    }
+
+    .login-title {
+      margin-top: 0 !important;
+      margin-bottom: 32px !important;
+      @include kt-mobile {
+        margin-bottom: 13px !important;
+      }
+      .Sign-In-to-Kounsel {
+        @include kt-mobile {
+          font-size: 20px !important;
+          letter-spacing: 0.15px;
+        }
+      }
+    }
+
+    .kt-login__divider {
+      @include kt-tablet-and-mobile {
+        margin-bottom: 16px !important;
+      }
+    }
+
+    .kt-join-with {
+      display: none;
+      @include kt-mobile-sm {
+        display: block;
+      }
+    }
+
+    .forgotPassword {
+      flex: 0 0 50%;
+      max-width: 50%;
+      .forgot-password {
+        height: 24px !important;
+        font-family: GothamRounded-Light !important;
+        font-size: 12px !important;
+        font-weight: 300 !important;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 20px !important;
+        letter-spacing: normal;
+        color: #7d96b3 !important;
+      }
+      @include kt-tablet-and-mobile {
+        display: none;
+      }
+    }
+
+    .login_tablet_design {
+      .forgotPassword {
+        display: none;
+        @include kt-tablet {
+          display: block;
+        }
+      }
+    }
+  }
+ }
+
+.input-group-addon {
+  position: absolute;
+  background-color: #ffffff;
+}
+
+.field-icon-i {
+  float: right;
+  margin-left: -25px;
+  margin-top: -25px;
+  position: relative;
+  z-index: 2;
+  width: 32px !important;
+  height: 18px !important;
+  color: #7d96b3 !important;
+  font-size: 14px;
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+
+.logoStyle {
+  margin-top: -30px !important;
+  text-align: center;
+}
+
+.kt-login__form{
+  width: 90% !important;
+  max-width: 450px !important;
+}
+
+.f-password{
+  font-family: GothamRounded-light;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1.67;
+  color: #7d96b3;
+}
+
+@media (max-width: 500px){
+  .f-password-container{
+    display: none;
+  }
+
+  .loginbtn{
+    max-width: 100% !important;
+    flex: 1 !important;
+  }
+}
+
+@media (min-width: 1025px) {
+  .Sign-In-to-Kounsel{
+    text-align: left !important;
+    margin-top: 0rem;
+  }
+}
+
+
+@media (max-width: 924px) {
+  .kt-login__form .kt-login__options{
+    flex-direction: row !important;
+    span{
+      &:last-child{
+        margin-left: 1rem;
+      }
+    }
+  }
+  .kt-login__form .kt-login__actions{
+    margin-top: 31px !important;
+  }
+}
+
+.kt-login__form{
+  max-width: 375px !important;
+}

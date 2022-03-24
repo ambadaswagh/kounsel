@@ -1,0 +1,89 @@
+<div class="row max-width-web-view">
+    <div class="col-md-12">
+        <div class="tag-head d-flex align-items-center  mt-3">
+            <span>Profile</span>
+            <span>Keywords</span>
+        </div>
+        <div class="basic-profile mt-5">
+            <div class="sub-title">
+                <h5>Keywords</h5>
+            </div>
+            <div class="cll">
+                Keywords are not displayed in profiles, but they can help people find you more easily. Provide a few keywords related to the type of counseling you’re offering.
+            </div>
+            <div class="basic-profile-form mt-3"
+                *ngIf="toEdit()">
+                <form>
+                    <ul>
+                        <li class="d-block mb-4">
+                            <label>Keywords</label>
+                            <div style="position: relative;">
+                                <input name="keyword"
+                                    [disabled]="keywords.length >= 50"
+                                    [(ngModel)]="keywordText"
+                                    (input)="limit($event.target.value)"
+                                    type="text"
+                                    maxlength="32"
+                                    placeholder="Enter Keywords"
+                                    class="form-control dropdown-toggle"
+                                    (keyup.enter)="addKeyword()" />
+                                <span *ngIf="keywordText !== ''"
+                                    (click)="addKeyword()"
+                                    class="addKeyword ml-3">Add</span>
+                            </div>
+                            <small style="color: red;"
+                                *ngIf="error != ''">
+                                {{error}}
+                            </small>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+
+            <div class="d-flex keywordList"
+                *ngIf="keywords.length"
+                [class.mt-4]="!toEdit()">
+                <div *ngFor="let keyword of keywords; let i = index"
+                    class="Rectangle-Copy mr-2"
+                    [class.Rectangle-Copy-noediting]="!toEdit()">
+
+                    <span class="keyword-Text ml-3 mr-1"
+                        [class.keyword-Text-noediting]="!toEdit()">{{keyword}}</span>
+
+                    <div class="close-img-container"
+                        (click)="removeKeyword(i)"
+                        *ngIf="toEdit()">
+                        <img class="mr-2 ml-1"
+                            src="../../../../../assets/media/icons/svg/Profile/close.svg">
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-3"
+                *ngIf="keywords.length>=50">
+                <small>Maximum 50 Keywords are allowed</small>
+            </div>
+
+            <div *ngIf="!toEdit()"
+                class="mt-4 ml-1 d-flex">
+                <div class="mr-2 point"
+                    (click)="editingKeywords = !editingKeywords">
+                    <img src="../../../../../assets/media/icons/svg/Profile/pencil-1.svg"
+                        class="pencil1">
+                </div>
+                <span class="start-editing"
+                    (click)="editingKeywords = !editingKeywords">Edit Keywords</span>
+            </div>
+
+            <div class="d-flex keyword-buttons"
+                *ngIf="isKeywordChanged()">
+                <button type="submit"
+                    class="btn btn-save mr-3"
+                    (click)="updateKeywords()">Save</button>
+                <button type="button"
+                    class="btn btn-cancel ml-10 cancel"
+                    (click)="cancelKeywordChanges()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,77 @@
+<div class="d-flex auth-container"
+	style="height: 100vh;">
+
+	<div *ngIf="imageToDisplay?.type == 1" class="d-flex vertical-image-container">
+		<img class="image_transition"
+			[class.blur_]="!imageToDisplay.highQuality"
+			*ngIf="innerWidth > 924"
+			style="height: 100vh;"
+			[src]="imageToDisplay.url"
+			alt="kounsel login images">
+		<img class="image_transition image-vertical-layout-type1"
+			[class.blur_]="!imageToDisplay.highQuality"
+			*ngIf="innerWidth < 925 && innerWidth > 500"
+			style="width: 100%;"
+			[src]="imageToDisplay.urlTablet"
+			alt="kounsel login images">
+		<img class="image_transition"
+			[class.blur_]="!imageToDisplay.highQuality"
+			*ngIf="innerWidth < 501"
+			style="width: 100%;"
+			[src]="imageToDisplay.urlMob"
+			alt="kounsel login images">
+	</div>
+
+	<div *ngIf="imageToDisplay?.type == 2"
+		style="flex: 1;background-color: rgba(21, 101, 192, 0.02);"
+		class="d-flex horizontal-image-container">
+		<img class="image_transition image-horizontal-layout"
+			[class.blur_]="!imageToDisplay.highQuality"
+			*ngIf="innerWidth > 924"
+			[src]="imageToDisplay.url"
+			alt="kounsel login images">
+		<img class="image_transition image-vertical-layout"
+			[class.blur_]="!imageToDisplay.highQuality"
+			*ngIf="innerWidth < 925 && innerWidth > 500"
+			[src]="imageToDisplay.urlTablet"
+			alt="kounsel login images">
+		<img class="image_transition"
+			[class.blur_]="!imageToDisplay.highQuality"
+			*ngIf="innerWidth < 501"
+			style="width: 100%;"
+			[src]="imageToDisplay.urlMob"
+			alt="kounsel login images">
+	</div>
+
+
+
+
+
+	<div  class="kt-grid__item kt-grid__item--fluid  kt-grid__item--order-tablet-and-mobile-1 kt-login__wrapper auth-router-content d-flex flex-column login-form-container-custom">
+
+		<div class="kounsel-logo-custom">
+			<img src="./assets/media/icons/svg/login/kounsel-logo.png"
+				alt="kounsel logo image">
+		</div>
+
+		<div class="vc"
+			style="flex: 1 1 auto;">
+			<router-outlet></router-outlet>
+		</div>
+
+		<div class="d-flex sb mb-3">
+			<div class="d-flex vc contact-links">
+				<a href="https://kounsel.io/legal/privacy/"
+					class="kt-link mx-4">Privacy</a>
+				<a href="https://kounsel.io/legal/"
+					class="kt-link mx-4">Legal</a>
+				<a href="https://kounsel.io/legal/contact/"
+					class="kt-link mx-4">Contact</a>
+			</div>
+			<div class="kt-login__copyright copyRight mr-3">
+				© {{today|date:'yyyy'}} Mirach
+			</div>
+		</div>
+	</div>
+
+</div>

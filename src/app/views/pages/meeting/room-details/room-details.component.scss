@@ -1,0 +1,136 @@
+* {
+    font-family: GothamRounded-Book;
+}
+
+.main-cont {
+    height: 100vh;
+}
+
+.room-detail-head {
+    padding-top: 5rem;
+    border-bottom: 1px solid #e9edf3;
+}
+
+.Room-Details {
+    font-family: GothamRounded-Medium;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: -0.42px;
+    color: #002452;
+}
+
+div>label {
+    font-size: 14px;
+    color: #002452;
+    margin-bottom: 0px;
+}
+
+div>input {
+    font-size: 16px;
+    color: #002452;
+    border: none;
+    border-bottom: solid 1px #e9edf3;
+    border-radius: 0px;
+    padding: 0px // border: solid 1px #e9edf3;
+        // background-color: #ffffff;
+}
+
+.add-participant-btn {
+    width: 100%;
+}
+
+.participant-img {
+    height: 36px;
+    width: 36px;
+    border-radius: 8px;
+    border: solid 1px #e9edf3;
+
+    img {
+        height: 36px;
+        width: 36px;
+        border-radius: 8px;
+    }
+}
+
+.participant-info {
+    flex: 1;
+    border-bottom: solid 1px #e9edf3;
+    align-items: center;
+    padding: 7px 0px 15px 0px;
+}
+
+.Existing-participant {
+    font-family: GothamRounded-Medium;
+    font-size: 14px;
+    font-weight: 500;
+    color: #7d96b3;
+}
+
+.userName {
+    font-family: GothamRounded-Book;
+    font-size: 16px;
+    line-height: 1.25;
+    letter-spacing: -0.5px;
+    color: #002452;
+    // max-width: 50%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.counselor,
+.client {
+    font-family: GothamRounded-Book;
+    font-size: 16px;
+    line-height: 1.25;
+    letter-spacing: -0.5px;
+    color: #7d96b3;
+}
+
+.detail-label {
+    font-family: GothamRounded-Book;
+    font-size: 16px;
+    letter-spacing: 0.15px;
+    color: #002452;
+}
+
+.detail-val {
+    font-family: GothamRounded-Book;
+    font-size: 14px;
+    letter-spacing: 0.25px;
+    color: rgba(0, 36, 82, 0.6);
+    border-bottom: solid 1px #e9edf3;
+}
+
+::ng-deep {
+
+    .mat-progress-spinner circle,
+    .mat-spinner circle {
+        stroke: #3f51b5 !important;
+    }
+}
+
+.hide{
+    display: none !important;
+}
+
+.cancel{
+    &:hover{
+        color: #002452;
+    }
+}
+
+.part-out{
+    max-width: calc(100% - 49px);
+    overflow: hidden;
+}
+
+.part-in{
+    width: 90%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.userName-type{
+    color: #7d96b3;
+}

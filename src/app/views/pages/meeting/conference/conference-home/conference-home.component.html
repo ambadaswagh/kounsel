@@ -1,0 +1,115 @@
+<div class="conference-container  d-flex flex-column">
+
+    <div class="content-body flex-fill d-flex w-100">
+        <div class="flex-fill w-100">
+            <kt-grid #gridElem
+                ($triggerLocalMute)="triggerLocalMute()"
+                ($triggerLocalUnmute)="triggerLocalUnmute()"
+                ($audioInStart)="audioInStart()"
+                ($audioInStop)="audioInStop()"
+                ($videoOutStart)="videoOutStart()"
+                ($videoOutStop)="videoOutStop()"
+                ($screenStart)="screenStart()"
+                ($screenStop)="screenStop()"
+                ($leaveMeeting)="openExitWarningModal()"
+                ($contentSharingStopped)="contentSharingStopped()"
+                ($meetingEnded)="meetingEnded()"
+                ($activeParticipantCount)="activeParticipantCount = $event; setMaxParticipants($event)"
+                ($fromActive)="participantBalanceWhileAwsStart = participantBalanceWhileAwsStart - 1"
+                ($participantLeft)="participantLeft($event)"
+                [amIWaiting]="amIWaiting"
+                ($connectionLost)="connectionLost()"
+                ($suggestVideoStop)="suggestVideoStop()"
+                ($connected)="connected()"
+                ($counselorDisconnected)="counselorDisconnected()"
+                [paymentOpen]="paymentOpen"
+                [nameOpen]="nameOpen"
+                ($screenShare)="screenSharing = $event"
+                [_meetingSession]="meetingSession"></kt-grid>
+        </div>
+
+        <div *ngIf="sideBarDisplayType == SideBarType.embed"
+            class="sidebar-control-panel d-none"
+            [class.d-none]="!sideBarOpened">
+            <kt-chat [hidden]="!sideBarMenu.chat"></kt-chat>
+        </div>
+    </div>
+
+    <div class="border-top" style="z-index: 1;">
+        <kt-conference-control-panel #controlPanel
+            [amIWaiting]="amIWaiting"
+            [screenSharing]="screenSharing"
+            [_meetingSession]="meetingSession"
+            ($openChat)="openSideBarFor('chat')"
+            ($closeChat)="closeSideBar('chat')"
+            ($deviceError)="deviceError($event)"
+            ($leaveSession)="openExitWarningModal()">
+        </kt-conference-control-panel>
+    </div>
+</div>
+
+<div *ngIf="!isPaymentValidating"
+    class="sidebar-overlay"
+    [hidden]="!(sideBarDisplayType == SideBarType.overlay && sideBarOpened)">
+    <kt-chat *ngIf="sideBarMenu.chat && !guest"></kt-chat>
+</div>
+
+<kt-waiting-list #waitingList
+    ($toActive)="participantBalanceWhileAwsStart  = participantBalanceWhileAwsStart+1"
+    [hidden]="!showWaitingList"
+    ($open)="showWaitingList = true"
+    ($close)="showWaitingList = false">
+</kt-waiting-list>
+
+<div class="modal"
+    id="paymentModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered"
+        role="document">
+        <div class="modal-content">
+            <kt-cost *ngIf="isClient"
+                ($continue)="onPaymentValidationClose($event)"
+                [paymentVerified]="paymentVerifiedForClient"
+                [cost]="paymentForClient.amount"
+                [billing_type]="paymentForClient.billing_type"></kt-cost>
+        </div>
+    </div>
+</div>
+
+<div class="modal"
+    id="addNameModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered"
+        role="document">
+        <div class="modal-content">
+            <kt-add-name [name]="currName" ($name)="onAddNameClose($event)"></kt-add-name>
+        </div>
+    </div>
+</div>
+
+<div class="wrapper">
+    <div class="modal"
+        id="exitWarning"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered"
+            role="document">
+            <div class="modal-content p-4">
+                <div class="warning-text mb-3" translate="MEETING.conference.conferenceHome.leaveWarning"></div>
+                <div class="d-flex btn-grp mt-4 flex-row-reverse">
+                    <button class="btn btn-save h-100" (click)="openSnackBar(formatDuration('Meeting Ended'), { success: true });leaveSession()"
+                        type="submit" translate="MEETING.conference.conferenceHome.endCall" style="background-color: #ef2a2a;"></button>
+                    <button class="btn cancel mr-3 h-100" (click)="closeExitWarningModal()"
+                        type="cancel" translate="COMMON.cancel"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

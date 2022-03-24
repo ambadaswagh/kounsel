@@ -1,0 +1,56 @@
+<div *ngIf="showSidebar" (click)="cancel()" [class.dropShadowForTablet]="innerWidth < 1025"></div>
+<div class="select-right-sideBar pt-5" *ngIf="showSidebar" [class.tablet-width]="innerWidth < 1025">
+
+    <div class="section-appointment">
+ 
+            <h5 class="section-appointment-title">New Appointment</h5>
+            <div class="d-flex align-items-center">
+                <div>
+                    <img src="../../../../assets/media/profile_images/profile-placeholder-300x300.png" width="56"
+                        height="56" class="user-img" alt="">
+                </div>
+                <div class="section-appointment-name">
+                    <h5>John Doe</h5>
+                    <p>Registered Dietitian</p>
+                </div>
+
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <h5>Start</h5>
+                    <input type="text" value="29 Feb 2020, 2:40 pm" />
+                </li>
+                <li class="list-group-item">
+                    <h5>End</h5>
+                    <input type="text" value="29 Feb 2020, 3:40 pm" />
+                </li>
+                <li class="list-group-item">
+                    <h5>Service</h5>
+                    <input type="text" value="Vegan chocolate Cake Recipe" />
+                </li>
+                <li class="list-group-item">
+                    <h5>Location</h5>
+                    <textarea>Apt, 34c, House:34, Redmonth Street, Virginia, VA-23433, USA</textarea>
+                </li>
+                <li class="list-group-item">
+                    <h5>Estimated spending</h5>
+                    <input type="text" value="$ 15.50" />
+                </li>
+            </ul>
+            <h6 class="section-appointment-subtitle"><img src="../../../../assets/media/icons/note.svg" alt="Note"> Add
+                Note
+            </h6>
+            <div class="section-appointment-form text-center">
+                <img src="../../../../assets/media/icons/upload.svg" width="56" alt="">
+                <p>Drop Files here to upload</p>
+                <p>or</p>
+                <button type="button" class="btn">Select from Cloud</button>
+                <small>Max 5 Mb <br> Recommended size 600 x 500 px</small>
+            </div>
+
+        <div class="section-appointment-buttons dead-center d-flex my-3">
+            <button type="button" class="btn btn-lg w-100 btn-primary">Save</button>
+            <button type="button" class="btn btn-lg w-100 btn-light">Cancel</button>
+        </div>
+    </div>
+</div>

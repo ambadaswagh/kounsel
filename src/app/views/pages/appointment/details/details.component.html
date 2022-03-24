@@ -1,0 +1,129 @@
+<div *ngIf="showSidebar" (click)="cancel()" [class.dropShadowForTablet]="true"></div>
+<div class="select-right-sideBar pt-5" *ngIf="showSidebar" [class.tablet-width]="innerWidth < 1025">
+
+    <div class="section-appointment">
+        <!-- {{appointmentDetail | json}} -->
+        <h5 class="section-appointment-title">Details</h5>
+        <div class="d-flex align-items-top">
+            <div>
+                <img [src]="providerImage" alt="../../../../assets/media/profile_images/profile-placeholder-300x300.png"
+                    width="56" height="56" class="user-img">
+            </div>
+            <div class="section-appointment-name">
+                <h5>{{appointmentDetail.service_provider.name}}</h5>
+                <p>{{appointmentDetail.service_provider.category}}</p>
+                <div class="d-flex">
+                    <div class="appoitnment-status">
+                        <img src="../../../../assets/media/appointment/status-accepted.svg">
+                        <span class="Accepted">Accepted</span>
+                    </div>
+                    <div class="payment-processed">
+                        <img src="../../../../assets/media/appointment/payment-processed.svg">
+                        <span class="payment-processed-text">Payment processed</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex align-items-top">
+            <div>
+                <img src="../../../../assets/media/appointment/time.svg" class="appoitment-left-icons">
+            </div>
+            <div class="section-appointment-date-and-time">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <h5>When</h5>
+                        <div class="date-time-value">{{appointmentDetail.start | date:'d MMM y'}},
+                            {{appointmentDetail.start | date:'h:mm a'}}-{{appointmentDetail.end | date:'h:mm a'}}</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- 
+        <div class="d-flex align-items-top">
+            <div>
+                <img src="../../../../assets/media/appointment/service-18.svg" class="appoitment-left-icons">
+            </div>
+
+            <div class="section-appointment-date-and-time">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <h5>Service</h5>
+                        <div class="date-time-value">{{appointmentDetail.start | date:'d MMM y'}},
+                            {{appointmentDetail.start | date:'h:mm a'}}-{{appointmentDetail.end | date:'h:mm a'}}</div>
+                    </li>
+                </ul>
+            </div>
+        </div> -->
+
+        <div class="d-flex align-items-top">
+            <div>
+
+                <img src="../../../../assets/media/appointment/pencil.svg" class="appoitment-left-icons">
+            </div>
+            <div class="section-appointment-date-and-time">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <h5>Note</h5>
+                        <div class="date-time-value"> {{appointmentDetail.agenda}}</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="d-flex align-items-top">
+            <div>
+                <img src="../../../../assets/media/appointment/location-apointment.svg" class="appoitment-left-icons">
+            </div>
+            <div class="section-appointment-date-and-time">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <h5>Location</h5>
+                        <div class="date-time-value">{{appointmentDetail.start | date:'d MMM y'}},
+                            {{appointmentDetail.start | date:'h:mm a'}}-{{appointmentDetail.end | date:'h:mm a'}}</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="d-flex align-items-top">
+            <div>
+                <img src="../../../../assets/media/appointment/attachment.svg" class="appoitment-left-icons">
+            </div>
+            <div class="section-appointment-date-and-time">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" style="width: 95%;">
+                        <h5>Attachments</h5>
+                        <div class="row">
+                            
+                            <img *ngFor="let img of attachments | slice:0:7; trackBy: attachment_id" [src]="img.original"
+                                width="56" height="56" class="col-3 appointment-attachment" alt="">
+                                <div class="col-3 view-more" *ngIf="attachments.length > 7">+ {{attachments.length - 7 }} more</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="d-flex align-items-top">
+            <div>
+                <img src="../../../../assets/media/appointment/file-code-cash.svg" class="appoitment-left-icons">
+            </div>
+            <div class="section-appointment-date-and-time" style="border-bottom: 0px;">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <h5>Estimated spending</h5>
+                        <div class="date-time-value">$ {{appointmentDetail.service_provider.rate}}</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center" style="margin-top: 40px;">
+            <img src="../../../../assets/media/appointment/messages-bubble.svg">
+            <h5 class="chat-with-client">Chat with client</h5>
+        </div>
+
+    </div>
+</div>

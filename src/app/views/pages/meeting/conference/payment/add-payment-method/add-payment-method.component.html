@@ -1,0 +1,128 @@
+<div class="my-3 mx-5">
+    <div class="d-flex justify-content-between">
+        <div class="Add-New-Card">Add New Card</div>
+        <div>
+            <button type="button"
+                (click)="cancel()"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="Please-add-a-valid-p mt-3">
+        Please add a valid payment method. That is needed to join the meeting.
+    </div>
+
+    <div class="form-group mt-3 position-relative">
+        <label>Card Number</label>
+        <input type="text"
+            [(ngModel)]="cardNumber"
+            #cardNumberInp="ngModel"
+            pattern="\d{13,}"
+            required
+            (keydown)="cardNumberChange($event)"
+            (paste)="$event.preventDefault()"
+            class="form-control"
+            placeholder="Card number">
+        <span>
+            <img class="paymentIcon"
+                [src]="cardIcon.getIcon(brand)"
+                alt="card icon">
+        </span>
+    </div>
+
+    <div class="form-group mt-3">
+        <label>Type</label>
+        <ng-select [(ngModel)]="cardType"
+            placeholder="Select card type"
+            [searchable]="false">
+            <ng-option *ngFor="let card of cardTypes"
+                [value]="card.id">
+                <span class="Select-value">
+                    {{card.name}}
+                </span>
+            </ng-option>
+        </ng-select>
+    </div>
+
+    <div class="form-group mt-3">
+        <label>Cardholder Name</label>
+        <input type="text"
+            [(ngModel)]="name"
+            #userNameInp="ngModel"
+            required
+            pattern=".*\S.*"
+            class="form-control"
+            placeholder="Name">
+    </div>
+
+    <div class="d-flex justify-content-between"
+        style="margin-top: -13px;">
+        <div class="form-group mt-3 w-40">
+            <label>Expiration Date</label>
+            <ng-select [(ngModel)]="month"
+                placeholder="Month"
+                [searchable]="false">
+                <ng-option *ngFor="let month of months"
+                    [value]="month.id">
+                    <span class="Select-value">
+                        {{month.id}}
+                    </span>
+                </ng-option>
+            </ng-select>
+        </div>
+
+        <div class="form-group w-40 mt-auto">
+            <label class="mt-auto"></label>
+            <ng-select [(ngModel)]="year"
+                placeholder="year"
+                [searchable]="false">
+                <ng-option *ngFor="let year of years"
+                    [value]="year.id">
+                    <span class="Select-value">
+                        {{year.id}}
+                    </span>
+                </ng-option>
+            </ng-select>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between">
+        <div class="form-group mt-3 w-40">
+            <label>Card Security Code</label>
+            <input type="password"
+                [(ngModel)]="securityCode"
+                required
+                pattern="\d{3,}"
+                #securityInp="ngModel"
+                class="form-control"
+                placeholder="Card security number">
+        </div>
+
+        <div class="form-group Three-digit-number-o mt-auto w-40">
+            Three digit number on the back of your card
+        </div>
+    </div>
+
+    <div *ngIf="errorAddingPayment"
+        class="text-danger">{{errorAddingPayment}}</div>
+
+    <div class="d-flex btn-grp mt-4 mb-5">
+        <button class="btn btn-save"
+            [disabled]="!isFormValid() || cardNumberInp.errors || userNameInp.errors || securityInp.errors"
+            (click)="submit()"
+            type="submit">Add Card</button>
+        <button class="btn cancel ml-3"
+            (click)="cancel()"
+            type="cancel">Cancel</button>
+    </div>
+
+    <div class="d-flex align-items-center position-absolute justify-content-center"
+        style="top:0; bottom:0; left:0; right:0"
+        *ngIf="addingPaymentMethod">
+        <mat-spinner diameter="40"></mat-spinner>
+    </div>
+</div>

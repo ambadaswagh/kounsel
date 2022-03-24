@@ -1,0 +1,315 @@
+* {
+    font-family: GothamRounded-Book;
+}
+
+.tag-head {
+    span {
+        font-family: GothamRounded-Book;
+        font-size: 14px;
+        font-weight: normal;
+        letter-spacing: -0.5px;
+        color: #7d96b3;
+        padding-right: 10px;
+        margin-right: 10px;
+        border-right: 1px solid rgba(125, 150, 179, 0.3);
+
+        &:last-child {
+            border-right: none;
+        }
+    }
+}
+
+.basic-profile,
+.select-category {
+    .sub-title {
+        h5 {
+            font-family: GothamRounded-Medium;
+            font-size: 20px;
+            font-weight: 500;
+            letter-spacing: -0.42px;
+            color: #002452;
+        }
+    }
+
+    .keyword-buttons {
+        margin-top: 2.5rem !important;
+
+        button {
+            font-family: GothamRounded-Medium;
+            border-radius: 6px;
+            background-color: #1565c0;
+            font-size: 16px;
+            color: #ffffff;
+            font-weight: 500;
+            height: 48px;
+            width: 135px;
+        }
+
+        .cancel {
+            background: #e9edf3;
+            color: #002452;
+        }
+    }
+
+    .List-the-keywords-you {
+        width: 400px;
+        height: 36px;
+        font-family: GothamRounded;
+        font-size: 14px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.29;
+        letter-spacing: -0.5px;
+        color: #7d96b3;
+    }
+
+    .basic-profile-form {
+        ul {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+
+            li {
+                div {
+                    display: flex;
+
+                    .addKeyword {
+                        position: absolute;
+                        right: -35px;
+                        top: 21%;
+                        display: grid;
+                        place-items: center;
+                        color: #1565c0;
+                        font-weight: 500;
+                        font-size: 14px;
+                        cursor: pointer;
+                    }
+                }
+
+                label {
+                    font-family: GothamRounded-Book;
+                    font-size: 14px;
+                    font-weight: normal;
+                    color: #002452;
+                }
+
+                .form-control {
+                    font-size: 16px;
+                    font-family: GothamRounded-Book;
+                    color: #002452;
+                    border-radius: 6px;
+                    border: solid 1px #e9edf3;
+                    background-color: #ffffff;
+
+                    &:focus {
+                        border-color: #1565c0;
+                    }
+
+                    &::placeholder {
+                        /* Chrome, Firefox, Opera, Safari 10.1+ */
+                        color: rgba(0, 36, 82, 0.5);
+                        opacity: 1;
+                        /* Firefox */
+                    }
+
+                    &:-ms-input-placeholder {
+                        /* Internet Explorer 10-11 */
+                        color: rgba(0, 36, 82, 0.5);
+                    }
+
+                    &::-ms-input-placeholder {
+                        /* Microsoft Edge */
+                        color: rgba(0, 36, 82, 0.5);
+                    }
+                }
+
+                ::ng-deep.custom {
+                    .ng-select-container {
+                        border-radius: 6px;
+                        border: solid 1px #e9edf3;
+                        background-color: #ffffff;
+
+                        .ng-value-container {
+                            padding: 10px 4px 6px 16px;
+
+                            .ng-placeholder {
+                                position: unset;
+                                color: rgba(0, 36, 82, 0.5);
+                                font-family: GothamRounded-Book;
+                                font-size: 16px;
+                                padding-left: 0;
+                                padding-bottom: 0;
+                            }
+
+                            .ng-input {
+                                padding: 0 0 5px;
+
+                                input {
+                                    font-family: GothamRounded-Book;
+                                    font-size: 16px;
+                                    line-height: normal;
+                                    color: #002452;
+                                }
+                            }
+
+                            .ng-value {
+                                background: none;
+                                font-family: GothamRounded-Book;
+                                font-size: 16px;
+                                line-height: normal;
+                                color: #002452;
+                                padding: 0;
+
+                                .ng-value-icon {
+                                    display: none;
+                                }
+                            }
+                        }
+
+                        .ng-arrow-wrapper {
+                            padding-right: 16px;
+                        }
+                    }
+
+                    .ng-select-multiple {
+                        border-radius: 6px;
+                        box-shadow: 0 10px 20px 0 rgba(0, 36, 82, 0.06);
+                        border: solid 1px #e9edf3;
+                        background-color: #ffffff;
+                        margin: 2px 0;
+
+                        .ng-option {
+                            .custom-control {
+                                padding-left: 30px;
+
+                                .custom-control-label {
+                                    font-family: GothamRounded-Book;
+                                    font-size: 14px;
+                                    color: #002452;
+                                    vertical-align: middle;
+                                    line-height: 24px;
+
+                                    &:after {
+                                        width: 16px;
+                                        height: 16px;
+                                        border-radius: 2px;
+                                        border: solid 1px #e9edf3;
+                                        left: -26px;
+                                    }
+
+                                    &:before {
+                                        width: 16px;
+                                        height: 16px;
+                                        border-radius: 2px;
+                                        left: -26px;
+                                    }
+                                }
+
+                                .custom-control-input:checked~.custom-control-label::before {
+                                    border: solid 1px #1565c0 !important;
+                                    background-color: #1565c0 !important;
+                                }
+                            }
+
+                            &:hover,
+                            &.ng-option-selected {
+                                background-color: rgba(21, 101, 192, 0.1);
+                            }
+                        }
+                    }
+
+                    &.ng-select-opened {
+                        .ng-select-container {
+                            border-color: #1565c0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .keywordList {
+
+        flex-wrap: wrap;
+
+        .Rectangle-Copy {
+            border-radius: 15px;
+            background-color: #1565c0;
+            height: 30px;
+            display: flex;
+            justify-content: space-evenly;
+            font-family: GothamRounded-Book;
+            margin-top: 0.5rem;
+
+            .keyword-Text {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                display: grid;
+                place-content: center;
+                color: #fff;
+                font-size: 12px;
+            }
+
+            .close-img-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                display: grid;
+                place-items: center;
+
+                img {
+                    height: 8px;
+                    width: 13px;
+                }
+            }
+        }
+
+        .Rectangle-Copy-noediting {
+            border-radius: 15px;
+            background-color: #dae2eb;
+            height: 30px;
+            display: flex;
+            justify-content: space-evenly;
+            font-family: GothamRounded-Book;
+
+            .keyword-Text-noediting {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                display: grid;
+                place-content: center;
+                font-size: 12px;
+                color: #002452;
+                font-weight: 900;
+                margin-right: 1rem !important;
+            }
+        }
+    }
+}
+
+.start-editing {
+    font-family: GothamRounded-Book;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1565c0;
+    cursor: pointer;
+}
+
+.max-width-web-view {
+    max-width: 554px;
+}
+
+.cll {
+    // width: 576px;
+    // height: 36px;
+    // font-family: GothamRounded-Light;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.29;
+    letter-spacing: -0.2px;
+    color: #7d96b3;
+}

@@ -1,0 +1,63 @@
+<div class="row max-width-web-view">
+    <div class="col-md-12">
+        <div class="tag-head d-flex align-items-center  mt-3">
+            <span>Settings</span>
+            <span>Counselor Settings</span>
+            <span>Counseling Session</span>
+        </div>
+        <div class="basic-profile mt-5">
+            <div class="sub-title">
+                <h5>Counseling Session</h5>
+            </div>
+
+            <div class="d-flex vp mt-5 w-100">
+                <div>
+                    <div class="txt">Only when I am available</div>
+                    <div class="subtxt">Uses counselor profile availability</div>
+                </div>
+
+                <div class="col-3 sld switch-container">
+                    <label class="switch">
+                        <input type="checkbox"
+                            [ngModel]="info.counseling_availability"
+                            (click)="toggleInfo('counseling_availability')">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+
+
+
+            <div class="d-flex vp mt-4 w-100">
+                <div>
+                    <div class="txt">Licensed state(s)</div>
+                    <div class="subtxt">Uses license details from counselor profile</div>
+                </div>
+
+                <div class="col-3 sld switch-container">
+                    <label class="switch">
+                        <input type="checkbox"
+                            [ngModel]="info.counseling_licensed_state"
+                            (click)="toggleInfo('counseling_licensed_state')">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+
+
+            <div class="d-flex vp mt-4 w-100 border-0">
+                <div class="txt">With appointment</div>
+                <div class="col-3 sld switch-container">
+                    <label class="switch">
+                        <input type="checkbox"
+                            [ngModel]="info.counseling_appointment"
+                            (click)="toggleInfo('counseling_appointment')">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>

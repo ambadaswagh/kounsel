@@ -1,0 +1,166 @@
+<!-- <input type="file" (change)="image = $event.target.files[0]" id="">
+<button (click)="submit()">submit</button> -->
+
+
+<div class="row max-width-web-view">
+    <div class="col-md-12">
+        <div class="tag-head d-flex align-items-center  mt-3">
+            <span>Profile</span>
+            <span>Profile Image</span>
+        </div>
+        <div class="basic-profile mt-5">
+            <div class="sub-title mb-5"
+                *ngIf='innerWidth > 1024'>
+                <h5>Profile Image</h5>
+            </div>
+
+            <img [src]="imageURL"
+                class="img-display"
+                alt="...">
+            <div class="changeImageText dead-center mt-2 point"
+                (click)="imageEditing = true;">
+                Change Image
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div *ngIf="imageEditing && !cloudFileSelect"
+    class="select-right-sideBar pt-5"
+    [class.tablet-width]="innerWidth < 1025">
+
+
+
+    <div class="select-head">Change Image</div>
+
+    <perfect-scrollbar id="profileImageSelect" [config]="{}">
+        <div style="flex: 1 1 auto;margin-left: 24px; margin-right: 24px;">
+
+            <div class="dead-center">
+                <!-- [disableClick]="true" -->
+                <div #drop
+                    class="custom-dropzone"
+                    [disabled]="loadingOperation"
+                    [multiple]="false"
+                    ngx-dropzone
+                    [maxFileSize]="'5242880'"
+                    [accept]="'image/*'"
+                    (change)="onSelect($event)">
+                    <ngx-dropzone-label>
+                        <div class="upload-body">
+
+                            <div class=""
+                                *ngIf="loadingOperation">
+                                <div class="d-flex flex-column justify-content-center align-items-center loading-container">
+                                    <mat-spinner diameter="36"></mat-spinner>
+                                    <!-- <div class="spinner-border text-primary"
+                                        style="border-width: 0.15em !important;"
+                                        role="status">
+                                        <span class="sr-only">Uploading...</span>
+                                    </div> -->
+                                    <div class="upload-text uploading">Uploading...</div>
+                                </div>
+                            </div>
+
+
+                            <img *ngIf="!loadingOperation"
+                                width="56px"
+                                src="../../../../../assets/media/icons/svg/Profile/upload.svg"
+                                class="upload point">
+
+                            <div *ngIf="!loadingOperation && innerWidth > 1024"
+                                class="upload-text"
+                                style="margin-top: 24px;">Click or drop files here to upload</div>
+                            <div *ngIf="!loadingOperation && innerWidth < 1025"
+                                class="upload-text">Click to upload</div>
+                            <div *ngIf="!loadingOperation"
+                                class="upload-text or-txt">or</div>
+
+                            <button *ngIf="!loadingOperation"
+                                type="button"
+                                (click)="selectFromCloud($event)"
+                                class="btn upload-btn px-4"
+                                style="margin-top: 12px;">Select From Cloud</button>
+
+                            <div class="upload-lim">Max 5 MB
+                                <br>
+                                Recommended size: 600 x 600 px
+                            </div>
+                        </div>
+                    </ngx-dropzone-label>
+                </div>
+            </div>
+            <div class="mx-5 dead-center">
+                <small *ngIf="uploadErrorMessage"
+                    style="color: red">{{uploadErrorMessage}}</small>
+            </div>
+
+            <div class="dead-center mt-4"
+                *ngIf="editImageUrl"
+                [hidden]="loadingOperation">
+                <div>
+                    <div id="cropper"></div>
+                    <!-- <img src="{{editImageUrl}}"
+                        id="cropper"> -->
+                </div>
+            </div>
+
+            <div class="dead-center mb-2"
+                *ngIf="editImageUrl"
+                [hidden]="loadingOperation">
+                <div style=""
+                    class="d-flex w-100">
+                    <div class="dead-center">
+                        <div class="zoomBtn dead-center point"
+                            (click)="zoomOut()">
+                            <img src="../../../../../assets/media/icons/svg/Profile/cloud-image-1-copy-3.svg">
+                        </div>
+                    </div>
+                    <!-- (change)="onZoomChange($event)" -->
+                    <div style="flex: 1 1 auto;"
+                        class="mx-3"
+                        *ngIf="zoomLoaded">
+                        <mat-slider #slide
+                            style="width: 100%;"
+                            [max]="1.5"
+                            [min]="minZoom"
+                            [step]="0.05"
+                            [value]="zoom"
+                            (input)="onZoomChange($event)">
+                        </mat-slider>
+                    </div>
+                    <div class="dead-center">
+                        <div class="zoomBtn dead-center point"
+                            (click)="zoomIn()">
+                            <img src="../../../../../assets/media/icons/svg/Profile/cloud-image-1-copy-4.svg">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </perfect-scrollbar>
+    
+    <div class="dead-center right-sidebar-button-container"
+        [hidden]="loadingOperation">
+        <div class="d-flex skill-buttons w-100">
+            <button type="submit"
+                [disabled]="!(editImageUrl && zoomLoaded)"
+                (click)="submit()"
+                class="btn btn-save mr-3 flex-fill">Save</button>
+            <button type="button"
+                (click)="cancel()"
+                class="btn btn-cancel ml-10 cancel flex-fill">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="imageEditing && !cloudFileSelect"
+    (click)="cancel()"
+    [class.dropShadowForTablet]="innerWidth < 1025"></div>
+
+<kt-select-from-cloud [imageOnly]="true"
+    [multiple]="false"
+    *ngIf="imageEditing && cloudFileSelect"
+    (close)="cloudSelectClosed($event)"></kt-select-from-cloud>

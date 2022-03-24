@@ -1,0 +1,67 @@
+<div  class="add-participant-cont" >
+
+    <div class="mx-4 mt-3" >
+        <div class="detail-label" translate="MEETING.addParticipant.meetingId"></div>
+        <div class="detail-val pb-2">{{meeting.personalRoomDetails.room_id}}</div>
+    </div>
+
+    <div class="Share-link-with-peop mx-4 mt-5" translate="MEETING.addParticipant.shareLink"></div>
+
+    <div id="addParticipantId" class="Title-Copy-5 mx-4 mt-3" translate="MEETING.addParticipant.whoToAdd"></div>
+
+    <div class="d-flex mt-3 mx-4 ">
+        <div class="user-type">
+            <img [hidden]="!(selectedUserType!=2)"
+                class="point"
+                (click)="selectedUserType=2; cdr.detectChanges()"
+                src="assets/media/icons/svg/meeting/guest-1@2x.png"
+                alt="">
+            <img [hidden]="selectedUserType!=2"
+                (click)="selectedUserType=0"
+                src="assets/media/icons/svg/meeting/guestSelected@2x.png"
+                alt="">
+            <div class="vc">
+                <span class="img-lb" translate="MEETING.common.free"></span>
+            </div>
+        </div>
+
+        <div class="user-type ml-4">
+            <img class="point"
+                [hidden]="!(selectedUserType!=3)"
+                (click)="selectedUserType=3;"
+                src="assets/media/icons/svg/meeting/client@2x.png"
+                alt="">
+            <img class=""
+                [hidden]="selectedUserType!=3"
+                (click)="selectedUserType=0"
+                src="assets/media/icons/svg/meeting/clientSelected@2x.png"
+                alt="">
+                <div class="vc">
+                    <span class="img-lb" translate="MEETING.common.paid"></span>
+                </div>
+        </div>
+
+    </div>
+
+    
+
+    <div  class="d-flex btn-grp mt-5 mx-4">
+        <button (click)="addParticipant()" class="btn btn-save add-participant-btn" [disabled]="!validAddParticipants() || addingParticipant">
+            <div class="hc">
+                <img src="assets/media/icons/svg/meeting/add-participants.svg"
+                    alt="">
+                <div class="ml-3 vc">
+                    <span *ngIf="selectedUserType == 3" translate="MEETING.addParticipant.selectBilling">
+                    </span>
+                    <span *ngIf="selectedUserType != 3" translate="MEETING.addParticipant.addParticipant">
+                    </span>
+                </div>
+                <div *ngIf="addingParticipant" class="vc ml-3" id="addPartButton" >
+                    <mat-spinner diameter="20"></mat-spinner>
+                </div>
+            </div>
+        </button>
+    </div>
+
+
+</div>

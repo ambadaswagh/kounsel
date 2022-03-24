@@ -1,0 +1,93 @@
+<div class="p-4">
+    <div #drop
+        class="custom-dropzone my-4"
+        [disabled]="loadingOperation"
+        ngx-dropzone
+        [multiple]="false"
+        [maxFileSize]="'5242880'"
+        (change)="onSelect($event)">
+        <ngx-dropzone-label>
+            <div class="upload-body">
+
+                <div class="my-4"
+                    *ngIf="loadingOperation">
+                    <div class="">
+                        <div style="justify-content: center;"
+                            class="d-flex mb-4">
+                            <mat-spinner diameter="40"></mat-spinner>
+                        </div>
+                        <div class="upload-text" translate="MEETING.conference.fileUploadArea.uploading"></div>
+                    </div>
+                </div>
+
+                <img *ngIf="!loadingOperation"
+                    width="56px"
+                    (click)="drop.showFileSelector();$event.stopPropagation()"
+                    src="../../../../../assets/media/icons/svg/Profile/upload.svg"
+                    class="upload point mb-3">
+
+
+                <div *ngIf="!loadingOperation && innerWidth > 1024"
+                    class="upload-text" translate="MEETING.conference.fileUploadArea.clickDrop"></div>
+                <div *ngIf="!loadingOperation && innerWidth< 1025"
+                    class="upload-text" translate="MEETING.conference.fileUploadArea.clickToDrop"></div>
+
+
+                <!-- <div *ngIf="!loadingOperation"
+                    class="upload-text"
+                    style="margin-top: 10px;">or</div> -->
+
+                <!-- <button *ngIf="!loadingOperation"
+                    type="button"
+                    (click)="selectFromCloud($event)"
+                    class="btn upload-btn px-4">Select From Cloud</button> -->
+
+                <div class="upload-lim">
+                    {{translateService.instant('MEETING.conference.fileUploadArea.maxMb')}}
+                    <br>
+                    {{translateService.instant('MEETING.conference.fileUploadArea.recommendedSize')}}
+                </div>
+            </div>
+        </ngx-dropzone-label>
+    </div>
+    <small style="color:red" *ngIf="fileSelectError">{{fileSelectError}}</small>
+
+
+    
+
+
+    <div class="d-flex sb">
+        <div class="upload-text mt-1" style="text-align:left" *ngIf="!newFiles.length">
+            <strong class="mr-2">
+                {{translateService.instant('MEETING.conference.fileUploadArea.selectFile')}}:
+            </strong>
+            {{translateService.instant('MEETING.conference.fileUploadArea.pleaseSelect')}}
+        </div>
+        <div class="upload-text mt-1" style="text-align:left" *ngIf="newFiles.length">
+            <strong class="mr-2">
+                {{translateService.instant('MEETING.conference.fileUploadArea.selectedFile')}}:
+            </strong>
+            {{ newFiles[0].title | slice:0:15 }}
+        </div>
+        <ng-container *ngIf="progressObj">
+            <div class="vc" *ngIf="progressObj > 0" >
+                <span style="color: #4CAF50; font-size: 1.2rem;" class="l-time">
+                    {{ progressObj }}
+                    {{translateService.instant('MEETING.conference.fileUploadArea.percentUploaded')}}
+                </span>
+            </div>
+        </ng-container>
+    </div>
+    
+    <div>
+        <div class="d-flex skill-buttons" style="justify-content: flex-end;">
+            <button type="submit"
+                [disabled]="loadingOperation || !haveFilesToUpload()"
+                (click)="submit()"
+                class="btn btn-save mr-3" translate="COMMON.save"></button>
+            <button type="button"
+                (click)="cancel()"
+                class="btn btn-cancel ml-10 cancel" translate="COMMON.cancel"></button>
+        </div>
+    </div>
+</div>

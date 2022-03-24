@@ -1,0 +1,50 @@
+<div class="kt-container-wrp h-100">
+    <div class=" d-flex mx-0 h-100">
+
+        <div>
+            <div class="left-side h-100">
+                <div class="head d-flex mb-4">
+                    <h4 class="Profile">Messages</h4>
+                    <div class="d-flex">
+                        <!-- <div class="vc">
+                            <img class="point"
+                                src="assets/media/icons/svg/message/new-message.svg">
+                        </div> -->
+                        <div class="vc ml-4">
+                            <img class="point"
+                                src="assets/media/icons/svg/message/star.svg">
+                        </div>
+                    </div>
+                </div>
+                    <!-- <div class="my-3 search-bx">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <img src="assets/media/icons/svg/message/search.svg"
+                                        alt="search">
+                                </div>
+                            </div>
+                            <input type="text"
+                                class="form-control"
+                                id="Search"
+                                placeholder="Search">
+                        </div>
+                    </div> -->
+                <perfect-scrollbar [config]="{}"
+                    (psYReachEnd)="mList.initMessage(false)">
+                    <div class="left-side-menu-list">
+                        <kt-message-list #mList [newMessageSent]="newMessageFromMessageBox"
+                            (chatToggled)="activeChat = $event; cdr.detectChanges()"></kt-message-list>
+                    </div>
+                </perfect-scrollbar>
+                <div style="height: 5px;"></div>
+            </div>
+        </div>
+        <!-- right side -->
+        <!-- class="col-md-9 px-0 col-sm-8" -->
+        <div class="rest">
+            <kt-chat-box #chatBox_ (messageSent)="newMessageFromMessageBox = $event"
+                [activeChat]="activeChat"></kt-chat-box>
+        </div>
+    </div>
+</div>

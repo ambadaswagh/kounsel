@@ -1,0 +1,165 @@
+.max-width-web-view {
+    max-width: 554px;
+}
+
+* {
+    font-family: GothamRounded-Book;
+}
+
+.tag-head {
+    span {
+        font-family: GothamRounded-Book;
+        font-size: 14px;
+        font-weight: normal;
+        letter-spacing: -0.5px;
+        color: #7d96b3;
+        padding-right: 10px;
+        margin-right: 10px;
+        border-right: 1px solid rgba(125, 150, 179, 0.3);
+
+        &:last-child {
+            border-right: none;
+        }
+    }
+}
+
+.basic-profile {
+    .sub-title {
+        h5 {
+            font-family: GothamRounded-Medium;
+            font-size: 20px;
+            font-weight: 500;
+            letter-spacing: -0.42px;
+            color: #002452;
+        }
+    }
+}
+
+.license {
+    border-radius: 12px;
+    border: solid 1px #e9edf3;
+    background-color: #ffffff;
+}
+
+.license_head {
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #002452;
+}
+
+.license_info {
+    font-family: GothamRounded-Light;
+    font-size: 14px;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: -0.5px;
+    color: #7d96b3;
+}
+
+.license-icon {
+    display: grid;
+    place-items: center;
+}
+
+.edit>div>label {
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #002452;
+}
+
+.edit>div>input {
+
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #002452;
+
+    border-radius: 6px;
+    border: solid 1px #e9edf3;
+    background-color: #ffffff;
+}
+
+.portfoloio-buttons {
+
+    button {
+        font-family: GothamRounded-Medium;
+        cursor: pointer;
+        border-radius: 6px;
+        background-color: #1565c0;
+        font-size: 16px;
+        color: #ffffff;
+        font-weight: 500;
+        height: 48px;
+        width: 135px;
+    }
+
+    .cancel {
+        background: #e9edf3;
+        color: #002452;
+    }
+}
+
+.addLicense {
+    font-size: 14px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.14;
+    letter-spacing: normal;
+    text-align: center;
+    color: #1565c0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: grid;
+    place-items: center;
+}
+
+.point {
+    cursor: pointer;
+}
+
+.dis {
+    pointer-events: not-allowed;
+    cursor: not-allowed;
+    opacity: 0.3;
+}
+
+.more-txt {
+    font-family: GothamRounded-Book;
+    font-size: 14px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #002452;
+    display: grid;
+    place-items: center;
+}
+
+.cstm-a:active {
+    background-color: rgba(233, 237, 243, 0.24);
+}
+
+.Clients-love-license {
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.29;
+    letter-spacing: -0.2px;
+    color: #7d96b3;
+}

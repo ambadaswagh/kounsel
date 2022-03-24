@@ -1,0 +1,66 @@
+<div class="row max-width-web-view">
+    <div class="col-md-12">
+        <div class="tag-head d-flex align-items-center  mt-3">
+            <span>Profile</span>
+            <span>Location Info</span>
+        </div>
+        <div class="basic-profile mt-5">
+            <div class="sub-title">
+                <h5>Location Info</h5>
+            </div>
+
+            <div class="form-group mt-4">
+                <label for="city">City</label>
+                <input #mCity
+                    type="text"
+                    
+                    ngx-google-places-autocomplete
+                    #placesRef="ngx-places"
+                    (onAddressChange)="handleAddressChange($event)"
+                    (input)="state=''; country = ''; stateEditing = true"
+                    [options]="option"
+                    (blur)="otherStateChangeEvents()"
+                    [(ngModel)]="city"
+                    class="form-control"
+                    id="city"
+                    placeholder="City">
+            </div>
+
+            <div class="form-group">
+                <label for="state">State</label>
+                <input type="text"
+                    [(ngModel)]="state"
+                    readonly
+                    (click)="myCity.nativeElement.focus()"
+                    class="form-control"
+                    id="state"
+                    placeholder="State">
+                <!-- <small style="color: red; position: absolute;" *ngIf="!stateEditing && state == ''">Please select correct city from dropdown only, state will be auto populated</small> -->
+            </div>
+
+            <div class="form-group">
+                <label for="country">Country</label>
+                <input type="text"
+                    readonly
+                    [(ngModel)]="country"
+                    (click)="myCity.nativeElement.focus()"
+                    class="form-control"
+                    id="country"
+                    placeholder="Country">
+                    <!-- <small style="color: red; position: absolute;" *ngIf="!stateEditing && country == ''">Please select correct city from dropdown only, country will be auto populated</small> -->
+            </div>
+
+            <div class="d-flex skill-buttons" >
+                <button 
+                    type="submit"
+                    [disabled]="!isChanged() || !allFilled()"
+                    class="btn btn-save mr-3"
+                    (click)="save()">Save</button>
+                <button type="button"
+                    [disabled]="!isChanged()"
+                    (click)="cancel()"
+                    class="btn btn-cancel ml-10 cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

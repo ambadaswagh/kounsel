@@ -1,0 +1,50 @@
+<div *ngIf="data.success" class="d-flex sb">
+	<div class="d-flex">
+		<div class="vc">
+			<!-- <div class="vc" style="border: 2px solid #17cb79; border-radius: 50%;height: 24px;width: 24px;">
+				<mat-icon style="color: #17cb79; font-size: 20px !important;margin-top: 6px">done</mat-icon>
+			</div> -->
+			<img src="assets/media/icons/svg/snackbar/check-circle-1.svg">
+		</div>
+		<div style="color:#002452;font-size: 14px;font-family: GothamRounded-Book;" class="vc ml-3">
+			<span>{{data.message}}</span>
+		</div>
+	</div>
+
+	<div class="vc point ml-3" (click)="onDismiss()">
+		<!-- <mat-icon style="color:#002452; font-size: 24px !important;">close</mat-icon> -->
+		<img src="assets/media/icons/svg/snackbar/close-1.svg">
+	</div>
+</div>
+
+<div *ngIf="data.error" class="d-flex sb">
+	<div class="d-flex">
+		<div class="vc">
+			<!-- <div class="" style="border: 2px solid red; border-radius: 50%;height: 24px;width: 24px;">
+				<mat-icon style="color: red; font-size: 20px !important;margin-top: 1px">close</mat-icon>
+			</div> -->
+			<img src="assets/media/icons/svg/snackbar/error.svg">
+		</div>
+		<div style="color:#ef2a2a;font-size: 14px;font-family: GothamRounded-Book;" class="vc ml-3">
+			<span>{{data.message}}</span>
+		</div>
+	</div>
+
+	<div class="vc point ml-3" (click)="onDismiss()">
+		<img src="assets/media/icons/svg/snackbar/close-1.svg">
+		<!-- <mat-icon style="color:#002452; font-size: 24px !important;">close</mat-icon> -->
+	</div>
+</div>
+
+<div *ngIf="data.info" class="d-flex sb">
+	<div class="d-flex">
+		<div style="color:#002452;font-size: 14px;font-family: GothamRounded-Book;" class="vc">
+			<span>{{data.message}}</span>
+		</div>
+	</div>
+
+	<div class="vc point ml-3" (click)="onDismiss()">
+		<!-- <mat-icon style="color:#002452; font-size: 24px !important;">close</mat-icon> -->
+		<img src="assets/media/icons/svg/snackbar/close-1.svg">
+	</div>
+</div>

@@ -1,0 +1,255 @@
+// import login css
+@import "sass/pages/login/login-1.scss";
+
+kt-auth,
+.kt-login.login {
+  height: 100%;
+
+  .mat-form-field {
+    width: 100%;
+  }
+
+  // add extra right padding when displaying spinner in button
+  .kt-spinner {
+    padding-right: 3rem !important;
+  }
+
+  .kt-login {
+    background: #fff;
+
+    .login-bg {
+      background-color: #ffffff;
+
+      .kt-login__aside {
+        @include kt-tablet {
+          padding-top: 70px;
+        }
+
+        @include kt-mobile {
+          padding: 28px 40px 0 40px;
+        }
+      }
+
+      .kt-login__wrapper {
+        @include kt-mobile {
+          padding: 0 40px 0 40px;
+          max-width: inherit;
+        }
+
+        &.auth-router-content {
+          kt-app-download-screen {
+            position: absolute;
+            width: calc(100% - 80px);
+            background: #fff;
+            height: 100%;
+            top: 0;
+          }
+        }
+      }
+    }
+
+    &__logo {
+      margin-left: 80px;
+
+      @include kt-tablet-and-mobile() {
+        display: none !important;
+      }
+    }
+
+    &__info {
+      @include kt-tablet-and-mobile() {
+        display: none !important;
+      }
+
+      .copyRight {
+        margin-left: 80px;
+      }
+    }
+  }
+}
+
+// Mobile layout
+/* .kt-login__logo {
+  display: none !important;
+}
+
+.kt-grid__item img {
+	width: 100%;
+}
+
+
+ */
+
+
+
+
+
+
+
+.clip-1-copy {
+  width: 75%;
+  object-fit: contain;
+
+  @include kt-tablet {
+    width: 388px;
+  }
+
+  @include kt-mobile {
+    width: 100%;
+  }
+}
+
+.footerLink {
+  width: 56px;
+  height: 14px;
+  font-family: GothamRounded;
+  font-size: 14px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #002452;
+  margin-right: 80px !important;
+
+  &:last-child {
+    margin-right: 0 !important;
+  }
+}
+
+.m-4 {
+  margin: 4% !important;
+}
+
+.copyRight {
+  height: 12px;
+  opacity: 0.4;
+  font-family: GothamRounded;
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #002452;
+}
+
+.contact-links {
+  a {
+    font-family: GothamRounded-Medium;
+    font-size: 14px;
+    color: #002452;
+  }
+  a+a{
+    margin-left: 1rem;
+  }
+}
+
+.copyRight{
+  opacity: 0.4;
+  font-family: GothamRounded-Book;
+  font-size: 12px;
+  color: #002452;
+}
+
+kt-login, kt-register{
+  width: 100%;
+}
+
+.login-form-container-custom{
+  padding: 1rem;
+  flex: 1 1 auto
+}
+
+@media (min-width: 925px) {
+  .kt-grid.kt-grid--ver-desktop.kt-grid--desktop {
+    flex-direction: row-reverse;
+  }
+
+  .auth-container{
+    flex-direction: row-reverse;
+  }
+
+  .login-form-container-custom{
+    min-height: 80vh;
+  }
+}
+
+@media (max-width: 924px) {
+  .kounsel-logo-custom{
+    display: none !important;
+  }
+
+  .auth-container{
+    flex-direction: column;
+  }
+}
+
+.image_transition{
+  transition: all 1s;
+}
+.blur_{
+  filter: blur(5px);
+}
+
+.horizontal-image-container{
+  justify-content: flex-end;
+  align-items: center;
+}
+
+@media (max-width: 924px) {
+  .horizontal-image-container{
+    justify-content: center;
+    align-items: center;
+    max-height: 40%;
+  }
+  .image-vertical-layout{
+    height: 94%;
+  }
+  .vertical-image-container{
+    justify-content: center;
+    align-items: center;
+    max-height: 40%;
+    overflow: hidden;
+  }
+
+}
+
+
+@media (min-width: 925px){
+  .horizontal-image-container{
+    min-width: 50%;
+  }
+  .image-horizontal-layout{
+    height: 50vh;
+  }
+}
+
+@media(min-width: 1025px){
+  .image-horizontal-layout{
+    height: 55vh;
+  }
+}
+
+@media(min-width: 1125px){
+  .image-horizontal-layout{
+    height: 65vh;
+  }
+}
+
+
+@media(min-width: 1225px){
+  .image-horizontal-layout{
+    height: 75vh;
+  }
+}
+
+@media(min-width: 1600px){
+  .image-horizontal-layout{
+    height: 62vh;
+  }
+}
+
+img{
+  image-rendering: -webkit-optimize-contrast;
+}

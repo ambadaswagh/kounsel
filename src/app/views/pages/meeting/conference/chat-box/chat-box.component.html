@@ -1,0 +1,578 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+			rel="stylesheet">
+<div class="middle-side h-100" i>
+    <!-- <div class="d-flex sb mw1 blur">
+        <div class="head d-flex"
+            style="padding-top: 10px;">
+            <div *ngIf="innerWidth > 1024"><span>Messages</span></div>
+            <div><span>Chat</span></div>
+            <div *ngIf="chatTitle != ''"><span>{{ chatTitle | slice:0:19}}</span></div>
+        </div>
+    </div> -->
+
+    <div class="d-flex ml-3 mb-3">
+        <div class="point" (click)="closeChat.emit()">
+            <mat-icon style="font-size: 24px !important;" [inline]="true" class="d-flex align-items-center p-1" >
+                chevron_left
+            </mat-icon>
+        </div>
+        <div  class="ml-3 d-flex align-items-center" *ngIf="chatTitle != ''">
+            <span id="conference-chat-title">{{ chatTitle | slice:0:19}}</span>
+        </div>
+    </div>
+    <perfect-scrollbar #chatContainer
+        class="flex-fill pl-3"
+        id="c_box_conference"
+        (psYReachStart)="scrollTopEventHandel($event)">
+        <ng-container *ngIf="chat.length <= 0 && loadingChat">
+
+            <div class="vc ml-3"
+                style="position: absolute;
+                    top: 0px;
+                    height: 100%;
+                    width: 100%;">
+                <div>
+                    <div class="vc">
+                        <mat-spinner diameter="40"></mat-spinner>
+                    </div>
+                    <div style="margin-left: 1rem;" translate="COMMON.loading"></div>
+                </div>
+            </div>
+
+        </ng-container>
+        <div class="body pb-3">
+
+            <div *ngIf="loadingChat && chat.length > 0"
+                class="vc ml-3"
+                style="height: 36px;">
+                <div>
+                    <div class="vc">
+                        <mat-spinner diameter="40"></mat-spinner>
+                    </div>
+                    <div style="margin-left: 1rem;" translate="COMMON.loading"></div>
+                </div>
+            </div>
+
+            <ng-container *ngIf="chat.length">
+                <ng-container *ngIf="ifToday(chat[0]._time); else notTodayElse">
+                    <div class="d-flex my-3"
+                        style="justify-content: space-evenly;display: flex; align-items: center">
+                        <div style="flex: 1 1 0; flex-grow: 1;">
+                            <div class="line"></div>
+                        </div>
+                        <div class="_time" translate="MEETING.conference.chatBox.today"></div>
+                        <div style="flex: 1 1 0;flex-grow: 1;">
+                            <div class="line"></div>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <ng-template #notTodayElse>
+                    <div class="d-flex my-3"
+                        style="justify-content: space-evenly;">
+                        <div style="flex: 1 1 0; display: flex; align-items: center;flex-grow: 1;">
+                            <div class="line"></div>
+                        </div>
+                        <div class="_time">{{chat[0]._time | date:'longDate'}}</div>
+                        <div style="flex: 1 1 0; display: flex; align-items: center;flex-grow: 1;">
+                            <div class="line"></div>
+                        </div>
+                    </div>
+                </ng-template>
+            </ng-container>
+
+
+            <ng-container *ngFor="let message of chat; let i = index">
+
+
+                <div id="msg-{{i}}">
+                    <ng-container *ngIf="i > 0">
+                        <ng-container *ngIf="dayDifference(message._time, chat[i-1]._time) > 0">
+
+                            <ng-container *ngIf="ifToday(message._time); else notToday">
+                                <div class="d-flex my-3"
+                                    style="justify-content: space-evenly;display: flex; align-items: center">
+                                    <div style="flex: 1 1 0;flex-grow: 1;">
+                                        <div class="line"></div>
+                                    </div>
+                                    <div class="_time" translate="MEETING.conference.chatBox.today"></div>
+                                    <div style="flex: 1 1 0;flex-grow: 1;">
+                                        <div class="line"></div>
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                            <ng-template #notToday>
+                                <div class="d-flex my-3"
+                                    style="justify-content: space-evenly;">
+                                    <div style="flex: 1 1 0; display: flex; align-items: center;flex-grow: 1;">
+                                        <div class="line"></div>
+                                    </div>
+                                    <div class="_time">{{message._time | date:'longDate'}}</div>
+                                    <div style="flex: 1 1 0; display: flex; align-items: center;flex-grow: 1;">
+                                        <div class="line"></div>
+                                    </div>
+                                </div>
+                            </ng-template>
+
+                        </ng-container>
+                    </ng-container>
+
+                    <div *ngIf="i == 0"
+                        class="d-flex mt-3"
+                        style="width: 100%;">
+                        <div class="image-container"
+                            style="width: 36px;">
+                            <img [src]="userToImgMap[message.sender].img || 'assets/media/profile_images/profile-placeholder-300x300.png' ">
+                        </div>
+                        <ng-container *ngTemplateOutlet="switchTemplate; context:{message: message, flag:true}"></ng-container>
+                    </div>
+
+                    <ng-container *ngIf="i > 0">
+                        <div *ngIf="message.sender != chat[i-1].sender || !withinMinute(message._time, chat[i-1]._time);else els"
+                            class="d-flex mt-4"
+                            style="width: 100%;">
+                            <div class="image-container"
+                                style="width: 36px;">
+                                <img [src]="userToImgMap[message.sender].img || 'assets/media/profile_images/profile-placeholder-300x300.png' ">
+                            </div>
+                            <ng-container *ngTemplateOutlet="switchTemplate; context:{message: message, flag:true}"></ng-container>
+                        </div>
+
+                        <ng-template #els>
+                            <div class="d-flex"
+                                style="width: 100%;">
+                                <div class="image-container"
+                                    style="width: 36px; height: auto;">
+                                </div>
+                                <ng-container *ngTemplateOutlet="switchTemplate; context:{message: message, flag: false}"></ng-container>
+                            </div>
+                        </ng-template>
+                    </ng-container>
+                </div>
+            </ng-container>
+        </div>
+    </perfect-scrollbar>
+    <div class="typingBox d-flex">
+        <div class="grow ta m-3"
+            style="overflow: auto; outline: none;">
+            <div style=" height: 100%;width: 100%; display: flex; align-items: center; cursor: text;"
+                (click)="text_box_editor.focus()">
+                <div (focus)="typing = true; setEndOfContentEditable()"
+                    #text_box_editor
+                    (input)="currentMessage = text_box_editor.innerText;"
+                    (keydown)="textAreaEnterHandel($event)"
+                    (keyup)="currentMessage = text_box_editor.innerText;"
+                    (blur)="typing = false"
+                    style="min-height:20%; width: 100%; overflow-wrap: anywhere; height: auto; width: 100%;white-space: pre-line;"
+                    contenteditable="true"></div>
+                <!-- (keydown)="currentMessage = text_box_editor.innerText;" -->
+            </div>
+
+            <div class="placeholder"
+                [class.no-time]="!otherUser || !userLocations[otherUser.user_id]"
+                *ngIf="!typing && !currentMessage">
+                <div class="userNamePlaceHolder"
+                    *ngIf="chatTitle != ''"
+                    (click)="taFocus(text_box_editor)">Message {{chatTitle | slice:0:19}}</div>
+                <div class="timePlaceHolder"
+                    *ngIf="chatTitle != '' && otherUser && userLocations[otherUser.user_id]"
+                    (click)="taFocus(text_box_editor)">
+                    {{getReceiverTimeString(userLocations[otherUser.user_id])}}
+                </div>
+            </div>
+
+        </div>
+        <div *ngIf="!groupChat" class="vc mr-4"
+            (click)="openUploadModal()">
+            <img class="point"
+                src="assets/media/icons/svg/message/attachment.svg">
+        </div>
+        <div class="vc mr-4"
+            (click)="sendTextMessage()">
+            <img class="point"
+                [hidden]="sendButtonEnable()"
+                src="assets/media/icons/svg/message/send-message.svg">
+            <img class="point"
+                [hidden]="!sendButtonEnable()"
+                src="assets/media/icons/svg/message/send-message-active.svg">
+        </div>
+    </div>
+</div>
+
+
+<!-- YOUTUBE TEMPLATE -->
+<ng-template #youtube
+    let-attachment="attachment">
+    <div class="mb-2">
+        <a class="y-link"
+            target="_blank"
+            [href]="attachment.youtube_link">https://www.youtube.com/watch?v={{attachment.youtube_id}}</a>
+    </div>
+    <div class="youtube-container">
+        <iframe id="player"
+            class="ml-3"
+            type="text/html"
+            [src]="attachment.youtube_embed"
+            frameborder="0"></iframe>
+        <div class="ml-3 mt-3 d-flex youtube-logo">
+            <img src="assets/media/icons/svg/message/youtube-social-icon-red.png"
+                srcset="assets/media/icons/svg/message/youtube-social-icon-red@2x.png 2x,
+                         img/youtube-social-icon-red@3x.png 3x">
+            <div class="name ml-2" translate="MEETING.conference.chatBox.youtube"></div>
+        </div>
+
+        <div class="ml-3 mt-3 ">
+            <a class="youtube-title"
+                [href]="attachment.youtube_link"
+                target="_blank">
+                {{attachment.title}}
+            </a>
+        </div>
+    </div>
+</ng-template>
+
+
+<!-- image template -->
+<ng-template #image
+    let-attachment="attachment">
+    <div class="img-container test-fit mt-3 point"
+        (contextmenu)="false"
+        [ngStyle]="{'background-image': 'url(\'' + attachment.original + '\')'}">
+        <!-- (click)="openImage(attachment.attachment_id)" -->
+        <!-- <img data-object-fit="cover" [src]="attachment.original" (contextmenu)="false"> -->
+    </div>
+    <div class="modal"
+        [id]="attachment.attachment_id"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered term-box"
+            role="document">
+            <div class="modal-content"
+                style="display: block;width: auto;margin:auto">
+                <div class="modal-body vc">
+                    <img [src]="attachment.original"
+                        (contextmenu)="false"
+                        style="max-height: 85vh;"
+                        class="img-fluid">
+                    <button type="button"
+                        class="close close-img"
+                        data-dismiss="modal"
+                        aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+
+<!-- Video template -->
+<ng-template #video
+    let-attachment="attachment">
+    <div class="video-container mt-3 mb-3">
+        <!-- <video controls
+            width="80%">
+            <source [src]="attachment.original">
+        </video> -->
+
+        <!-- <kt-vedio-player (stopOthers)="stopOtherVideos($event);"
+            [attachment]="attachment"></kt-vedio-player> -->
+        <kt-video-player (stopOthers)="stopOtherVideos($event);"
+            [attachment]="attachment"></kt-video-player>
+    </div>
+</ng-template>
+
+
+<!-- text Template -->
+<ng-template #text
+    let-message="message">
+    <div>
+        <div class="msg-txt">
+            {{message}}
+        </div>
+        <!-- <ng-container *ngFor="let item of message">
+            <div class="msg-txt"
+                *ngIf="!item.isLink">
+                {{item.value}}
+            </div>
+
+            <span *ngIf="item.isLink">
+                <a class="y-link"
+                    [href]="item.link"
+                    target="_blank">{{item.value}}</a>
+            </span>
+        </ng-container> -->
+    </div>
+</ng-template>
+
+
+<!-- FILE TEMPLATE -->
+<ng-template #file
+    let-attachment="attachment">
+
+    <div (contextmenu)="false"
+        class="file-container mt-3 mb-3">
+        <a (contextmenu)="false"
+            class="d-flex p-3"
+            [href]="attachment.original"
+            target="_blank">
+            <div (contextmenu)="false"
+                style="width: 12%;">
+                <!-- <ng-container [ngSwitch]="attachment.media_type">
+                <ng-container *ngSwitchCase="571">
+                    <img class="point"
+                        src="assets/media/icons/svg/message/pdf.svg">
+                </ng-container>
+
+                <ng-container *ngSwitchDefault>
+                    <img class="point"
+                        src="assets/media/icons/svg/message/doc.svg">
+                </ng-container>
+            </ng-container> -->
+                <img (contextmenu)="false"
+                    class="point"
+                    [src]="iconService.getIconForAttachment(attachment)">
+
+            </div>
+            <div (contextmenu)="false"
+                class="break-wrd"
+                style="width: 88%;">
+                <div (contextmenu)="false"
+                    class="fileName">{{attachment.title}}</div>
+                <div (contextmenu)="false"
+                    class="fileSize">{{ bytesToBigUnits(attachment.size) }}</div>
+            </div>
+        </a>
+
+    </div>
+</ng-template>
+
+
+<!-- Audio template -->
+<ng-template #audio
+    let-attachment="attachment">
+    <div (contextmenu)="false"
+        class="file-container mt-3 mb-3 d-flex p-3">
+        <div (contextmenu)="false"
+            style="width: 12%;">
+
+            <ng-container [ngSwitch]="attachment.audio_link.paused">
+                <ng-container *ngSwitchCase="true">
+                    <div (contextmenu)="false"
+                        class="oval vc point"
+                        (click)="playAudio(attachment.audio_link)">
+                        <img (contextmenu)="false"
+                            src="assets/media/icons/svg/message/triangle.svg">
+                    </div>
+
+                </ng-container>
+
+                <ng-container *ngSwitchCase="false">
+                    <div (contextmenu)="false"
+                        class="oval vc point"
+                        (click)="pauseAudio(attachment.audio_link)">
+                        <img (contextmenu)="false"
+                            src="assets/media/icons/svg/message/pause.svg">
+                    </div>
+                </ng-container>
+            </ng-container>
+        </div>
+        <div class="break-wrd"
+            (contextmenu)="false"
+            style="width: 88%;">
+            <div (contextmenu)="false"
+                class="fileName">{{attachment.title}}</div>
+            <div (contextmenu)="false"
+                class="fileSize">{{ bytesToBigUnits(attachment.size) }}</div>
+            <div (contextmenu)="false">
+                <mat-slider class="audio-player-slide"
+                    (contextmenu)="false"
+                    style="width: 100%; height: 23px;"
+                    [value]="attachment.audio_link.audio_meta.played"
+                    (change)="seekAudioTo(attachment.audio_link, attachment.audio_link.audio_meta, $event.value)"
+                    [min]="0"
+                    [max]="100"></mat-slider>
+            </div>
+            <!-- <div class="d-flex">
+                <div class="played"
+                    [style.width]="attachment.audio_link.audio_meta.played + '%'"></div>
+                <div class="yet-to-be-played"
+                    [style.width]="attachment.audio_link.audio_meta.remaining + '%'"></div>
+            </div> -->
+            <div (contextmenu)="false"
+                class="d-flex mt-2"
+                style="justify-content: space-between;">
+                <div (contextmenu)="false"
+                    class="timeStyles">{{toMinutes(attachment.audio_link.currentTime)}}</div>
+                <div (contextmenu)="false"
+                    class="timeStyles">{{toMinutes(attachment.audio_link.duration)}}</div>
+            </div>
+        </div>
+    </div>
+
+</ng-template>
+
+
+<!-- Request template -->
+<ng-template #request
+    let-message="message">
+    <div class="msg-txt">
+        {{message.message}}
+    </div>
+</ng-template>
+
+
+<!-- Event Template -->
+<ng-template #event
+    let-event="event">
+    <div class="event-container mt-3 mb-3 py-3">
+        <div *ngIf="currentlyActiveEvent(event.start, event.end); else notNow"
+            class="d-flex sb px-3">
+            <div class="Active-Appointment vc" translate="MEETING.conference.chatBox.activeAppointment"></div>
+            <div class="join vc py-2">
+                <div translate="MEETING.conference.chatBox.join"></div>
+            </div>
+        </div>
+
+        <ng-template #notNow>
+            <div class="d-flex sb px-3"
+                *ngIf="getTime().getTime() < event.end">
+                <div class="Active-Appointment vc" translate="MEETING.conference.chatBox.appointment"></div>
+                <div class="vc py-2">
+                    <div class="due">{{translateService.instant('MEETING.conference.chatBox.dueIn')}}: <span>{{dueIn(event.start)}}</span></div>
+                </div>
+            </div>
+
+            <div class="d-flex sb px-3"
+                *ngIf="getTime().getTime() > event.end">
+                <div class="Active-Appointment vc" translate="MEETING.conference.chatBox.appointment"></div>
+                <div class="vc py-2">
+                    <div class="due">{{translateService.instant('MEETING.conference.chatBox.wasOn')}}: <span>{{event.start | date:'MMM d, y, h:mm a'}}</span></div>
+                </div>
+            </div>
+
+        </ng-template>
+
+        <div class="border-bottom mt-2 mb-3"
+            style="border-bottom-color:#dae2eb"></div>
+
+        <div class="event-txt px-3">
+            {{event.agenda}}
+        </div>
+
+        <div class="d-flex sb px-3 mt-3 event-btm">
+            <div>{{event.start| date:'hh:mm a'}}</div>
+            <div>{{event.start | date:'d MMM y'}}</div>
+            <div>{{event.approxCost | currency:'USD'}}</div>
+        </div>
+    </div>
+</ng-template>
+
+
+<!-- switch template -->
+<ng-template #switchTemplate
+    let-flag="flag"
+    let-message="message">
+    <div class="grow d-flex ml-2 msg-box"
+        style="flex-direction: column; width: calc(100% - 36px - 3rem);">
+        <div *ngIf="flag"
+            class="sender-name mb-1">{{userToImgMap[message.sender].name}} <span class="sent-time sent-time">{{message._time | date:'h:mm a'}}</span></div>
+
+        <!-- Type 7 -->
+        <div class="of-style msg-txt"
+            *ngIf="message.type == 7">
+            <ng-container *ngTemplateOutlet="request; context:{message: message}"></ng-container>
+        </div>
+
+        <div class="of-style"
+            *ngIf="message.type == 5">
+            <ng-container *ngTemplateOutlet="text; context:{message: message.message}"></ng-container>
+        </div>
+
+        <div class="of-style"
+            *ngIf="message.type == 2">
+            <ng-container *ngTemplateOutlet="event; context:{event: message.event}"></ng-container>
+        </div>
+
+        <div class="of-style msg-txt"
+            *ngIf="message.type == 3">
+            <ng-container [ngSwitch]="message.attachment.media_type">
+                <ng-container *ngSwitchCase="593">
+                    <ng-container *ngTemplateOutlet="youtube; context:{attachment: message.attachment}"></ng-container>
+                </ng-container>
+
+                <ng-container *ngSwitchCase="577">
+                    <ng-container *ngTemplateOutlet="image; context:{attachment: message.attachment}"></ng-container>
+                </ng-container>
+
+                <ng-container *ngSwitchCase="569">
+                    <ng-container *ngTemplateOutlet="video; context:{attachment: message.attachment}"></ng-container>
+                </ng-container>
+
+                <ng-container *ngSwitchCase="571">
+                    <ng-container *ngTemplateOutlet="file; context:{attachment: message.attachment}"></ng-container>
+                </ng-container>
+
+                <ng-container *ngSwitchCase="599">
+                    <ng-container *ngTemplateOutlet="file; context:{attachment: message.attachment}"></ng-container>
+                </ng-container>
+
+                <ng-container *ngSwitchCase="587">
+                    <ng-container *ngTemplateOutlet="audio; context:{attachment: message.attachment}"></ng-container>
+                </ng-container>
+
+                <ng-container *ngSwitchDefault>
+                    <div translate="MEETING.conference.chatBox.attachment"></div>
+                </ng-container>
+            </ng-container>
+        </div>
+    </div>
+</ng-template>
+
+
+<!-- File upload Modal -->
+<div class="modal"
+    id="messageFileSendModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered"
+        role="document">
+        <div class="modal-content">
+            <kt-file-upload-area (closed)="attachmentUploaded($event)"
+                [receiver]="otherUser?.user_id"
+                [receivers]="otherUsers"
+                [topicId]="this.topic?.topic_id">
+            </kt-file-upload-area>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="wrapper">
+    <div class="modal"
+        id="messageFileSendModal"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered"
+            role="document">
+            <div class="modal-content p-4">
+                <div class="warning-text mb-3">
+                    There are active/waiting participants in the meeting, do you still want to end meeting?
+                </div>
+                <div class="d-flex btn-grp mt-4 flex-row-reverse">
+                    <button class="btn btn-save h-100" (click)="openSnackBar(formatDuration('Meeting Ended'), { success: true });leaveSession()"
+                        type="submit" style="background-color: #ef2a2a;">End call</button>
+                    <button class="btn cancel mr-3 h-100" (click)="closeExitWarningModal()"
+                        type="cancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->

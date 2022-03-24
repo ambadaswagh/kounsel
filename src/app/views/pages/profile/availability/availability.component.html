@@ -1,0 +1,437 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet">
+<div class="row max-width-web-view mb-4">
+    <div class="col-md-12">
+        <div class="tag-head d-flex align-items-center  mt-3">
+            <span>Profile</span>
+            <span>Availability</span>
+        </div>
+        <div class="basic-profile mt-5">
+            <div class="sub-title">
+                <h5>Availability</h5>
+            </div>
+            <div class="row m-0 mt-4">
+                <div class="col-9 pl-0">
+                    <div class="available-now">Available Now</div>
+                    <div class="mt-2 av-head"
+                        *ngIf="!available_now">
+                        Your regular availability will be ignored and you will consider available unless you turn this off
+                    </div>
+                    <div *ngIf="available_now"
+                        class="mt-2 av-head">You are now online. Your day by availability will be ignored.</div>
+                </div>
+                <div class="col-3 switch-container">
+                    <label class="switch">
+                        <input type="checkbox"
+                            (click)="toggleAvailability()"
+                            [ngModel]="available_now">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div id="_availability_select">
+                <div class="time-zone mt-4">
+                    Time Zone
+                </div>
+                <ng-select class="custom"
+                    [(ngModel)]="availability['timezone']"
+                    [closeOnSelect]='true'
+                    (change)="timeZonesChanged()"
+                    [items]="timeZones"></ng-select>
+            </div>
+
+            <div class="ya mt-5"
+                *ngIf="availability['day'] && availability['day']?.length > 0 && availability_loaded == false">Your Availability</div>
+
+            <div class="mt-3 p-4"
+                style="display: flex; justify-content: center;"
+                *ngIf="availability_loaded">
+                <div class="spinner-border text-primary"
+                    role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+
+            <!-- <div class="mt-3 p-4 pl-0"
+                >
+                <div class="dayName">You Have not added your availability.</div>
+            </div> -->
+
+            <div class="d-flex day mt-3 p-4 point" #par
+                (click)="editAvailability(i); addEnabled = true;"
+                *ngFor="let day of availability['day']; let i = index">
+                <div class="dayName" style="max-width: 60%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+                    *ngIf="day.label == ''">{{day.day}}</div>
+                <div class="dayName" style="max-width: 60%;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+                    *ngIf="day.label != ''">{{day.label}}</div>
+
+                <div style="min-width: 140px;">
+                    <div *ngFor="let slot of day.open;let i = index"
+                        class="slot"
+                        [class.mt-3]="i > 0">
+                        {{slot._start | removeLeadingZero}} - {{slot._end | removeLeadingZero}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex mt-4">
+                <div class="point"
+                    [class.disabled]="!availability['day']"
+                    (click)="editAvailability(-1)">
+                    <img src="../../../../../assets/media/icons/svg/Profile/plus.svg"
+                        class="plus">
+                </div>
+                <div class="add point"
+                    style="display: flex; justify-content: center; align-items: center;"
+                    [class.disabled]="!availability['day']"
+                    (click)="editAvailability(-1)">
+                    Add
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- slot adding section -->
+
+
+<div *ngIf="addEnabled"
+    class="select-right-sideBar pt-5"
+    [class.tablet-width]="innerWidth < 1025">
+
+    <div class="sidebarLoader"
+        *ngIf="loadingOperation">
+        <div class="spinner-border text-primary"
+            role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <div class="select-head mb-3 pb-2">Add</div>
+
+    <perfect-scrollbar [config]="{}">
+        <div style="flex: 1 1 auto">
+
+            <!-- day type starts -->
+
+            <div class="form-group px-4">
+                <label for="dayType"
+                    class="inp-lb">Day Type</label>
+                <div class="dropdown"
+                    id="dayType__"
+                    [class.show]="dayType['focused']"
+                    (clickOutside)="dayType['focused'] = false;">
+                    <input #dayType
+                        [disabled]="daysUserHave.has(newDay.dayOfWeek) || newDay.existing"
+                        type="text"
+                        readonly
+                        data-toggle="dropdown"
+                        (click)="dayType['focused'] = true; $event.stopPropagation()"
+                        class="dropdown-toggle form-control inp-brd"
+                        id="dayType"
+                        [(ngModel)]="newDay.dayType"
+                        placeholder="Select Day Type">
+
+                    <mat-icon class="custom-icons-pos point"
+                        *ngIf="!dayType['focused']"
+                        (click)="dayType['focused'] = true; p_default($event)"
+                        aria-hidden="false"
+                        aria-label="Example arrow_drop_down icon">arrow_drop_down</mat-icon>
+                    <mat-icon class="custom-icons-pos point"
+                        *ngIf="dayType['focused']"
+                        (click)="dayType['focused'] = false; p_default($event)"
+                        aria-hidden="false"
+                        aria-label="Example arrow_drop_up icon">arrow_drop_up</mat-icon>
+
+                    <div class="dropdown-menu value-drop"
+                        [class.show]="dayType['focused']"
+                        aria-labelledby="dayType">
+                        <a class="dropdown-item point cstm-a"
+                            (click)="newDay.dayType = 'Weekday'; dayType['focused'] = false">Weekday</a>
+                        <a class="dropdown-item point cstm-a"
+                            (click)="newDay.dayType = 'Special Day'; dayType['focused'] = false">Special Day</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- day type ends -->
+
+
+            <!-- day of week starts -->
+
+            <div class="form-group px-4"
+                *ngIf="newDay.dayType == 'Weekday'">
+                <label for="dayOfWeek"
+                    class="inp-lb">Day of the Week</label>
+                <div class="dropdown"
+                    [class.show]="dayOfWeek.focused"
+                    (clickOutside)="dayOfWeek['focused'] = false">
+                    <input #dayOfWeek
+                        type="text"
+                        readonly
+                        [disabled]="daysUserHave.has(newDay.dayOfWeek)"
+                        data-toggle="dropdown"
+                        (click)="dayOfWeek['focused'] = true; $event.stopPropagation()"
+                        class="dropdown-toggle form-control inp-brd"
+                        id="dayOfWeek"
+                        [(ngModel)]="newDay.dayOfWeek"
+                        placeholder="Select Day of Week">
+
+                    <mat-icon class="custom-icons-pos point"
+                        *ngIf="!dayOfWeek['focused']"
+                        (click)="dayOfWeek['focused'] = true; p_default($event)"
+                        aria-hidden="false"
+                        aria-label="Example arrow_drop_down icon">arrow_drop_down</mat-icon>
+                    <mat-icon class="custom-icons-pos point"
+                        *ngIf="dayOfWeek['focused']"
+                        (click)="dayOfWeek['focused'] = false; p_default($event)"
+                        aria-hidden="false"
+                        aria-label="Example arrow_drop_up icon">arrow_drop_up</mat-icon>
+
+                    <div class="dropdown-menu value-drop"
+                        [class.show]="dayOfWeek.focused"
+                        aria-labelledby="dayOfWeek">
+                        <a *ngFor="let day of daysAvailableToUser"
+                            class="dropdown-item point cstm-a"
+                            (click)="newDay.dayOfWeek = day; dayOfWeek['focused'] = false">{{day}}</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- day of week ends -->
+
+            <!-- special day label starts -->
+
+            <div class="form-group px-4"
+                *ngIf="newDay.dayType == 'Special Day'">
+                <label for="specialLabel"
+                    class="inp-lb">Label</label>
+                <div class="dropdown">
+                    <!-- [disabled]="daysUserHave.has(newDay.dayOfWeek)" -->
+                    <input [disabled]="newDay.existing"
+                        type="text"
+                        maxlength="32"
+                        class="form-control inp-brd"
+                        id="specialLabel"
+                        (input)="limitNewDayLabel(newDay.label); this.specialDayLabelError = specialDayLabelValid()?'':'Label is required'"
+                        [(ngModel)]="newDay.label"
+                        placeholder="Select Label">
+                    <!-- <span *ngIf="specialDayLabelError != ''">{{specialDayLabelError}}</span> -->
+                    <span style="position: absolute;bottom: -14px; left: 0px;font-size: 10px; color: red;"
+                        *ngIf="specialDayLabelError != '' ">{{specialDayLabelError}}</span>
+                </div>
+            </div>
+
+            <!-- special day label end -->
+
+            <!-- day of month for special day  starts-->
+
+            <div class="form-group px-4"
+                *ngIf="newDay.dayType == 'Special Day'">
+                <label for="dayofmonth"
+                    class="inp-lb">Day of the month</label>
+                <div class="dropdown">
+                    <!-- [disabled]="daysUserHave.has(newDay.dayOfWeek)" -->
+                    <input readonly
+                        [disabled]="newDay.existing"
+                        #dayOfMonth
+                        type="text"
+                        class="form-control inp-brd"
+                        id="dayofmonth"
+                        (blur)="this.specialDayLabelError = specialDayLabelValid()?'':'Label is required'"
+                        (focus)="dayOfMonth['focused'] = true"
+                        [(ngModel)]="newDay.dayOfMonth"
+                        placeholder="Day of the month">
+                </div>
+                <span style="position: absolute;font-size: 10px; color: red;"
+                    *ngIf="daysOfMonth.has(newDay.dayOfMonth) && !newDay.existing">This day is already used</span>
+                <mat-calendar *ngIf="dayOfMonth['focused']"
+                    [selected]="newDay._dayOfMonth"
+                    (selectedChange)="updateDayOfMonth($event);dayOfMonth['focused'] = false "></mat-calendar>
+            </div>
+
+            <!-- day of month for special day ends -->
+
+            <div class="px-4 slts mb-2"
+                *ngIf="newDay.slots.length">
+                Slots
+            </div>
+
+            <div class="d-flex mx-4 p-2 px-3 slotBox mt-2"
+                *ngFor="let slot of newDay.slots; let i = index">
+                <div class="slotTime">{{slot._start}} - {{slot._end}}</div>
+                <div (click)="delete(newDay.dayOfWeek, i)">
+                    <img matTooltip="delete time slot"
+                        src="../../../../../assets/media/icons/svg/Profile/bin.svg"
+                        class="bin point">
+                </div>
+            </div>
+
+            <div class="mx-4 slts d-flex mt-3"
+                *ngFor="let newSlot of newDay._newSlots; let i = index">
+                <!-- <ng-container *ngIf="i < newDay._newSlots.length-1">
+                    <div class="d-flex slotBox p-2 newSB"
+                        style="flex: 1 1 auto;">
+                        <div class="slotTime">{{newSlot.start.displayTime | removeLeadingZero}} - {{newSlot.end.displayTime | removeLeadingZero}}</div>
+                        <div (click)="deleteNewSlot(i)">
+                            <img matTooltip="delete time slot"
+                                src="../../../../../assets/media/icons/svg/Profile/bin.svg"
+                                class="bin point">
+                        </div>
+                    </div>
+                </ng-container> -->
+                <ng-container>
+                    <div style="flex:1 "
+                        class="mr-2 mt-2">
+                        <label class="inp-lb">Start</label>
+                        <div class="dropdown"
+                            id="slot-{{i}}-start"
+                            [class.show]="newSlot.start.focused"
+                            (clickOutside)="newSlot.start['focused'] = false">
+                            <input type="text"
+                                readonly
+                                data-toggle="dropdown"
+                                (focus)="newSlot.start['focused'] = true; newSlot.end['focused'] = false"
+                                class="dropdown-toggle form-control inp-brd point date-format-zero"
+                                [ngModel]="newSlot.start.displayTime | removeLeadingZero"
+                                (ngModelChange)="newSlot.start.displayTime = $event"
+                                placeholder="Start Date">
+
+                            <mat-icon class="custom-icons-pos point"
+                                *ngIf="!newSlot.start['focused']"
+                                (click)="newSlot.start['focused'] = true; p_default($event); ; newSlot.end['focused'] = false"
+                                aria-hidden="false"
+                                aria-label="Example arrow_drop_down icon">arrow_drop_down</mat-icon>
+                            <mat-icon class="custom-icons-pos point"
+                                *ngIf="newSlot.start['focused']"
+                                (click)="newSlot.start['focused'] = false; p_default($event)"
+                                aria-hidden="false"
+                                aria-label="Example arrow_drop_up icon">arrow_drop_up</mat-icon>
+
+                            <div class="dropdown-menu value-drop"
+                                [class.time-pick-box]="newSlot.start.focused"
+                                [class.show]="newSlot.start.focused"
+                                aria-labelledby="startDate">
+                                <ngb-timepicker class=""
+                                    [meridian]="true"
+                                    [(ngModel)]="newSlot.start.minuteTime"></ngb-timepicker>
+                                <div>
+                                    <a class="dropdown-item point cstm-a"
+                                        (click)="updateSlotStartTime(i);newSlot.start['focused'] = false">Done</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="flex:1"
+                        class="ml-2 mt-2">
+                        <label for="endDate"
+                            class="inp-lb">End</label>
+                        <div class="dropdown"
+                            id="slot-{{i}}-end"
+                            [class.show]="newSlot.end.focused"
+                            (clickOutside)="newSlot.end['focused'] = false">
+                            <input type="text"
+                                readonly
+                                data-toggle="dropdown"
+                                (focus)="newSlot.end['focused'] = true; newSlot.start['focused'] = false"
+                                class="dropdown-toggle form-control inp-brd point"
+                                [ngModel]="newSlot.end.displayTime | removeLeadingZero"
+                                (ngModelChange)="newSlot.end.displayTime = $event"
+                                placeholder="End Date">
+
+                            <mat-icon class="custom-icons-pos point"
+                                *ngIf="!newSlot.end['focused']"
+                                (click)="newSlot.end['focused'] = true; p_default($event); ; newSlot.start['focused'] = false"
+                                aria-hidden="false"
+                                aria-label="Example arrow_drop_down icon">arrow_drop_down</mat-icon>
+                            <mat-icon class="custom-icons-pos point"
+                                *ngIf="newSlot.end['focused']"
+                                (click)="newSlot.end['focused'] = false; p_default($event)"
+                                aria-hidden="false"
+                                aria-label="Example arrow_drop_up icon">arrow_drop_up</mat-icon>
+
+                            <div class="dropdown-menu value-drop "
+                                [class.time-pick-box]="newSlot.end.focused"
+                                [class.show]="newSlot.end.focused"
+                                aria-labelledby="startDate">
+
+                                <ngb-timepicker class=""
+                                    [meridian]="true"
+                                    [(ngModel)]="newSlot.end.minuteTime"></ngb-timepicker>
+                                <div>
+                                    <a class="dropdown-item point cstm-a"
+                                        (click)="updateSlotEndTime(i); newSlot.end['focused'] = false">Done</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div (click)="deleteNewSlot(i)"
+                        style="display: flex; align-items: center; margin-top: 29px; margin-left: 0.5rem; padding-right: 1rem;">
+                        <img matTooltip="delete time slot"
+                            src="../../../../../assets/media/icons/svg/Profile/bin.svg"
+                            class="bin point">
+                    </div>
+                    <span style="position: absolute;bottom: -14px; left: 0px;font-size: 10px; color: red;"
+                        *ngIf="newSlot.startGreaterThanEndError != '' ">{{newSlot.startGreaterThanEndError}}</span>
+                    <span style="position: absolute;bottom: -14px; left:0px;font-size: 10px; color: red;"
+                        *ngIf="newSlot.conflictWithOtherSlots != '' && newSlot.startGreaterThanEndError == ''">{{newSlot.conflictWithOtherSlots}}</span>
+                </ng-container>
+            </div>
+
+
+
+
+            <!-- [class.dis]="!ifAllSlotsValid()" -->
+            <div class="px-4 slts d-flex mt-3"
+                *ngIf="newDay.dayOfWeek !== '' || newDay.dayOfMonth != ''">
+                <div class="point"
+                    (click)="addSlot()">
+                    <img src="../../../../../assets/media/icons/svg/Profile/plus.svg"
+                        class="plus">
+                </div>
+                <div class="add point"
+                    style="display: flex; justify-content: center; align-items: center;"
+                    (click)="addSlot()">
+                    Add Slot
+                </div>
+            </div>
+
+            <!-- <span class="px-4"
+            *ngIf="slotValidationErrors.endSmallThenStart != ''"
+            style="color:red">{{slotValidationErrors.endSmallThenStart}}</span>
+        <span class="px-4"
+            *ngIf="slotValidationErrors.slotConflict != ''"
+            style="color: red">{{slotValidationErrors.slotConflict}}</span> -->
+        </div>
+    </perfect-scrollbar>
+
+
+
+    <div class="dead-center d-flex my-3">
+        <!-- || daysOfMonth.has(newDay.dayOfMonth) -->
+        <button class="btn mx-3"
+            *ngIf="newDay.dayType == 'Weekday'"
+            [disabled]="(!ifAllSlotsValid()) || newDay._newSlots.length == 0 || !isWeekDayValid()"
+            (click)="saveWeekDay()">Save</button>
+
+        <button class="btn mx-3"
+            *ngIf="newDay.dayType == 'Special Day'"
+            [disabled]="(!ifAllSlotsValid()) || newDay._newSlots.length == 0 || !isSpecialDayValid()"
+            (click)="saveWeekDay()">Save</button>
+
+        <button class="btn mx-3"
+            *ngIf="newDay.dayType == ''"
+            disabled>Save</button>
+
+        <button class="btn mx-3 btn-cl"
+            (click)="_close()">Cancel</button>
+    </div>
+
+</div>
+
+<div *ngIf="addEnabled"
+    (click)="_close()"
+    [class.dropShadowForTablet]="innerWidth < 1025"></div>

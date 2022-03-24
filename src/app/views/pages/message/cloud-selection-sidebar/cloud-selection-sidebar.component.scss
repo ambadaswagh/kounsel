@@ -1,0 +1,155 @@
+* {
+    font-family: GothamRounded-Book;
+}
+
+@media(min-width: 1024px){
+    .select-right-sideBar{
+        max-width: 416px;
+    }
+}
+.select-right-sideBar {
+    position: fixed;
+    top: 0;
+    z-index: 96;
+    right: 0;
+    bottom: 0;
+    // height: 100vh;
+    background: #ffffff;
+    box-shadow: 0 2px 4px 0 rgba(0, 36, 82, 0.1);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    width: 416px;
+    
+
+    .select-head {
+        font-size: 20px;
+        font-weight: 500;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: -0.42px;
+        color: #002452;
+        margin-top: 2rem;
+        margin-left: 1.5rem;
+        width: 188px;
+        font-family: GothamRounded-Medium;
+        margin-bottom: 32px;
+    }
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: grid;
+    width: 100%;
+    padding: 1rem;
+    place-items: center;
+}
+
+.dropShadowForTablet {
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    z-index: 95;
+    background-color: rgba(0, 36, 82, 0.4);
+}
+
+.btn {
+    font-family: GothamRounded-Medium;
+    width: 100%;
+    height: 48px;
+    border-radius: 6px;
+    background-color: #1565c0;
+    font-size: 16px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffffff;
+}
+
+.btn-cl {
+    background-color: #e9edf3;
+    color: #002452;
+}
+
+.tablet-contHeight {
+    height: 95px;
+}
+
+.file-container {
+    height: 131px;
+    border-radius: 6px;
+    border: solid 1px #e9edf3;
+    position: relative;
+}
+
+.test-fit {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.desktop-detail-image {
+    left: 0px;
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    right: 0;
+    display: flex;
+    color: white;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 6px;
+}
+
+.detail-image-hov {
+    background-color: rgba(0, 36, 82, 0.6);
+
+    .size {
+        opacity: 0.7;
+        font-size: 14px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: -0.5px;
+        color: #ffffff;
+    }
+
+    .name {
+        font-size: 14px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: -0.5px;
+        color: #ffffff;
+    }
+}
+
+::ng-deep {
+    .over-check>label>div>div.mat-checkbox-frame {
+        border: 1px solid #bdbdbd !important;
+    }
+}
+
+.cloud-container{
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.no-file-in-cloud {
+    margin-left: 1.5rem;
+    font-family: GothamRounded-Book;
+    font-size: 14px;
+    line-height: 1.29;
+    letter-spacing: -0.5px;
+    color: #7d96b3;
+}

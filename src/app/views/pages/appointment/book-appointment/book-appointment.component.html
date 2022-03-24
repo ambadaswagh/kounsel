@@ -1,0 +1,93 @@
+<div (click)="cancel()" [class.dropShadowForTablet]="innerWidth < 1025"></div>
+<div class="select-right-sideBar pt-5" [class.tablet-width]="innerWidth < 1025">
+   
+    <form [formGroup]="bookAppointmentForm" (ngSubmit)="submit()" >
+    <div class="section-appointment">
+ 
+            <h5 class="section-appointment-title">New Appointment</h5>
+            <div class="d-flex align-items-center" *ngIf="showUserDetails">
+                <div>
+                    <img src="{{imageUrl}}" width="56"
+                        height="56" class="user-img" alt="">
+                </div>
+                <div class="section-appointment-name">
+                    <h5>{{name}}</h5>
+                    <p>{{profession}}</p>
+                </div>
+
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item" *ngIf="!showUserDetails">
+                    <h5>Counselor name</h5>
+                    <p> <input type="text" formControlName="conselor" class="form-control" placeholder="heal.heal"></p>
+                </li>
+                <li class="list-group-item">
+                    <h5>Start</h5>
+                    <p><input type="text" matInput type="datetime-local" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}" class="form-control" formControlName="start" name="start" [(ngModel)]="start" /></p>
+                </li>
+                <li class="list-group-item">
+                    <h5>End</h5>
+                    <p><input type="text" matInput type="datetime-local" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}" class="form-control" formControlName="end" name="end" [(ngModel)]="end" /></p>
+                </li>
+                <li class="list-group-item" *ngIf="showUserDetails">
+                    <h5>Note</h5>
+                    <p><input type="text" formControlName="note" name="note" [(ngModel)]="note" /></p>
+                </li>
+                <li class="list-group-item" *ngIf="showUserDetails">
+                    <h5>Location</h5>
+                    <p>Online</p>
+                </li>
+                <li class="list-group-item" *ngIf="showUserDetails">
+                    <h5>Estimated spending</h5>
+                    <p>${{earnings}}</p>
+                </li>
+            </ul>
+            <!-- <h6 class="section-appointment-subtitle"><img src="../../../../assets/media/icons/note.svg" alt="Note"> Add
+                Note
+            </h6>-->
+            <div class="section-appointment-form text-center" *ngIf="showUserDetails">
+                <img src="../../../../assets/media/icons/upload.svg" width="56" alt="">
+                <p>Drop Files here to upload</p>
+                <p>or</p>
+                <button type="button" class="btn">Select from Cloud</button>
+                <small>Max 5 Mb <br> Recommended size 600 x 500 px</small>
+            </div>
+
+        <div class="section-appointment-buttons dead-center d-flex my-3">
+            <button type="submit" class="btn btn-lg w-100 btn-primary">Save</button>
+            <button type="button" class="btn btn-lg w-100 btn-light">Cancel</button>
+        </div>
+    </div>
+    </form>
+
+    <!--<form [formGroup]="createAppointmentForm" (ngSubmit)="submit()" >
+            <div class="section-appointment" *ngIf="showCreateAppointment">
+         
+                    <h5 class="section-appointment-title">New Appointment</h5>
+                  
+        
+                    <ul class="list-group list-group-flush">
+        
+                        <li class="list-group-item">
+                            <h5>Counselor name</h5>
+                            <p> <input type="text" formControlName="conselor" class="form-control" placeholder="Please input conselor name here ... example : heal.heal"></p>
+                        </li>
+                        <li class="list-group-item">
+                            <h5>Start</h5>
+                            <p><input type="text" matInput type="datetime-local" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}" class="form-control" formControlName="start" name="start" /></p>
+                        </li>
+                        <li class="list-group-item">
+                            <h5>End</h5>
+                            <p><input type="text" matInput type="datetime-local" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}" class="form-control" formControlName="end" name="end" /></p>
+                        </li>
+                       
+                    </ul>
+                 
+                    
+                <div class="section-appointment-buttons dead-center d-flex my-3">
+                    <button type="submit" class="btn btn-lg w-100 btn-primary">Save</button>
+                    <button type="button" class="btn btn-lg w-100 btn-light">Cancel</button>
+                </div>
+            </div>
+            </form>-->
+</div>

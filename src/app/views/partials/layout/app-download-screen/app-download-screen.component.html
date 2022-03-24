@@ -1,0 +1,14 @@
+<div *ngIf="osType" class="w-100 h-100 position-relative d-flex flex-column justify-content-center">
+    <img (click)="closeScreen()" src="./assets/media/icons/svg/GetAppScreen/close.svg" class="close">
+    <div class="Sign-in-from-mobile d-block">
+        <div class="Sign-in-from-mobile-img d-block px-2">
+            <img src="./assets/media/icons/svg/GetAppScreen/clip-bad-gateaway.svg" class="clip-bad-gateaway">
+        </div>
+        <span class="sign-note d-block">
+            Please use our app for {{osType}} for better experience.
+        </span>
+        <a class="sign-apps-btn d-block text-center" [href]="deviceData[osType]['appStoreUrl']">
+            <img [src]="deviceData[osType]['appStoreImage']" class="get-on-google-pay">
+        </a>
+    </div>
+</div>

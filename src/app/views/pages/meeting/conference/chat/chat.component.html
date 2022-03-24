@@ -1,0 +1,14 @@
+<div class="w-100 h-100 d-flex flex-column">
+
+    <div class="pt-4 ml-3 heading pb-3" translate="MEETING.conference.chat.title"></div>
+
+    <perfect-scrollbar id="counselor-chat-list" [hidden]="chatIsOpened" class="flex-fill">
+        <kt-chat-snapshot [newMessageSent]="newMessageFromMessageBox" (chatToggled)="chatToggled($event)" ></kt-chat-snapshot>
+    </perfect-scrollbar>
+
+    <div class="flex-fill h-80" *ngIf="chatIsOpened">
+        <kt-chat-box (messageSent)="newMessageFromMessageBox = $event" [activeChat]="activeChat" (closeChat)="closeChat()">
+        </kt-chat-box>
+    </div>
+
+</div>

@@ -1,0 +1,88 @@
+.max-width-web-view {
+    max-width: 554px;
+}
+
+* {
+    font-family: GothamRounded-Book;
+}
+
+.tag-head {
+    span {
+        font-family: GothamRounded-Book;
+        font-size: 14px;
+        font-weight: normal;
+        letter-spacing: -0.5px;
+        color: #7d96b3;
+        padding-right: 10px;
+        margin-right: 10px;
+        border-right: 1px solid rgba(125, 150, 179, 0.3);
+
+        &:last-child {
+            border-right: none;
+        }
+    }
+}
+
+.basic-profile,
+.select-category {
+    .sub-title {
+        h5 {
+            font-family: GothamRounded-Medium;
+            font-size: 20px;
+            font-weight: 500;
+            letter-spacing: -0.42px;
+            color: #002452;
+        }
+    }
+}
+
+.desc-text {
+    font-size: 14px;
+    font-weight: normal;
+    color: #002452;
+}
+
+div>label {
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #002452;
+}
+
+div>input {
+
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #002452;
+
+    border-radius: 6px;
+    border: solid 1px #e9edf3;
+    background-color: #ffffff;
+}
+
+.skill-buttons {
+    margin-top: 2.5rem !important;
+
+    button {
+        font-family: GothamRounded-Medium;
+        border-radius: 6px;
+        background-color: #1565c0;
+        font-size: 16px;
+        color: #ffffff;
+        font-weight: 500;
+        height: 48px;
+        width: 135px;
+    }
+
+    .cancel {
+        background: #e9edf3;
+        color: #002452;
+    }
+}

@@ -1,0 +1,37 @@
+.control-panel {
+    background-color: #ffffff;
+    height: 100px;
+}
+
+.icon-container {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    // box-shadow: 0 -0.5px 0 0 rgba(255, 255, 255, 0.16);
+    background-color: #f4f6f9;
+}
+
+.icon-txt{
+  font-family: GothamRounded-Book;
+  font-size: 12px;
+  text-align: center;
+  color: #002452;
+}
+
+.close-call{
+    background-color: #ef2a2a;
+}
+
+.txt-red{
+    color: #ef2a2a;
+}
+
+.hide{
+    display: none !important;
+}
+
+.disable{
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+}

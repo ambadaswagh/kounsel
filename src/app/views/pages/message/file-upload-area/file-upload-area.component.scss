@@ -1,0 +1,64 @@
+.custom-dropzone {
+    border: 1px dashed rgba(21, 101, 192, 0.25);
+    border-radius: 10px;
+    height: 200px;
+}
+
+.upload-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.upload-text {
+    // margin-top: 1rem;
+    font-family: GothamRounded-Book;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: -0.29px;
+    text-align: center;
+    color: #002452;
+}
+
+.upload-lim {
+    margin-top: 2rem;
+    font-family: GothamRounded-light;
+    font-size: 12px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.42;
+    letter-spacing: -0.25px;
+    text-align: center;
+    color: #7d96b3;
+}
+
+.skill-buttons {
+    margin-top: 2.5rem !important;
+
+    button {
+        font-family: GothamRounded-Medium;
+        border-radius: 6px;
+        background-color: #1565c0;
+        font-size: 16px;
+        color: #ffffff;
+        font-weight: 500;
+        height: 48px;
+        width: 135px;
+    }
+
+    .cancel {
+        background: #e9edf3;
+        color: #002452;
+    }
+}
+
+.l-time{
+    font-family: GothamRounded-Book;
+    font-size: 14px;
+    color: #7d96b3;
+  }

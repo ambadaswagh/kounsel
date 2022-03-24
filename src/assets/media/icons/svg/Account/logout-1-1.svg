@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>595C8F7D-3BE6-475A-9194-5130B19D8F31</title>
+    <g id="5.-Account" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="1.5-Verification-Code" transform="translate(-397.000000, -875.000000)" stroke="#1565C0" stroke-width="1.5">
+            <g id="Group-3" transform="translate(398.000000, 876.000000)">
+                <g id="logout-1.1">
+                    <path d="M9,3.33333333 L9,1 C9,0.631810167 8.70152317,0.333333333 8.33333333,0.333333333 L1,0.333333333 C0.631810167,0.333333333 0.333333333,0.631810167 0.333333333,1 L0.333333333,15 C0.333333333,15.3681898 0.631810167,15.6666667 1,15.6666667 L8.33333333,15.6666667 C8.70152317,15.6666667 9,15.3681898 9,15 L9,12.6666667" id="Path"></path>
+                    <line x1="15.6666667" y1="8" x2="3" y2="8" id="Path"></line>
+                    <polyline id="Path" points="12.3333333 11.3333333 15.6666667 8 12.3333333 4.66666667"></polyline>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

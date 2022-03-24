@@ -1,0 +1,143 @@
+<div class="join-meeting-container" style="position: relative;">
+    <div class="join-meeting-heading" translate="MEETING.joinMeeting.title"></div>
+
+    <form [formGroup]="joinMeetingForm" (ngSubmit)="submit()" >
+        <div class="form-group mt-3">
+            <label translate="MEETING.joinMeeting.meetingId"></label>
+            <input type="text"
+                formControlName="meetingId"
+                class="form-control"
+                [placeholder]="translateService.instant('MEETING.joinMeeting.meetingIdPlaceholder')">
+        </div>
+
+        <div class="form-group pass-code">
+            <label translate="MEETING.joinMeeting.passCode"></label>
+            <div class="d-flex">
+                
+                <!-- (keydown)="codeInput($event, code2, code1, 'code1', undefined)" -->
+                <input #code1
+                    type="text"
+                    formControlName="code1"
+                    (focus)="moveToEnd($event)"
+                    (keydown.arrowRight)="code2.focus();$event.preventDefault()"
+                    (keydown.enter)="$event.preventDefault()"
+                    (keydown.backspace)="code1.value='';$event.preventDefault()"
+                    (input)="check($event,'code1', code2, undefined)"
+                    class="form-control">
+                    <!-- (keydown)="codeInput($event, code3, code2, 'code2', code1)"                     -->
+                <input #code2
+                    type="text"
+                    formControlName="code2"
+                    (focus)="moveToEnd($event)"
+                    (keydown.arrowRight)="code3.focus();$event.preventDefault()"
+                    (keydown.arrowLeft)="code1.focus();$event.preventDefault()"
+                    (keydown.enter)="$event.preventDefault()"
+                    (keydown.backspace)="code2.value='';code1.focus();$event.preventDefault()"
+                    (input)="check($event,'code2', code3, code1)"
+                    class="form-control ml-3">
+                    <!-- (keydown)="codeInput($event, code4, code3, 'code3', code2)" -->
+                <input #code3
+                    type="text"
+                    formControlName="code3"
+                    (focus)="moveToEnd($event)"
+                    (keydown.arrowRight)="code4.focus();$event.preventDefault()"
+                    (keydown.arrowLeft)="code2.focus();$event.preventDefault()"
+                    (keydown.enter)="$event.preventDefault()"
+                    (keydown.backspace)="code3.value='';code2.focus();$event.preventDefault()"
+                    (input)="check($event,'code3', code4, code2)"
+                    class="form-control ml-3">
+                    <!-- (keydown)="codeInput($event, code5, code4, 'code4', code3)" -->
+                <input #code4
+                    type="text"
+                    formControlName="code4"
+                    (focus)="moveToEnd($event)"
+                    (keydown.arrowRight)="code5.focus();$event.preventDefault()"
+                    (keydown.arrowLeft)="code3.focus();$event.preventDefault()"
+                    (keydown.enter)="$event.preventDefault()"
+                    (keydown.enter)="$event.preventDefault()"
+                    (keydown.backspace)="code4.value='';code3.focus();$event.preventDefault()"
+                    (input)="check($event,'code4', code5, code3)"
+                    class="form-control ml-3">
+                    <!-- (keydown)="codeInput($event, code6, code5, 'code5', code4)" -->
+                <input #code5
+                    type="text"
+                    formControlName="code5"
+                    (focus)="moveToEnd($event)"
+                    (keydown.arrowRight)="code6.focus();$event.preventDefault()"
+                    (keydown.arrowLeft)="code4.focus();$event.preventDefault()"
+                    (keydown.enter)="$event.preventDefault()"
+                    (keydown.backspace)="code5.value='';code4.focus();$event.preventDefault()"
+                    (input)="check($event,'code5', code6, code4)"
+                    class="form-control ml-3">
+                    <!-- (keydown)="codeInput($event, code6, code6, 'code6', code5)" -->
+                <input #code6
+                    type="text"
+                    (focus)="moveToEnd($event)"
+                    (keydown.arrowLeft)="code5.focus();$event.preventDefault()"
+                    (keydown.backspace)="code6.value='';code5.focus();$event.preventDefault()"
+                    (keydown.enter)="handelEnter($event)"
+                    (input)="check($event,'code6', undefined, code5)"
+                    formControlName="code6"
+                    class="form-control ml-3">
+            </div>
+
+        </div>
+
+
+        <div class="join-options-heading mt-5" translate="MEETING.joinMeeting.joinOption"></div>
+
+
+        <div class="d-flex mt-4">
+
+            <div class="d-flex">
+                <div class="slid-label" translate="MEETING.joinMeeting.audio"></div>
+                <div class="sld switch-container ml-3">
+                    <label class="switch" #audioTp="matTooltip"  matTooltip="Audio Permission denied" [matTooltipDisabled]="!audioDenied">
+                        <input type="checkbox"
+                            (change)="audioChange()"
+                            formControlName="audio">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="d-flex ml-5">
+                <div class="slid-label" translate="MEETING.joinMeeting.video"></div>
+                <div class="sld switch-container ml-3">
+                    <label class="switch" #videoTp="matTooltip" matTooltip="Video permission denied" [matTooltipDisabled]="!videoDenied">
+                        <input type="checkbox"
+                            (change)="videoChange()"
+                            formControlName="video">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="d-flex room-detail mt-4" *ngIf="meeting.counselor == RestBoolean.TRUE">
+            <div class="point" (click)="enterMyRoom()" translate="MEETING.joinMeeting.enterRoom"></div>
+            <div class="point ml-5" (click)="sidebarOpened = !sidebarOpened" translate="MEETING.joinMeeting.manageParticipants"></div>
+        </div>
+
+        <div class="d-flex btn-grp mt-4 mb-4">
+            <button class="btn btn-save" type="submit"
+                [disabled]="!joinMeetingForm.valid" translate="MEETING.joinMeeting.join"></button>
+            <button class="btn cancel ml-3" (click)="clearForm()" type="button" translate="COMMON.cancel"></button>
+        </div>
+
+    </form>
+
+    <div *ngIf="joining" class="vc ml-3" style="position: absolute;top: 0;left: 0;right: 0; bottom: 0;" >
+        <mat-spinner diameter="40"></mat-spinner>
+    </div>
+
+</div>
+
+<div *ngIf="sidebarOpened">
+    <div class="right-sideBar" [class.tablet-width]="innerWidth < 1025" >
+        <kt-room-details ($close)="sidebarOpened = false" ></kt-room-details>
+    </div>
+    <div (click)="closeSideBar()"
+        [class.dropShadowForTablet]="innerWidth < 1025"></div>
+</div>

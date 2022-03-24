@@ -1,0 +1,61 @@
+kt-base {
+	opacity: 0;
+	height: 100%;
+
+	.kt-grid--root {
+		height: 100%;
+	}
+}
+
+.kt-page--loaded {
+	kt-base {
+		opacity: 1;
+		transition: opacity 1s ease-in-out;
+	}
+}
+
+
+
+.top-account {
+	position: fixed;
+	top: 0;
+	right: 0;
+	z-index: 1000;
+	max-width: calc(100% - 1rem - 71%);
+
+	&:focus {
+		outline: none !important;
+	}
+
+	.name {
+		margin: auto;
+		font-family: GothamRounded-Book;
+		font-size: 14px;
+		color: #7d96b3;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.img-contain {
+		img {
+			width: 24px;
+			height: 24px;
+			border-radius: 8px;
+		}
+	}
+}
+
+.term-box {
+	max-width: 53vw;
+}
+
+@media (max-width: 1024px) {
+	.term-box {
+		max-width: 66vw;
+	}
+
+	.top-account {
+		max-width: calc(100% - 1rem - 51%);
+	}
+}

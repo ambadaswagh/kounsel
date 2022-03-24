@@ -1,0 +1,214 @@
+.select-right-sideBar{
+    position: fixed;
+    top: 0;
+    z-index: 96;
+    right: 0;
+    bottom: 0;
+    // height: 100vh;
+    background: #ffffff;
+    box-shadow: 0 2px 4px 0 rgba(0, 36, 82, 0.1);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    min-width: 350px;
+    max-width: 416px;
+    .select-head{
+        font-size: 20px;
+        font-weight: 500;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: -0.42px;
+        color: #002452;
+        margin-top: 2rem;
+        margin-left: 1.5rem;
+    }
+}
+
+.level-one{
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #002452;
+    padding-left: 1.6rem;
+}
+
+.space-btwn{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.level-two{
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #002452;
+    margin-left: 1.6rem;
+}
+
+.level-three{
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #7d96b3;
+}
+
+.lev-3-li{
+    margin-left: 1.6rem;
+}
+
+.curs-point{
+    cursor: pointer;
+}
+
+.btn{
+    width: 368px;
+  height: 48px;
+  border-radius: 6px;
+  background-color: #1565c0;
+  font-size: 16px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #ffffff;
+}
+
+.dead-center{
+    display: flex;
+    justify-content: center;
+}
+
+._spave_btw{
+    display: flex;
+    justify-content: space-between;
+}
+
+.myCategory{
+    margin-right: 1rem;
+    font-size: 11px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: -0.46px;
+    text-align: right;
+    color: #1565c0;
+}
+
+.dropShadowForTablet{
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    z-index: 95;
+    background-color: rgba(0, 36, 82, 0.4);
+}
+
+.loading{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: grid;
+    width: 100%;
+    padding: 1rem;
+    place-items: center;
+}
+
+
+////////// new styles
+
+#right-menu-page  li{
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #002452;
+}
+
+#right-menu-page > li > ul > li{
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #002452;
+}
+
+.selection-value{
+    font-size: 14px !important;
+    font-weight: normal !important;
+    font-stretch: normal !important;
+    font-style: normal !important;
+    line-height: normal !important;
+    letter-spacing: normal !important;
+    color: #7d96b3 !important;
+}
+
+.custom-border {
+    border-bottom: 1px solid #ebedf2 !important;
+}
+
+.custom-padding{
+    padding-left: 1.6rem !important;
+}
+
+.custom-margin{
+    margin-left: 1.6rem !important;
+}
+
+.custom-space{
+    display: flex; justify-content: space-between;
+}
+
+.space_between{
+    display: flex;
+    justify-content: space-between;
+}
+
+.point{
+    cursor: pointer;
+}
+
+.scrool-container{
+    flex: 1 1 auto;
+    overflow: auto;
+}
+
+
+
+
+.scrool-container::-webkit-scrollbar {
+    width: 5px;
+}
+
+.scrool-container::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.scrool-container::-webkit-scrollbar-thumb {
+    background-color: #3F51B5;
+    outline: 1px solid slategrey;
+}
+
+.btn-cl{
+    background-color: #e9edf3;
+    color: #002452;
+}

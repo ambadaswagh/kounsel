@@ -1,0 +1,111 @@
+<div class="kt-container-wrp h-100">
+    <div class=" d-flex mx-0 h-100">
+
+        <div>
+            <div class="left-side h-100">
+                <div class="head d-flex align-items-center">
+                    <h4 class="Profile">Settings</h4>
+                </div>
+                <div class="left-side-menu-list mt-5">
+                    <!-- *ngIf="completed.size > 0" -->
+                    <ul class="side-menu-ul mb-4">
+                        <!-- *ngIf="completed.has('basic-profile')" -->
+                        <li>
+                            <!-- [class.active]="isActiveLink('basic-profile')"
+                                (click)="activateLink('basic-profile')" -->
+                            <a href="javascript:void(0);"
+                                (click)="menu.counselor = !menu.counselor"
+                                [class.active]="menu.counselor || !counslourPrestine()"
+                                [class.bottom-clear]="counselor_submenu.message"
+                                class="d-flex align-items-center min-menu-width">
+                                <img class="mr-3"
+                                    src="../../../../assets/media/icons/svg/Profile/counselor.svg"
+                                    alt="">
+                                <span>Counselor</span>
+                                <span class="fill-space"></span>
+                                <div>
+                                    <img src="../../../../assets/media/icons/svg/Profile/arrow-down.svg"
+                                        *ngIf="!menu.counselor"
+                                        alt="">
+                                    <img *ngIf="menu.counselor"
+                                        src="../../../../assets/media/icons/svg/Profile/arrow-up.svg"
+                                        alt="">
+                                </div>
+                            </a>
+                        </li>
+
+                        <ul class="counc-sub-menu"
+                            *ngIf="menu.counselor"
+                            [class.active]="counselor_submenu.message"
+                            style="border-top-left-radius: 0px; border-top-right-radius: 0px;">
+                            <li class="py-2"
+                                (click)="counselorSubMenuToggle('message')">Message</li>
+                        </ul>
+
+                        <ul class="counc-sub-menu"
+                            *ngIf="menu.counselor"
+                            [class.active]="counselor_submenu.counselingSession">
+                            <li class="py-2"
+                                (click)="counselorSubMenuToggle('counselingSession')">Counseling Session</li>
+                        </ul>
+
+                        <ul class="counc-sub-menu"
+                            *ngIf="menu.counselor"
+                            [class.active]="counselor_submenu.searchVisibility">
+                            <li class="py-2"
+                                (click)="counselorSubMenuToggle('searchVisibility')">Search Visibility</li>
+                        </ul>
+
+                        <li>
+                            <a href="javascript:void(0);"
+                                (click)="menuToggle('notification')"
+                                [class.active]="menu.notification"
+                                class="d-flex align-items-center min-menu-width">
+                                <img class="mr-3"
+                                    src="../../../../assets/media/icons/svg/Profile/notification.svg"
+                                    alt="">
+                                <span>Notification</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0);"
+                                (click)="menuToggle('email')"
+                                [class.active]="menu.email"
+                                class="d-flex align-items-center min-menu-width">
+                                <img class="mr-3"
+                                    src="../../../../assets/media/icons/svg/Profile/email.svg"
+                                    alt="">
+                                <span>Email</span>
+                            </a>
+                        </li>
+
+
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+        <!-- right side -->
+        <!-- class="col-md-9 px-0 col-sm-8" -->
+        <div class="fill-space">
+            <div class="middle-side h-100">
+                <kt-message [settings]="settings"
+                    (settingsUpdated)="updateSetting()"
+                    *ngIf="counselor_submenu.message"></kt-message>
+                <kt-counseling-session [settings]="settings"
+                    (settingsUpdated)="updateSetting()"
+                    *ngIf="counselor_submenu.counselingSession"></kt-counseling-session>
+                <kt-search-visibility [settings]="settings"
+                    (settingsUpdated)="updateSetting()"
+                    *ngIf="counselor_submenu.searchVisibility"></kt-search-visibility>
+                <kt-notification [settings]="settings"
+                    (settingsUpdated)="updateSetting()"
+                    *ngIf="menu.notification && counslourPrestine()"></kt-notification>
+                <kt-email [settings]="settings"
+                    (settingsUpdated)="updateSetting()"
+                    *ngIf="menu.email && counslourPrestine()"></kt-email>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,131 @@
+.profileImage {
+  width: 150px;
+  height: 150px;
+  margin-left: 72px;
+  margin-top: 26px;
+  border-radius: 50%;
+}
+.ng-star-inserted {
+  margin-left: 5px;
+}
+.activeStatusClass {
+  font-weight: bold;
+  color: #109d90;
+  font-size: 14px;
+  letter-spacing: 0.2px;
+}
+
+.notActiveStatusClass {
+  font-weight: bold;
+  color: #808080;
+  font-size: 14px;
+  letter-spacing: 0.2px;
+}
+
+.ratingClass {
+  font-weight: bold;
+  color: #e59937;
+  font-size: 16px;
+  letter-spacing: 0.2px;
+}
+.statusLabel {
+  font-size: 20px;
+  opacity: 66%;
+  letter-spacing: 1.29px;
+  // font-family: Lato Medi;
+}
+.mt-22 {
+  margin-top: 22px;
+}
+
+.connectedSection {
+  font-size: 20px;
+  opacity: 66%;
+  letter-spacing: 1.29px;
+}
+.borderRight {
+  border-right: 2px inset;
+}
+
+.bottomSection {
+  margin-top: 3%;
+  margin-left: 3%;
+}
+
+.fbSection {
+  width: 285px;
+  height: 59px;
+  // opacity: 0.02;
+  background-color: #f4f5f8;
+  margin-top: 3%;
+  padding: 20px;
+}
+
+.connectedStatus {
+  width: 58px;
+  height: 15px;
+  font-family: Lato;
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: right;
+  color: #bbbfc4;
+  margin-top: 5%;
+}
+
+.facebook {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  margin-left: 16px;
+}
+
+.google {
+  width: 19px;
+  height: 19px;
+  object-fit: contain;
+  margin-left: 16px;
+}
+
+.delete {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  opacity: 0.54;
+}
+
+.calliesNIA {
+  width: 102px;
+  height: 17px;
+  font-family: Lato;
+  font-size: 14px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: 0.7px;
+  text-align: left;
+  color: #6a6c6f;
+  padding-left: 30px;
+}
+
+.bottomRightSection {
+  margin-left: 3%;
+}
+.primaryColor{
+   color: #e59937;
+}
+.reviewsSection {
+  color: #bbbfc4;
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #bbbfc4;
+}

@@ -1,0 +1,43 @@
+<div id="waitingRoom"
+    class="waiting-list flex-fill d-flex flex-column">
+    <div class="waiting-heading mt-4 ">Waiting room</div>
+    <div class="waiting-sub-heading mt-3 pb-4 mb-1">{{getWaitingCount()}}</div>
+
+    <perfect-scrollbar class="flex-fill">
+        <div class="Waiting-List mx-3 mt-2" style="margin-left: 24px !important;margin-right: 0px !important;">
+            <ng-container *ngFor="let user of waitingList;" >
+                <div class="d-flex mt-1">
+                    <div class="d-flex align-items-center">
+                        <div class="img-container">
+                            <img *ngIf="user.image_url;else noImage" [src]="user.image_url" class="image-present" alt="image-placeholder">
+                            <ng-template #noImage>
+                                <img src="assets/media/icons/svg/meeting/conference/icons-user-placeholder-1.svg" alt="image-placeholder">
+                            </ng-template>
+                        </div>
+                    </div>
+
+                    <div class="ml-3 flex-fill d-flex justify-content-between border-bottom" style="max-width: calc(100% - 50px);">
+                        <div class="name">
+                            {{user.name || 'Not Available'}}
+                        </div>
+
+
+                        <div class="d-flex btn-grp flex-row-reverse p-2">
+                            <button class="btn cancel ml-2 d-flex btn-add h-100 reject-button mr-3" (click)="reject(user.access_id)"
+                                type="cancel">Reject</button>
+                            <button class="btn btn-save d-flex btn-add h-100 admit-button" (click)="admit(user.access_id)" >Admit</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </ng-container>
+        </div>
+    </perfect-scrollbar>
+
+    <div class="d-flex btn-grp flex-row-reverse">
+        <button [disabled]="waitingList.length"
+            class="btn btn-save h-100"
+            (click)="$close.emit()">Done</button>
+    </div>
+</div>

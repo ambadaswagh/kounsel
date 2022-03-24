@@ -1,0 +1,266 @@
+<div class="row max-width-web-view mb-3">
+    <div class="col-md-12">
+        <div class="tag-head d-flex align-items-center  mt-3">
+            <span>Profile</span>
+            <span>License</span>
+        </div>
+        <div class="basic-profile mt-5 mb-4">
+            <div class="sub-title">
+                <h5>License</h5>
+            </div>
+            <div class="Clients-love-license">
+                Clients love licensed professionals and this is your chance to showcase your licensing details.
+            </div>
+        </div>
+
+        <ng-container *ngFor="let _license of licenseArray; let i = index">
+
+
+            <div *ngIf="!_license.editing"
+                style="display: flex; justify-content: space-between;"
+                class="license p-4 mt-2">
+                <div style="flex:1">
+                    <div *ngIf="innerWidth > 1024"
+                        class="license_head">{{_license.data.type}}</div>
+
+                    <div class="d-flex"
+                        style="justify-content: space-between;"
+                        *ngIf="innerWidth < 1025">
+                        <div class="license_head">{{_license.data.type}}</div>
+                        <div>
+
+                            <div class="dropdown  dropleft"
+                                (clickOutside)="_license.more = false"
+                                [class.show]="_license.more">
+
+                                <img (click)="_license.more = !_license.more"
+                                    matTooltip="more options"
+                                    src="../../../../../assets/media/icons/svg/Profile/more.svg"
+                                    data-toggle="dropdown"
+                                    class="more">
+
+                                <div class="dropdown-menu dropdown-menu-right"
+                                    [class.show]="_license.more"
+                                    style="top: 100%; right: 0%;"
+                                    aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item cstm-a"
+                                        *ngIf="isEditing()"
+                                        [class.dis]="isEditing()">
+                                        <div class="license-icon point">
+
+                                            <img matTooltip="edit license"
+                                                src="../../../../../assets/media/icons/svg/Profile/edit.svg"
+                                                class="edit">
+                                        </div>
+
+                                        <span class="more-txt ml-2 point">Edit</span>
+                                    </a>
+
+                                    <a class="dropdown-item cstm-a"
+                                        *ngIf="!isEditing()"
+                                        (click)="_license.editing = true; scrollToEdit()">
+                                        <div class="license-icon point">
+                                            <img matTooltip="edit license"
+                                                src="../../../../../assets/media/icons/svg/Profile/edit.svg"
+                                                class="edit">
+                                        </div>
+
+                                        <span class="more-txt ml-2 point">Edit</span>
+                                    </a>
+
+                                    <a class="dropdown-item cstm-a"
+                                        (click)="deleteLicense(i)">
+                                        <div class="license-icon point">
+                                            <img matTooltip="delete license"
+                                                src="../../../../../assets/media/icons/svg/Profile/bin.svg"
+                                                class="edit">
+                                        </div>
+
+                                        <span class="more-txt ml-2 point">Delete</span>
+                                    </a>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <div class="license_info my-1">{{_license.data.board}}</div>
+                    <div class="license_info my-1">Expire on: {{_license.data.expiration | date}}</div>
+                    <div class="license_info my-1">{{_license.data.state}} {{_license.data.country}} #{{_license.data.number}}</div>
+                </div>
+
+                <div style="display: flex;"
+                    *ngIf="innerWidth > 1024">
+                    <div class="license-icon point"
+                        [class.dis]="isEditing()">
+                        <img matTooltip="Only one license can be edited at a time"
+                            *ngIf="isEditing()"
+                            src="../../../../../assets/media/icons/svg/Profile/edit.svg"
+                            class="edit">
+                        <img src="../../../../../assets/media/icons/svg/Profile/edit.svg"
+                            matTooltip="edit license"
+                            *ngIf="!isEditing()"
+                            (click)="_license.editing = true; scrollToEdit()"
+                            class="edit point">
+                    </div>
+
+                    <div class="license-icon ml-4 point">
+                        <img matTooltip="delete license"
+                            src="../../../../../assets/media/icons/svg/Profile/bin.svg"
+                            (click)="deleteLicense(i)"
+                            class="edit point">
+                    </div>
+                </div>
+            </div>
+
+
+            <div #EditingPane
+                *ngIf="_license.editing "
+                class="edit mb-3 ">
+                <div style="color: #7d96b3;font-size: 14px;font-weight: 500;"
+                    class="mb-4 mt-5">EDIT LICENSE</div>
+                <div class="form-group">
+                    <label>Country</label>
+                    <input readonly
+                        type="text"
+                        maxlength="32"
+                        (input)="_license.errors.country = _license.data.country == ''"
+                        [(ngModel)]="_license.data.country"
+                        class="form-control"
+                        (click)="state.nativeElement.focus()"
+                        placeholder="Country">
+                    <!-- <small *ngIf="_license?.errors?.country && _license.data.country != ''"
+                        style="color: red;">country is required</small> -->
+                </div>
+
+                <div class="form-group">
+                    <label>State</label>
+                    <!-- <input ngx-google-places-autocomplete [options]='{}' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)"/> -->
+
+                    <input type="text"
+                        #myState
+                        ngx-google-places-autocomplete
+                        #placesRef="ngx-places"
+                        [options]="option"
+                        (onAddressChange)="handleAddressChange($event, i)"
+                        maxlength="32"
+                        [(ngModel)]="_license.data.state"
+                        (input)="_license.errors.state = _license.data.state == ''; stateEditing = true"
+                        class="form-control"
+                        placeholder="State">
+                    <!-- <small *ngIf="_license?.errors?.state && _license.data.state != ''"
+                        style="color: red;">state is required</small> -->
+                </div>
+
+                <div class="form-group">
+                    <label>License Type</label>
+                    <input (focus)="openLicenseTypeSelection(i)"
+                        type="text"
+                        readonly
+                        [(ngModel)]="_license.data.type"
+                        class="form-control"
+                        placeholder="License Type">
+                    <!-- <small *ngIf="_license?.errors?.type && _license.data.type != ''" style="color: red;">license type is required</small> -->
+                </div>
+
+                <div class="form-group">
+                    <label>Board</label>
+                    <input (focus)="openLicenseTypeSelection(i)"
+                        type="text"
+                        readonly
+                        [(ngModel)]="_license.data.board"
+                        class="form-control"
+                        placeholder="Board">
+                    <!-- <small *ngIf="_license?.errors?.board && _license.data.board != ''" style="color: red;">board is required</small> -->
+                </div>
+
+                <div class="form-group">
+                    <label>License Number</label>
+                    <!-- (input)="_license.errors.number = _license.data.number == ''" -->
+                    <input
+                        type="text"
+                        maxlength="32"
+                        required
+                        pattern="^(?=.*[A-Za-z\d]).{1,}$"
+                        [(ngModel)]="_license.data.number"
+                        class="form-control"
+                        #licenseNumber="ngModel"
+                        (change)="licenseValid()"
+                        placeholder="License Number">
+                        <small *ngIf="licenseNumber.invalid && licenseNumber.dirty" style="color: red; position: absolute;">license is required and must contain one letter or number</small>
+                    <!-- <small *ngIf="_license?.errors?.number && _license.data.number != ''" style="color: red;">license is required and must contain one letter or number</small> -->
+                </div>
+
+                <div class="form-group">
+                    <label>Expiry Date</label>
+                    <input class="form-control"
+                        matInput
+                        [matDatepicker]="picker"
+                        readonly
+                        (click)="picker.open()"
+                        (input)="_license.errors.expiration = _license.data.expiration == ''"
+                        [ngModel]="_license.data.expiration"
+                        (ngModelChange)="_license.data.expiration = toDate($event); this.cdr.detectChanges()"
+                        placeholder="Expiry Date">
+                    <mat-datepicker #picker></mat-datepicker>
+                    <!-- <input type="date"
+                        (input)="_license.errors.expiration = _license.data.expiration == ''"
+                        [ngModel]="_license.data.expiration | date:'yyyy-MM-dd'"
+                        (ngModelChange)="_license.data.expiration = $event"
+                        class="form-control"
+                        placeholder="Expiry Date"> -->
+                    <small *ngIf="_license?.errors?.expiration && _license.data.expiration != ''"
+                        style="color: red; position: absolute;">Expiry date is required and it should be greater than the current date</small>
+                </div>
+
+                <hr>
+
+                <div *ngIf="isEditing()"
+                    class="d-flex my-3 portfoloio-buttons mb-5">
+                    <button type="submit"
+                        [disabled]="!licenseValid() || !licenseChanged(i)"
+                        class="btn mr-3 point"
+                        (click)="save()">Save</button>
+                    <button type="button"
+                        class="btn cancel point"
+                        (click)="cancelEditing()">Cancel</button>
+                    <hr>
+                </div>
+            </div>
+
+
+        </ng-container>
+        <!-- [class.dis]="isEditing()" -->
+        <div class="d-flex mt-3 "
+            *ngIf="!isEditing()">
+            <span matTooltip="Only one license can be edited at a time"
+                *ngIf="isEditing()"><img src="../../../../../assets/media/icons/svg/Profile/plus.svg"
+                    class="edit point"></span>
+            <div matTooltip="Only one license can be edited at a time"
+                *ngIf="isEditing()"
+                class="addLicense point">Add New License</div>
+
+            <span matTooltip="add license"
+                class="d-flex">
+                <span *ngIf="!isEditing()"
+                    (click)="addNewLicense()"><img src="../../../../../assets/media/icons/svg/Profile/plus.svg"
+                        class="edit point"></span>
+                <div *ngIf="!isEditing()"
+                    (click)="addNewLicense();scrollToEdit()"
+                    class="addLicense point">Add New License</div>
+            </span>
+        </div>
+
+
+    </div>
+</div>
+
+<ng-container *ngFor="let _license of licenseArray; let i = index">
+    <kt-selection *ngIf="selectLicenseType && _license.editing"
+        [title]="'License Selection'"
+        [data]="licenseMetaData.data"
+        [selectedValue]="_license.data.type || ''"
+        (closeWihoutSave)="selectLicenseType = false"
+        (close)="saveLicenseType($event, i)"></kt-selection>
+</ng-container>

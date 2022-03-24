@@ -1,0 +1,888 @@
+<div class="files-cont">
+    <div class="file-title d-flex">
+        <div>
+            <span>File</span>
+        </div>
+        <div class="ml-2 ">
+            <span class="pl-2">{{sharedOrCloud | titlecase}}</span>
+        </div>
+    </div>
+
+    <div class="file-heading mt-5">
+        Files
+    </div>
+
+    <div #drop
+        *ngIf="sharedOrCloud == 'cloud'"
+        class="custom-dropzone mt-4 mb-3"
+        [disabled]="loadingOperation"
+        ngx-dropzone
+        [maxFileSize]="'5242880'"
+        (change)="onSelect($event)">
+        <ngx-dropzone-label>
+            <div class="upload-body">
+
+                <div class="my-4"
+                    *ngIf="loadingOperation">
+                    <div class="">
+                        <div style="justify-content: center;"
+                            class="d-flex mb-4">
+                            <mat-spinner diameter="40"></mat-spinner>
+                        </div>
+                        <div class="upload-text">Uploading...</div>
+                    </div>
+                </div>
+
+                <img *ngIf="!loadingOperation"
+                    width="56px"
+                    (click)="drop.showFileSelector(); $event.stopPropagation()"
+                    src="../../../../../assets/media/icons/svg/Profile/upload.svg"
+                    class="upload point mb-3">
+
+
+                <div *ngIf="!loadingOperation && innerWidth > 1024"
+                    class="upload-text">Click or drop files here to upload</div>
+                <div *ngIf="!loadingOperation && innerWidth< 1025"
+                    class="upload-text">Click to upload</div>
+
+
+                <!-- <div *ngIf="!loadingOperation"
+                    class="upload-text"
+                    style="margin-top: 10px;">or</div> -->
+
+                <!-- <button *ngIf="!loadingOperation"
+                    type="button"
+                    (click)="selectFromCloud($event)"
+                    class="btn upload-btn px-4">Select From Cloud</button> -->
+
+                <div class="upload-lim">Max 5 MB
+                    <br>
+                    Recommended size: 600 x 600 px</div>
+            </div>
+        </ngx-dropzone-label>
+    </div>
+    <div>
+        <small *ngIf="fileSelectError"
+            style="color: red">{{fileSelectError}}</small>
+    </div>
+
+    <div class="uploading-txt mt-5"
+        *ngIf="newFiles.length">
+        Uploading
+    </div>
+
+    <div class="row"
+        *ngIf="newFiles.length">
+
+        <ng-container *ngFor="let file of newFiles; let i = index">
+            <div class="col-3 mt-2"
+                *ngIf="!file.deleted">
+
+                <!-- IMAGE CONTAINER START -->
+
+                <ng-container *ngIf="file.media_type == 577; else noImage">
+                    <div #cont
+                        class="file-container test-fit"
+                        [class.tablet-contHeight]="innerWidth < 1025"
+                        (mouseover)="cont.hov = true"
+                        (mouseleave)="cont.hov = false"
+                        [ngStyle]="{'background-image': 'url(\'' + file.original + '\')'}">
+                        <!-- <img [src]="file.original"
+                            class="img-fit"> -->
+
+                        <div class="desktop-detail-image detail-image-hov"
+                            *ngIf="(innerWidth > 1024 ) && (file.uploadProgress > -1 || cont.hov)">
+                            <div class="d-flex"
+                                style="justify-content: flex-end;">
+                                <div class="mt-2 mr-2 point"
+                                    (click)="deleteRecent(i)">
+                                    <img src="assets/media/icons/svg/Profile/whiteBin.svg">
+                                </div>
+                            </div>
+                            <div class="mb-2 mx-2">
+
+                                <div *ngIf="file.uploadProgress > -1"
+                                    [class.mb-2]="!cont.hov">
+                                    <mat-progress-bar class="example-margin"
+                                        [color]="'accent'"
+                                        [mode]="file.mode"
+                                        [value]="file.uploadProgress">
+                                    </mat-progress-bar>
+
+                                </div>
+
+                                <div class="name"
+                                    *ngIf="cont.hov"
+                                    matTooltip="{{file.title}}">
+                                    {{file.title | nameTrim:20}}
+                                </div>
+
+                                <div class="size"
+                                    *ngIf="cont.hov">
+                                    {{bytesToBigUnits(file.size)}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="desktop-detail-image detail-image-hov"
+                            *ngIf="innerWidth < 1025">
+
+                            <div class="d-flex"
+                                style="justify-content: flex-end;">
+                                <div class="mt-2 mr-2 point"
+                                    (click)="deleteRecent(i)">
+                                    <img src="assets/media/icons/svg/Profile/whiteBin.svg">
+                                </div>
+
+                            </div>
+
+                            <div class="mb-4 mx-2">
+
+                                <div *ngIf="file.uploadProgress > -1">
+                                    <mat-progress-bar class="example-margin"
+                                        [color]="'accent'"
+                                        [mode]="'determinate'"
+                                        [value]="file.uploadProgress">
+                                    </mat-progress-bar>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tablet-detail"
+                        *ngIf="innerWidth < 1025">
+                        <div class="tabletName"
+                            matTooltip="{{file.title}}">
+                            {{file.title | nameTrim:15}}
+                        </div>
+                        <div class="tabletSize">
+                            {{bytesToBigUnits(file.size)}}
+                        </div>
+                    </div>
+                </ng-container>
+
+                <!-- IMAGE CONTAINER END -->
+
+                <ng-template #noImage>
+                    <div #cont
+                        class="file-container"
+                        [class.tablet-contHeight]="innerWidth < 1025"
+                        (mouseover)="cont.hov = true"
+                        (mouseleave)="cont.hov = false">
+                        <div class="desktop-detail-file file-detail"
+                            *ngIf="innerWidth > 1024"
+                            [class.hov-back]="cont.hov || file.uploadProgress > -1">
+
+                            <div class="d-flex"
+                                style="justify-content: space-between;">
+                                <div class="mt-2 ml-2">
+                                    <img [src]="iconService.getIconForAttachment(file)">
+                                </div>
+                                <div class="mt-2 mr-2 point"
+                                    [hidden]="!cont.hov"
+                                    (click)="deleteRecent(i)">
+                                    <img src="assets/media/icons/svg/Profile/whiteBin.svg">
+                                </div>
+                            </div>
+
+                            <div class="mb-2 mx-2">
+
+                                <div *ngIf="file.uploadProgress > -1">
+                                    <mat-progress-bar class="example-margin"
+                                        [color]="'accent'"
+                                        [mode]="'determinate'"
+                                        [value]="file.uploadProgress">
+                                    </mat-progress-bar>
+                                </div>
+
+                                <div class="name"
+                                    *ngIf="file.uploadProgress == -1"
+                                    matTooltip="{{file.title}}"
+                                    [class.hov-col]="cont.hov">
+                                    {{file.title | nameTrim:20}}
+                                </div>
+                                <div class="size"
+                                    *ngIf="file.uploadProgress == -1"
+                                    [class.hov-col2]="cont.hov">
+                                    {{bytesToBigUnits(file.size)}}
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="desktop-detail-file file-detail"
+                            [class.hov-back]="file.uploadProgress > -1"
+                            *ngIf="innerWidth < 1025">
+
+                            <div class="d-flex"
+                                style="justify-content: space-between;">
+                                <div class="mt-2 ml-2">
+                                    <img [src]="iconService.getIconForAttachment(file)">
+                                </div>
+
+                                <div class="mt-2 mr-2 point"
+                                    *ngIf="file.uploadProgress > -1"
+                                    (click)="deleteRecent(i)">
+                                    <img src="assets/media/icons/svg/Profile/whiteBin.svg">
+                                </div>
+
+                                <div class="mt-2 mr-2 point"
+                                    *ngIf="file.uploadProgress < 0"
+                                    (click)="deleteRecent(i)">
+                                    <img src="assets/media/icons/svg/Profile/bin.svg">
+                                </div>
+
+
+
+                            </div>
+
+                            <div class="mb-4 mx-2">
+
+                                <div *ngIf="file.uploadProgress > -1">
+                                    <mat-progress-bar class="example-margin"
+                                        [color]="'accent'"
+                                        [mode]="'determinate'"
+                                        [value]="file.uploadProgress">
+                                    </mat-progress-bar>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="tablet-detail"
+                        *ngIf="innerWidth < 1025">
+                        <div class="tabletName"
+                            matTooltip="{{file.title}}">
+                            {{file.title | nameTrim:12}}
+                        </div>
+                        <div class="tabletSize">
+                            {{bytesToBigUnits(file.size)}}
+                        </div>
+                    </div>
+                </ng-template>
+            </div>
+        </ng-container>
+
+    </div>
+
+    <div class="mb-5"
+        *ngIf="haveFilesToUpload() && !loadingOperation">
+        <div class="d-flex skill-buttons">
+            <button type="submit"
+                [disabled]="uploading"
+                (click)="submit()"
+                class="btn btn-save mr-3">Save</button>
+        </div>
+    </div>
+
+    <div style="display: inline-block;"
+        class="mt-5">
+        <div class="dropdown  dropright"
+            id="sharedCloud"
+            (clickOutside)="sharedOrCloudDropDown = false"
+            [class.show]="sharedOrCloudDropDown">
+
+            <button class="btn cloud-btn d-flex vc py-0"
+                style="height: 34px; width: 104px;"
+                [disabled]="loading || uploading || deleting"
+                (click)="sharedOrCloudDropDown = !sharedOrCloudDropDown">
+                <span>
+                    <ng-container *ngIf="sharedOrCloud=='shared'">Shared</ng-container>
+                    <ng-container *ngIf="sharedOrCloud=='cloud'">Cloud</ng-container>
+                </span>
+                <span style="display: flex;align-items: center; height: 100%;">
+                    <mat-icon class="custom-icons-pos point"
+                        style="height: 18px;"
+                        *ngIf="!sharedOrCloudDropDown"
+                        (click)="sharedOrCloudDropDown = true;$event.stopPropagation(); dateSortDropDown = false; nameSortDropDown = false; gridListDropDown = false"
+                        aria-hidden="false"
+                        aria-label="Example arrow_drop_down icon">arrow_drop_down</mat-icon>
+                    <mat-icon style="height: 18px;"
+                        class="custom-icons-pos point"
+                        *ngIf="sharedOrCloudDropDown"
+                        (click)="sharedOrCloudDropDown = false;$event.stopPropagation();dateSortDropDown = false; nameSortDropDown = false; gridListDropDown = false"
+                        aria-hidden="false"
+                        aria-label="Example arrow_drop_up icon">arrow_drop_up</mat-icon>
+                </span>
+            </button>
+
+            <div class="dropdown-menu dropdown-menu-right"
+                [class.show]="sharedOrCloudDropDown"
+                style="top: 120%; left: 0%;"
+                aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item cstm-a point"
+                    (click)="switchSharedOrCloud('shared') ; sharedOrCloudDropDown=false">
+                    Shared
+                </a>
+
+                <a class="dropdown-item cstm-a point"
+                    (click)="switchSharedOrCloud('cloud'); sharedOrCloudDropDown=false">
+                    Cloud
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div *ngIf="initialLoad && attachment.length==0 && sharedOrCloud=='shared'"
+        class="no-shared-file mt-5">You don`t have shared files yet.</div>
+    <div *ngIf="initialLoad && attachment.length==0 && sharedOrCloud=='cloud'"
+        class="no-shared-file mt-5">You don`t have files in Cloud yet.</div>
+
+    <div class="d-flex mt-4"
+        *ngIf="attachment.length"
+        style="justify-content: space-between;">
+        <div style="display: flex;align-items: center;">
+
+            <mat-checkbox [(ngModel)]="allSelection"
+                (change)="allSelectionToggle($event)"
+                class="mr-3"></mat-checkbox>
+
+            <div class="dropdown  dropright"
+                id="nameSort"
+                (clickOutside)="nameSortDropDown = false"
+                [class.show]="nameSortDropDown">
+
+                <button class="btn cloud-btn d-flex"
+                    style="background-color:transparent;padding: 0px;justify-content: flex-start;"
+                    (click)="nameSortDropDown = !nameSortDropDown">
+                    <span>
+                        Name
+                    </span>
+                    <span style="display: flex;align-items: center; height: 100%;">
+                        <mat-icon class="custom-icons-pos point"
+                            style="height: 18px;"
+                            *ngIf="!nameSortDropDown"
+                            (click)="nameSortDropDown = true;$event.stopPropagation(); dateSortDropDown = false; sharedOrCloudDropDown = false; gridListDropDown = false"
+                            aria-hidden="false"
+                            aria-label="Example arrow_drop_down icon">arrow_drop_down</mat-icon>
+                        <mat-icon style="height: 18px;"
+                            class="custom-icons-pos point"
+                            *ngIf="nameSortDropDown"
+                            (click)="nameSortDropDown = false;$event.stopPropagation(); dateSortDropDown = false; sharedOrCloudDropDown = false; gridListDropDown = false"
+                            aria-hidden="false"
+                            aria-label="Example arrow_drop_up icon">arrow_drop_up</mat-icon>
+                    </span>
+                </button>
+
+                <div class="dropdown-menu dropdown-menu-right"
+                    [class.show]="nameSortDropDown"
+                    style="top: 120%; left: 0%;"
+                    aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item cstm-a point"
+                        [class.active_dp]="nameSort == 'asc'"
+                        (click)="nameSort = 'asc'; sortAttachments('name'); nameSortDropDown=false">
+                        Ascending
+                    </a>
+
+                    <a class="dropdown-item cstm-a point"
+                        [class.active_dp]="nameSort == 'desc'"
+                        (click)="nameSort = 'desc'; sortAttachments('name'); nameSortDropDown=false">
+                        Descending
+                    </a>
+
+                </div>
+            </div>
+        </div>
+        <div class="d-flex">
+
+            <div *ngIf="isSelected()"
+                (click)="downloadAll()"
+                class="vc mr-4 point"
+                style="margin-top: -5px; margin-bottom: -5px;">
+                <button class="btn cloud-btn vc py-0"
+                    style="height: 32px;width: auto;">
+                    <span class="d-flex vc">
+                        <img style="height: 15px;"
+                            src="assets/media/icons/svg/Files/download-bottomGrey.svg">
+                        <span class="ml-2">Download</span>
+                    </span>
+                </button>
+            </div>
+            <div *ngIf="isSelected()"
+                (click)="deleteBulk()"
+                class="vc mr-4 point"
+                style="margin-top: -5px; margin-bottom: -5px;">
+                <button class="btn cloud-btn vc py-0"
+                    style="height: 32px;">
+                    <span class="d-flex vc">
+                        <img src="assets/media/icons/svg/Files/binGrey.svg">
+                        <span class="ml-2">Delete</span>
+                    </span>
+                </button>
+            </div>
+
+            <div class="dropdown  dropright"
+                style="display: flex;align-items: center;"
+                id="dateSort"
+                (clickOutside)="dateSortDropDown = false"
+                [class.show]="dateSortDropDown">
+
+                <button class="btn cloud-btn d-flex"
+                    style="background-color:transparent;padding: 0px;justify-content: flex-start;width: auto;"
+                    (click)="dateSortDropDown = !dateSortDropDown">
+                    <span>
+                        Date
+                    </span>
+                    <span style="display: flex;align-items: center; height: 100%;">
+                        <mat-icon class="custom-icons-pos point"
+                            style="height: 18px;"
+                            *ngIf="!dateSortDropDown"
+                            (click)="dateSortDropDown = true;$event.stopPropagation(); nameSortDropDown = false; sharedOrCloudDropDown = false; gridListDropDown = false"
+                            aria-hidden="false"
+                            aria-label="Example arrow_drop_down icon">arrow_drop_down</mat-icon>
+                        <mat-icon style="height: 18px;"
+                            class="custom-icons-pos point"
+                            *ngIf="dateSortDropDown"
+                            (click)="dateSortDropDown = false;$event.stopPropagation();nameSortDropDown = false; sharedOrCloudDropDown = false; gridListDropDown = false"
+                            aria-hidden="false"
+                            aria-label="Example arrow_drop_up icon">arrow_drop_up</mat-icon>
+                    </span>
+                </button>
+
+                <div class="dropdown-menu dropdown-menu-right"
+                    [class.show]="dateSortDropDown"
+                    style="top: 120%; left: -125px;"
+                    aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item cstm-a point"
+                        [class.active_dp]="dateSort == 'asc'"
+                        (click)="dateSort = 'asc'; sortAttachments('date'); dateSortDropDown=false">
+                        Ascending
+                    </a>
+
+                    <a class="dropdown-item cstm-a point"
+                        [class.active_dp]="dateSort == 'desc'"
+                        (click)="dateSort = 'desc'; sortAttachments('date'); dateSortDropDown=false">
+                        Descending
+                    </a>
+
+                </div>
+            </div>
+
+
+
+            <div class="dropdown  dropright ml-5"
+                id="dateSort"
+                (clickOutside)="gridListDropDown = false"
+                [class.show]="gridListDropDown">
+
+                <button class="btn cloud-btn d-flex"
+                    style="background-color:transparent;padding: 0px;justify-content: flex-start; width: auto;"
+                    (click)="gridListDropDown = !gridListDropDown">
+                    <span style="min-width: 24px;">
+                        <ng-container *ngIf="gridList =='grid'">
+                            <img src="assets/media/icons/svg/message/big-items.svg">
+                        </ng-container>
+                        <ng-container *ngIf="gridList =='list'">
+                            <img src="assets/media/icons/svg/message/list.svg">
+                        </ng-container>
+                    </span>
+                    <span style="display: flex;align-items: center; height: 100%;">
+                        <mat-icon class="custom-icons-pos point"
+                            style="height: 18px;"
+                            *ngIf="!gridListDropDown"
+                            (click)="gridListDropDown = true;$event.stopPropagation(); nameSortDropDown = false; sharedOrCloudDropDown = false; dateSortDropDown = false"
+                            aria-hidden="false"
+                            aria-label="Example arrow_drop_down icon">arrow_drop_down</mat-icon>
+                        <mat-icon style="height: 18px;"
+                            class="custom-icons-pos point"
+                            *ngIf="gridListDropDown"
+                            (click)="gridListDropDown = false;$event.stopPropagation();nameSortDropDown = false; sharedOrCloudDropDown = false; dateSortDropDown = false"
+                            aria-hidden="false"
+                            aria-label="Example arrow_drop_up icon">arrow_drop_up</mat-icon>
+                    </span>
+                </button>
+
+                <div class="dropdown-menu dropdown-menu-left"
+                    [class.show]="gridListDropDown"
+                    style="top: 120%; left: -125px;"
+                    aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item cstm-a point"
+                        (click)="gridList = 'grid'; gridListDropDown=false">
+                        Grid
+                    </a>
+
+                    <a class="dropdown-item cstm-a point"
+                        (click)="gridList = 'list'; gridListDropDown=false">
+                        List
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- List Display -->
+
+    <div *ngIf="attachment.length && gridList=='list'"
+        class="mt-4">
+        <div class="d-flex pt-2"
+            *ngFor="let item of attachment; let i = index">
+
+            <div class="vc">
+                <mat-checkbox class="mr-3 mb-3"
+                    [(ngModel)]="item['selected']"></mat-checkbox>
+            </div>
+
+            <div class="img-file-disp mb-2 vc">
+                <div>
+                    <img *ngIf="item.media_type != 577"
+                        style="border-radius: 0px;"
+                        [src]="iconService.getIconForAttachment(item)"
+                        alt="">
+                </div>
+                <!-- <div *ngIf="item.media_type != 577" style="height: 100%; width: 100%;" class="vc">
+                    <div>File</div>
+                </div> -->
+                <img *ngIf="item.media_type == 577"
+                    [src]="item.original">
+            </div>
+
+            <!-- details -->
+            <div class="grow border-bottom pb-2 d-flex sb ml-3"
+                style="align-items: center;">
+                <div>
+                    <div matTooltip="{{item.title}}"
+                        class="l-name">{{item.title | nameTrim:17}}</div>
+                    <div *ngIf="item.media_type != 593"
+                        class="l-size">{{bytesToBigUnits(item.size)}}</div>
+                    <div *ngIf="item.media_type == 593"
+                        class="l-size">youtube</div>
+                </div>
+
+                <div class="d-flex"
+                    style="height: 100%;align-items: center;">
+                    <div class="vc"
+                        *ngIf="item['downloadProgress'] != undefined">
+                        <span><img style="height: 13px;"
+                                matTooltip="Cannot download youtube attachment"
+                                src="assets/media/icons/svg/message/download-bottom-1.svg"
+                                class="edit mr-2"></span>
+                        <span style="width: 45px; color: #4CAF50;"
+                            class="l-time">
+                            {{ item['downloadProgress'] }}%
+                        </span>
+                    </div>
+                    <div class="l-time mr-4">{{item['_time'] | date:'d MMM, y'}}</div>
+                    <div class="ml-5 mr-2">
+
+                        <ng-container *ngTemplateOutlet="menuTemplate; context:{file: item, menu:'menu', i:i}"></ng-container>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- GRID DIsplay -->
+
+    <div class="row mb-4"
+        *ngIf="attachment.length && gridList=='grid'">
+        <ng-container *ngFor="let file of attachment; let i = index">
+            <div class="col-3 mt-3">
+
+                <!-- IMAGE CONTAINER START -->
+
+                <ng-container *ngIf="file.media_type == 577; else noImage">
+                    <div #cont
+                        class="file-container test-fit"
+                        [class.tablet-contHeight]="innerWidth < 1025"
+                        (mouseover)="cont.hov = true"
+                        (mouseleave)="cont.hov = false" [ngStyle]="{'background-image': 'url(\'' + file.original + '\')'}">
+                        <!-- <img [src]="file.original"
+                            class="img-fit"> -->
+
+                        <mat-checkbox class="mr-2 mb-2 over-check"
+                            style="position: absolute; bottom: 0px; right: 0px; z-index: 3;"
+                            [(ngModel)]="file['selected']"></mat-checkbox>
+
+                        <div class="vc downloadStatus hov-back"
+                            *ngIf="file['downloadProgress'] != undefined">
+                            <span><img style="height: 18px;"
+                                    src="assets/media/icons/svg/Files/download-bottom-12.svg"
+                                    class="edit mr-2"></span>
+                            <span class="l-time"
+                                style=" color: white; font-size: 18px;">
+                                {{ file['downloadProgress'] }}%
+                            </span>
+                        </div>
+
+                        <div class="desktop-detail-image detail-image-hov"
+                            *ngIf="(innerWidth > 1024 && cont.hov) && file['downloadProgress'] == undefined">
+                            <div class="d-flex"
+                                style="justify-content: flex-end;">
+                                <div class="mt-2 mr-2 point"
+                                    *ngIf="file.uploadProgress == undefined || file.uploadProgress == 100"
+                                    (click)="downloadFile(file.original, file.title, file)">
+                                    <img src="assets/media/icons/svg/Files/download-bottom-12.svg">
+                                </div>
+                                <div class="mt-2 mr-2 point"
+                                    *ngIf="file.uploadProgress == undefined"
+                                    (click)="deleteExisting(file, 'old', i)">
+                                    <img src="../../../../../assets/media/icons/svg/Profile/whiteBin.svg">
+                                </div>
+                                <div *ngIf="file.uploadProgress != undefined"
+                                    style="cursor: not-allowed;"
+                                    class="mt-2 mr-2 point"
+                                    [matTooltip]="'this file is being processed, you can delete it after processing'">
+                                    <img src="../../../../../assets/media/icons/svg/Profile/whiteBin.svg">
+                                </div>
+                            </div>
+                            <div class="mb-2 mx-2">
+
+                                <div class="name"
+                                    matTooltip="{{file.title}}">
+                                    {{file.title | nameTrim:16}}
+                                </div>
+
+                                <div class="size">
+                                    {{bytesToBigUnits(file.size)}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="desktop-detail-image"
+                            *ngIf="(innerWidth < 1024) && file['downloadProgress'] == undefined">
+
+                            <!-- TODO -->
+                            <div class="d-flex flex-row-reverse">
+                                <ng-container *ngTemplateOutlet="menuTemplate; context:{file: file, menu:'menu2', i:i}"></ng-container>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tablet-detail"
+                        *ngIf="innerWidth < 1025">
+                        <div class="tabletName"
+                            matTooltip="{{file.title}}">
+                            {{file.title | nameTrim:12}}
+                        </div>
+                        <div class="tabletSize">
+                            {{bytesToBigUnits(file.size)}}
+                        </div>
+                    </div>
+                </ng-container>
+
+                <!-- IMAGE CONTAINER END -->
+
+                <ng-template #noImage>
+                    <div #cont
+                        class="file-container"
+                        [class.tablet-contHeight]="innerWidth < 1025"
+                        (mouseover)="cont.hov = true"
+                        (mouseleave)="cont.hov = false">
+
+                        <mat-checkbox class="mr-2 mb-2 over-check"
+                            style="position: absolute; bottom: 0px; right: 0px; z-index: 3;"
+                            [(ngModel)]="file['selected']"></mat-checkbox>
+
+                        <div class="desktop-detail-file file-detail"
+                            *ngIf="innerWidth > 1024"
+                            [class.hov-back]="cont.hov || file['downloadProgress'] != undefined">
+
+
+                            <div class="vc downloadStatus"
+                                *ngIf="file['downloadProgress'] != undefined">
+                                <span><img style="height: 18px;"
+                                        src="assets/media/icons/svg/Files/download-bottom-12.svg"
+                                        class="edit mr-2"></span>
+                                <span class="l-time"
+                                    style="color: white; font-size: 18px;">
+                                    {{ file['downloadProgress'] }}%
+                                </span>
+                            </div>
+
+                            <div class="d-flex"
+                                style="justify-content: space-between;">
+                                <div class="mt-2 ml-2">
+                                    <img [src]="iconService.getIconForAttachment(file)">
+                                </div>
+
+
+                                <div class="d-flex"
+                                    *ngIf="file['downloadProgress'] == undefined">
+                                    <div class="mt-2 mr-2 point"
+                                        *ngIf="file.uploadProgress == undefined || file.uploadProgress == 100"
+                                        [hidden]="!cont.hov"
+                                        (click)="downloadFile(file.original, file.title, file)">
+                                        <img src="assets/media/icons/svg/Files/download-bottom-12.svg">
+                                    </div>
+                                    <div class="mt-2 mr-2 point"
+                                        *ngIf="file.uploadProgress == undefined"
+                                        [hidden]="!cont.hov"
+                                        (click)="deleteExisting(file, 'old', i)">
+                                        <img src="../../../../../assets/media/icons/svg/Profile/whiteBin.svg">
+                                    </div>
+                                    <div class="mt-2 mr-2 point"
+                                        *ngIf="file.uploadProgress != undefined"
+                                        style="cursor: not-allowed;"
+                                        [matTooltip]="'this file is being processed, you can delete it after processing'"
+                                        [hidden]="!cont.hov">
+                                        <img src="../../../../../assets/media/icons/svg/Profile/whiteBin.svg">
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div class="mb-2 mx-2">
+
+                                <div class="name"
+                                    matTooltip="{{file.title}}"
+                                    [class.hov-col]="cont.hov">
+                                    {{file.title | nameTrim:16}}
+                                </div>
+                                <div class="size"
+                                    [class.hov-col2]="cont.hov">
+                                    {{bytesToBigUnits(file.size)}}
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="desktop-detail-file file-detail"
+                            *ngIf="innerWidth < 1025">
+
+                            <div class="vc downloadStatus hov-back"
+                                *ngIf="file['downloadProgress'] != undefined">
+                                <span><img style="height: 18px;"
+                                        src="assets/media/icons/svg/Files/download-bottom-12.svg"
+                                        class="edit mr-2"></span>
+                                <span class="l-time"
+                                    style=" color: white; font-size: 18px;">
+                                    {{ file['downloadProgress'] }}%
+                                </span>
+                            </div>
+                            <div class="d-flex"
+                                style="justify-content: space-between;">
+                                <div class="mt-2 ml-2">
+                                    <img [src]="iconService.getIconForAttachment(file)">
+                                </div>
+
+                                <ng-container *ngTemplateOutlet="menuTemplate; context:{file: file, menu:'menu', i:i}"></ng-container>
+
+
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="tablet-detail"
+                        *ngIf="innerWidth < 1025">
+                        <div class="tabletName"
+                            matTooltip="{{file.title}}">
+                            {{file.title | nameTrim:15}}
+                        </div>
+                        <div class="tabletSize">
+                            {{bytesToBigUnits(file.size)}}
+                        </div>
+                    </div>
+                </ng-template>
+            </div>
+        </ng-container>
+    </div>
+
+    <!-- GRID Display ends -->
+
+    <div class="mt-4">
+        <div *ngIf="loading"
+            style="justify-content: center;"
+            class="d-flex mb-4">
+            <mat-spinner diameter="40"></mat-spinner>
+        </div>
+    </div>
+
+    <div class="d-flex mt-2 mb-5 point"
+        style="justify-content: flex-end;">
+        <span (click)="fetchAttachment()"
+            *ngIf="loadMore && !loading">Load More...</span>
+    </div>
+
+</div>
+
+
+
+<!-- file menu template -->
+<ng-template #menuTemplate
+    let-file="file"
+    let-menu="menu"
+    let-i="i">
+    <div class="dropdown dropleft"
+        (clickOutside)="file['more'] = false"
+        [class.show]="file['more']">
+
+        <button class="btn  point mr-2 mt-2"
+            [attr.data-target]="'#'+file.attachment_id"
+            (click)="toggleMenu(file)"
+            style="background-color:transparent;padding: 0px;justify-content: flex-start; width: auto;">
+            <img [src]="'assets/media/icons/svg/Files/'+menu+'.svg'"
+                class="more">
+        </button>
+
+
+        <div class="dropdown-menu dropdown-menu-right"
+            [id]="file.attachment_id"
+            [class.show]="file['more']"
+            aria-labelledby="dropdownMenuLink">
+
+            <!-- youtube not youtube -->
+            <ng-container>
+                <a class="dropdown-item cstm-a disabled_lst"
+                    *ngIf="file.media_type == 593"
+                    (click)="item['more'] = false">
+                    <div class="license-icon point disabled_lst">
+                        <img matTooltip="Cannot download youtube attachment"
+                            src="assets/media/icons/svg/message/download-bottom-1.svg"
+                            class="edit">
+                    </div>
+
+                    <span class="more-txt ml-3 point disabled_lst">Download</span>
+                </a>
+
+                <a class="dropdown-item cstm-a"
+                    *ngIf="file.media_type != 593"
+                    (click)="file['more'] = false; downloadFile(file.original, file.title, file)">
+                    <div class="license-icon point">
+                        <img src="assets/media/icons/svg/message/download-bottom-1.svg"
+                            class="edit">
+                    </div>
+
+                    <span class="more-txt ml-3 point">Download</span>
+                </a>
+            </ng-container>
+
+
+            <a class="dropdown-item cstm-a"
+                *ngIf="file.uploadProgress != undefined"
+                style="cursor: not-allowed;"
+                [matTooltip]="'this file is being processed, you can delete it after processing'"
+                (click)="file['more'] = false">
+                <div class="license-icon point">
+                    <img matTooltip="delete file"
+                        src="assets/media/icons/svg/message/bin.svg"
+                        class="edit">
+                </div>
+
+                <span class="more-txt ml-3 point"
+                    style="color: #ef2a2a;">Delete</span>
+            </a>
+            <a class="dropdown-item cstm-a"
+                *ngIf="file.uploadProgress == undefined"
+                (click)="deleteExisting(file,'old', i); file['more'] = false">
+                <div class="license-icon point">
+                    <img matTooltip="delete file"
+                        src="assets/media/icons/svg/message/bin.svg"
+                        class="edit">
+                </div>
+
+                <span class="more-txt ml-3 point"
+                    style="color: #ef2a2a;">Delete</span>
+            </a>
+        </div>
+    </div>
+</ng-template>

@@ -1,0 +1,82 @@
+.Add-New-Card {
+    font-family: GothamRounded-Medium;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: -0.42px;
+    color: #002452;
+}
+
+.Please-add-a-valid-p {
+    font-family: GothamRounded-Book;
+    font-size: 14px;
+    line-height: 1.29;
+    letter-spacing: -0.5px;
+    color: #7d96b3;
+}
+
+div>label {
+    font-size: 14px;
+    color: #002452;
+}
+
+div>input {
+    font-size: 16px;
+    color: #002452;
+    border-radius: 6px;
+    border: solid 1px #e9edf3;
+    background-color: #ffffff;
+}
+
+.Three-digit-number-o {
+    font-family: GothamRounded-Book;
+    font-size: 14px;
+    line-height: 1.29;
+    letter-spacing: -0.5px;
+    color: #7d96b3;
+}
+
+.w-40 {
+    width: 47%;
+}
+
+.form-group {
+    margin-bottom: 13px !important;
+}
+
+.Select-value {
+    font-family: GothamRounded-Book;
+    font-size: 16px;
+    color: #002452;
+}
+
+::ng-deep{
+    .ng-select .ng-select-container{
+        border: 1px solid #e9edf3;
+    }
+
+    .ng-select .ng-select-container .ng-value-container .ng-placeholder {
+        color: #818592;
+        font-family: GothamRounded-Book;
+        font-size: 16px;
+    }
+
+    .ng-select.ng-select-focused:not(.ng-select-opened)>.ng-select-container {
+        border-color: #1565c0 !important;
+        box-shadow: none !important;
+    }
+
+    .ng-select.ng-select-single .ng-select-container {
+        height: 40px;
+    }
+
+    .text-danger {
+        color: #dc3545 !important;
+    }
+}
+
+.paymentIcon {
+    height: 31px;
+    position: absolute;
+    right: 1%;
+    top: 47%;
+}

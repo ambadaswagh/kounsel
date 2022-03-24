@@ -1,0 +1,85 @@
+<!-- begin:: Page -->
+<ng-container *ngIf="selfLayout !== 'blank'; else blankLayout">
+	<!-- begin:: Header Mobile -->
+	<!-- <kt-header-mobile></kt-header-mobile> -->
+	<!-- end:: Header Mobile -->
+
+	<div class="kt-grid kt-grid--hor kt-grid--root">
+		<!-- begin::Body -->
+		<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
+			<!-- begin:: Aside Left -->
+
+			<!-- *ngIf="asideDisplay" sanjay -->
+			<ng-container>
+				<button class="kt-aside-close"
+					id="kt_aside_close_btn"><i class="la la-close"></i></button>
+				<kt-aside-left></kt-aside-left>
+			</ng-container>
+			<!-- end:: Aside Left -->
+
+			<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper pt-0"
+				id="kt_wrapper">
+				<!-- begin:: Header -->
+				<!-- *ngIf="desktopHeaderDisplay" -->
+				<kt-header></kt-header>
+
+				<div class="d-flex top-account mt-3 mr-3 point" 
+					[routerLink]="['/account']">
+					<div class="name mr-2">Hi<ng-container *ngIf="userName">, {{userName}}</ng-container></div>
+					<div class="img-contain">
+						<img [src]="imageSrc"
+							alt="">
+					</div>
+				</div>
+				<!-- end:: Header -->
+
+				<!-- begin:: Content -->
+				<div class="kt-content kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor py-0"
+					id="kt_content"
+					[ngClass]="{'kt-content--fit-top': fitTop}">
+					<!-- begin:: Content Head -->
+					<kt-subheader *ngIf="subheaderDisplay"></kt-subheader>
+					<!-- end:: Content Head -->
+
+					<!-- begin:: Content Body -->
+					<!-- ktContentAnimate -->
+					<div class="kt-container kt-grid__item kt-grid__item--fluid px-0"
+						[ngClass]="{'kt-container--fluid': fluid}">
+						<router-outlet></router-outlet>
+					</div>
+					<!-- end:: Content Body -->
+				</div>
+				<!-- end:: Content -->
+
+				<kt-footer *ngIf="false"></kt-footer>
+			</div>
+		</div>
+		<!-- end:: Body -->
+
+		<kt-quick-panel></kt-quick-panel>
+		<kt-scroll-top></kt-scroll-top>
+		<kt-sticky-toolbar *ngIf="false"></kt-sticky-toolbar>
+	</div>
+</ng-container>
+<!-- end:: Page -->
+
+<ng-template #blankLayout>
+	<router-outlet></router-outlet>
+</ng-template>
+
+
+
+<!-- Modal -->
+<div class="modal"
+	id="registerTermConditionBase"
+	tabindex="-1"
+	role="dialog"
+	aria-labelledby="exampleModalCenterTitle"
+	aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered term-box"
+		role="document">
+		<div class="modal-content">
+			<kt-terms-condition (close)="closeTermCondition($event)"></kt-terms-condition>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,28 @@
+# Official framework image. Look for the different tagged releases at:
+# https://hub.docker.com/r/library/node/tags/
+# cooment
+image: node:12.18.0
+
+before_script:
+  - npm prune
+  - npm install
+  - npm install -g firebase-tools
+  - firebase use sandbox-10fb8 --token $FIREBASE_TOKEN
+  - export NODE_OPTIONS=--max_old_space_size=2048
+  - ./node_modules/.bin/ng build
+  #  - npm run build
+
+stages:
+  - deploy
+
+cache:
+  paths:
+    - node_modules/
+  key: "$CI_BUILD_REPO"
+
+deploy_to_firebase:
+  stage: deploy
+  only:
+    - deployment_test_0.0.4
+  script:
+    - firebase deploy -m "Pipeline $CI_PIPELINE_ID, committed by $CI_COMMIT_AUTHOR - $CI_COMMIT_MESSAGE" --token $FIREBASE_TOKEN

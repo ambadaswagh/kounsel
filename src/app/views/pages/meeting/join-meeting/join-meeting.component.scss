@@ -1,0 +1,157 @@
+* {
+    font-family: GothamRounded-Book;
+}
+
+.join-meeting-container {
+    max-width: 465px;
+
+    .join-meeting-heading {
+        font-family: GothamRounded-Medium;
+        font-size: 20px;
+        font-weight: 500;
+        letter-spacing: -0.42px;
+        color: #002452;
+    }
+}
+
+div>label {
+    font-size: 14px;
+    color: #002452;
+}
+
+div>input {
+    font-size: 16px;
+    color: #002452;
+    border-radius: 6px;
+    border: solid 1px #e9edf3;
+    background-color: #ffffff;
+}
+
+.pass-code {
+    input {
+        padding-left: 1.3rem;
+        width: 44px;
+    }
+}
+
+.join-options-heading {
+    font-family: GothamRounded-Medium;
+    font-size: 14px;
+    font-weight: 500;
+    color: #7d96b3;
+}
+
+
+// *************** Slider styles ****************
+.sld {
+    display: flex;
+    align-items: center;
+}
+
+
+
+.switch-container {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 22px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #e9edf3;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 1px;
+    bottom: 1px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: #1565c0;
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(28px);
+    -ms-transform: translateX(28px);
+    transform: translateX(28px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+// ************* slider ends *********
+
+.slid-label {
+    font-size: 14px;
+    color: #002452;
+}
+
+.room-detail {
+    font-size: 14px;
+    line-height: 1.36;
+    letter-spacing: 0.09px;
+    color: #1565c0;
+}
+
+
+// ************** right sidebar ******************
+
+.right-sideBar{
+    position: fixed;
+    top: 0;
+    z-index: 96;
+    right: 0;
+    bottom: 0;
+    background: #ffffff;
+    box-shadow: 0 2px 4px 0 rgba(0, 36, 82, 0.1);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    min-width: 350px;
+    max-width: 416px;
+}
+
+
+.dropShadowForTablet{
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    z-index: 89;
+    background-color: rgba(0, 36, 82, 0.4);
+}

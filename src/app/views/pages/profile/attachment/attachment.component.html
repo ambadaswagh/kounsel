@@ -1,0 +1,489 @@
+<div class="row max-width-web-view">
+    <div class="col-md-12">
+        <div class="tag-head d-flex align-items-center  mt-3">
+            <span>Profile</span>
+            <span>Attachments</span>
+        </div>
+        <div class="basic-profile mt-5">
+            <div class="sub-title">
+                <h5>Attachments</h5>
+            </div>
+            <div class="detail mt-4 mb-2">
+                Upload additional files that support the skills you’re offering as a counselor.
+            </div>
+
+            
+
+            <!-- File Drop Start -->
+            <!-- [disableClick]="true" -->
+            <div #drop
+                class="custom-dropzone mt-4 mb-4"
+                [disabled]="loadingOperation"
+                ngx-dropzone
+                [maxFileSize]="'5242880'"
+                (change)="onSelect($event)">
+                <ngx-dropzone-label>
+                    <div class="upload-body">
+
+                        <div class="my-5"
+                            *ngIf="loadingOperation">
+                            <div class="">
+                                <div class="spinner-border text-primary"
+                                    style="border-width: 0.15em !important;"
+                                    role="status">
+                                    <span class="sr-only">Uploading...</span>
+                                </div>
+                                <div class="upload-text">Uploading...</div>
+                            </div>
+                        </div>
+
+
+                        <!-- <img *ngIf="!loadingOperation"
+                                width="56px"
+                                (click)="drop.showFileSelector()"
+                                src="../../../../../assets/media/icons/svg/Profile/upload.svg"
+                                class="upload point"> -->
+
+                        <div *ngIf="!loadingOperation && innerWidth > 1024"
+                            class="upload-text">Click or drop files here to upload</div>
+                        <div *ngIf="!loadingOperation && innerWidth< 1025"
+                            class="upload-text">Click to upload</div>
+
+
+                        <div *ngIf="!loadingOperation"
+                            class="upload-text"
+                            style="margin-top: 10px;">or</div>
+
+                        <button *ngIf="!loadingOperation"
+                            type="button"
+                            (click)="selectFromCloud($event)"
+                            class="btn upload-btn px-4">Select From Cloud</button>
+
+                        <div class="upload-lim">Max 5 MB
+                            <br>
+                            Recommended size: 600 x 600 px</div>
+                    </div>
+                </ngx-dropzone-label>
+            </div>
+            <small *ngIf="fileSelectError"
+                style="color: red">{{fileSelectError}}</small>
+            <!-- File Drop Ends -->
+
+
+            <div *ngIf="newFiles.length" class="uploading-txt mt-5">Uploading</div>
+
+            <!-- New Files Starts -->
+            <div class="row">
+
+                <ng-container *ngFor="let file of newFiles; let i = index">
+                    <div class="col-4 mt-3"
+                        *ngIf="!file.deleted">
+
+                        <!-- IMAGE CONTAINER START -->
+
+                        <ng-container *ngIf="file.media_type == 577; else noImage">
+                            <div #cont
+                                class="file-container test-fit"
+                                [class.tablet-contHeight]="innerWidth < 1025"
+                                (mouseover)="cont.hov = true"
+                                (mouseleave)="cont.hov = false" [ngStyle]="{'background-image': 'url(\'' + file.original + '\')'}">
+                                <!-- <img [src]="file.original"
+                                    class="img-fit"> -->
+
+                                <div class="desktop-detail-image detail-image-hov"
+                                    *ngIf="(innerWidth > 1024 ) && (file.uploadProgress > -1 || cont.hov)">
+                                    <div class="d-flex"
+                                        style="justify-content: flex-end;">
+                                        <div class="mt-2 mr-2 point"
+                                            (click)="deleteRecent(i)">
+                                            <img src="../../../../../assets/media/icons/svg/Profile/whiteBin.svg">
+                                        </div>
+                                    </div>
+                                    <div class="mb-2 mx-2">
+
+                                        <div *ngIf="file.uploadProgress > -1"
+                                            [class.mb-2]="!cont.hov">
+                                            <mat-progress-bar class="example-margin"
+                                                [color]="'accent'"
+                                                [mode]="file.mode"
+                                                [value]="file.uploadProgress">
+                                            </mat-progress-bar>
+
+                                        </div>
+
+                                        <div class="name"
+                                            *ngIf="cont.hov"
+                                            matTooltip="{{file.title}}">
+                                            {{file.title | nameTrim}}
+                                        </div>
+
+                                        <div class="size"
+                                            *ngIf="cont.hov">
+                                            {{bytesToBigUnits(file.size)}}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="desktop-detail-image detail-image-hov"
+                                    *ngIf="innerWidth < 1025">
+
+                                    <div class="d-flex"
+                                        style="justify-content: flex-end;">
+                                        <div class="mt-2 mr-2 point"
+                                            (click)="deleteRecent(i)">
+                                            <img src="../../../../../assets/media/icons/svg/Profile/whiteBin.svg">
+                                        </div>
+
+                                    </div>
+
+                                    <div class="mb-4 mx-2">
+
+                                        <div *ngIf="file.uploadProgress > -1">
+                                            <mat-progress-bar class="example-margin"
+                                                [color]="'accent'"
+                                                [mode]="'determinate'"
+                                                [value]="file.uploadProgress">
+                                            </mat-progress-bar>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tablet-detail"
+                                *ngIf="innerWidth < 1025">
+                                <div class="tabletName"
+                                    matTooltip="{{file.title}}">
+                                    {{file.title | nameTrim}}
+                                </div>
+                                <div class="tabletSize">
+                                    {{bytesToBigUnits(file.size)}}
+                                </div>
+                            </div>
+                        </ng-container>
+
+                        <!-- IMAGE CONTAINER END -->
+
+                        <ng-template #noImage>
+                            <div #cont
+                                class="file-container"
+                                [class.tablet-contHeight]="innerWidth < 1025"
+                                (mouseover)="cont.hov = true"
+                                (mouseleave)="cont.hov = false">
+                                <div class="desktop-detail-file file-detail"
+                                    *ngIf="innerWidth > 1024"
+                                    [class.hov-back]="cont.hov || file.uploadProgress > -1">
+
+                                    <div class="d-flex"
+                                        style="justify-content: space-between;">
+                                        <div class="mt-2 ml-2">
+                                            <img [src]="iconService.getIconForAttachment(file)">
+                                        </div>
+                                        <div class="mt-2 mr-2 point"
+                                            [hidden]="!cont.hov"
+                                            (click)="deleteRecent(i)">
+                                            <img src="../../../../../assets/media/icons/svg/Profile/whiteBin.svg">
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2 mx-2">
+
+                                        <div *ngIf="file.uploadProgress > -1">
+                                            <mat-progress-bar class="example-margin"
+                                                [color]="'accent'"
+                                                [mode]="'determinate'"
+                                                [value]="file.uploadProgress">
+                                            </mat-progress-bar>
+                                        </div>
+
+                                        <div class="name"
+                                            *ngIf="file.uploadProgress == -1"
+                                            matTooltip="{{file.title}}"
+                                            [class.hov-col]="cont.hov">
+                                            {{file.title | nameTrim}}
+                                        </div>
+                                        <div class="size"
+                                            *ngIf="file.uploadProgress == -1"
+                                            [class.hov-col2]="cont.hov">
+                                            {{bytesToBigUnits(file.size)}}
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="desktop-detail-file file-detail"
+                                    [class.hov-back]="file.uploadProgress > -1"
+                                    *ngIf="innerWidth < 1025">
+
+                                    <div class="d-flex"
+                                        style="justify-content: space-between;">
+                                        <div class="mt-2 ml-2">
+                                            <img [src]="iconService.getIconForAttachment(file)">
+                                        </div>
+
+                                        <div class="mt-2 mr-2 point"
+                                            *ngIf="file.uploadProgress > -1"
+                                            (click)="deleteRecent(i)">
+                                            <img src="../../../../../assets/media/icons/svg/Profile/whiteBin.svg">
+                                        </div>
+
+                                        <div class="mt-2 mr-2 point"
+                                            *ngIf="file.uploadProgress < 0"
+                                            (click)="deleteRecent(i)">
+                                            <img src="../../../../../assets/media/icons/svg/Profile/bin.svg">
+                                        </div>
+
+
+
+                                    </div>
+
+                                    <div class="mb-4 mx-2">
+
+                                        <div *ngIf="file.uploadProgress > -1">
+                                            <mat-progress-bar class="example-margin"
+                                                [color]="'accent'"
+                                                [mode]="'determinate'"
+                                                [value]="file.uploadProgress">
+                                            </mat-progress-bar>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div class="tablet-detail"
+                                *ngIf="innerWidth < 1025">
+                                <div class="tabletName"
+                                    matTooltip="{{file.title}}">
+                                    {{file.title | nameTrim}}
+                                </div>
+                                <div class="tabletSize">
+                                    {{bytesToBigUnits(file.size)}}
+                                </div>
+                            </div>
+                        </ng-template>
+                    </div>
+                </ng-container>
+
+            </div>
+
+            <!-- [hidden]="loadingOperation" -->
+            <div class="mb-5"
+                *ngIf="haveFilesToUpload() && !uploading">
+                <div class="d-flex skill-buttons" style="margin-top: 1rem !important;">
+                    <button type="submit"
+                        (click)="submit()"
+                        class="btn btn-save mr-3">Save</button>
+                    <!-- <button type="button"
+                        [disabled]="uploading"
+                        (click)="cancel()"
+                        class="btn btn-cancel ml-10 cancel">Cancel</button> -->
+                </div>
+            </div>
+            <!-- New Files End -->
+
+            
+
+
+            <!-- existing Files Starts -->
+            <div class="recent mt-4 mb-3"
+                *ngIf="attachment.length">
+                Recent Uploads
+            </div>
+            <div class="row mb-4">
+                <ng-container *ngFor="let file of attachment; let i = index">
+                    <div class="col-4 mt-3">
+
+                        <!-- IMAGE CONTAINER START -->
+
+                        <ng-container *ngIf="file.media_type == 577; else noImage">
+                            <div #cont
+                                class="file-container test-fit"
+                                [class.tablet-contHeight]="innerWidth < 1025"
+                                (mouseover)="cont.hov = true"
+                                (mouseleave)="cont.hov = false" [ngStyle]="{'background-image': 'url(\'' + file.original + '\')'}">
+                                <!-- <img [src]="file.original"
+                                    class="img-fit"> -->
+
+                                <div class="desktop-detail-image detail-image-hov"
+                                    *ngIf="innerWidth > 1024 && cont.hov">
+                                    <div class="d-flex"
+                                        style="justify-content: flex-end;">
+                                        <div class="mt-2 mr-2 point"
+                                            *ngIf="file.uploadProgress == undefined"
+                                            (click)="deleteExisting(file, 'old', i)">
+                                            <img src="../../../../../assets/media/icons/svg/Profile/whiteBin.svg">
+                                        </div>
+                                        <div *ngIf="file.uploadProgress != undefined"
+                                            style="cursor: not-allowed;"
+                                            class="mt-2 mr-2 point"
+                                            [matTooltip]="'this file is being processed, you can delete it after processing'">
+                                            <img src="../../../../../assets/media/icons/svg/Profile/whiteBin.svg">
+                                        </div>
+                                    </div>
+                                    <div class="mb-2 mx-2">
+
+                                        <div class="name"
+                                            matTooltip="{{file.title}}">
+                                            {{file.title | nameTrim}}
+                                        </div>
+
+                                        <div class="size">
+                                            {{bytesToBigUnits(file.size)}}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="desktop-detail-image"
+                                    *ngIf="innerWidth < 1024">
+                                    <div class="d-flex"
+                                        style="justify-content: flex-end;">
+                                        <div class="mt-2 mr-2 point"
+                                            *ngIf="file.uploadProgress == undefined"
+                                            (click)="deleteExisting(file, 'old', i)">
+                                            <img src="../../../../../assets/media/icons/svg/Profile/whiteBin.svg">
+                                        </div>
+                                        <div *ngIf="file.uploadProgress != undefined"
+                                            style="cursor: not-allowed;"
+                                            class="mt-2 mr-2 point"
+                                            [matTooltip]="'this file is being processed, you can delete it after processing'">
+                                            <img src="../../../../../assets/media/icons/svg/Profile/whiteBin.svg">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tablet-detail"
+                                *ngIf="innerWidth < 1025">
+                                <div class="tabletName"
+                                    matTooltip="{{file.title}}">
+                                    {{file.title | nameTrim}}
+                                </div>
+                                <div class="tabletSize">
+                                    {{bytesToBigUnits(file.size)}}
+                                </div>
+                            </div>
+                        </ng-container>
+
+                        <!-- IMAGE CONTAINER END -->
+
+                        <ng-template #noImage>
+                            <div #cont
+                                class="file-container"
+                                [class.tablet-contHeight]="innerWidth < 1025"
+                                (mouseover)="cont.hov = true"
+                                (mouseleave)="cont.hov = false">
+                                <div class="desktop-detail-file file-detail"
+                                    *ngIf="innerWidth > 1024"
+                                    [class.hov-back]="cont.hov">
+
+                                    <div class="d-flex"
+                                        style="justify-content: space-between;">
+                                        <div class="mt-2 ml-2">
+                                            <img [src]="iconService.getIconForAttachment(file)">
+                                        </div>
+                                        <div class="mt-2 mr-2 point"
+                                            *ngIf="file.uploadProgress == undefined"
+                                            [hidden]="!cont.hov"
+                                            (click)="deleteExisting(file, 'old', i)">
+                                            <img src="../../../../../assets/media/icons/svg/Profile/whiteBin.svg">
+                                        </div>
+
+                                        <div class="mt-2 mr-2 point"
+                                            *ngIf="file.uploadProgress != undefined"
+                                            style="cursor: not-allowed;"
+                                            [matTooltip]="'this file is being processed, you can delete it after processing'"
+                                            [hidden]="!cont.hov">
+                                            <img src="../../../../../assets/media/icons/svg/Profile/whiteBin.svg">
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2 mx-2">
+
+                                        <div class="name"
+                                            matTooltip="{{file.title}}"
+                                            [class.hov-col]="cont.hov">
+                                            {{file.title | nameTrim}}
+                                        </div>
+                                        <div class="size"
+                                            [class.hov-col2]="cont.hov">
+                                            {{bytesToBigUnits(file.size)}}
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="desktop-detail-file file-detail"
+                                    *ngIf="innerWidth < 1025">
+
+                                    <div class="d-flex"
+                                        style="justify-content: space-between;">
+                                        <div class="mt-2 ml-2">
+                                            <img [src]="iconService.getIconForAttachment(file)">
+                                        </div>
+
+                                        <div class="mt-2 mr-2 point"
+                                            *ngIf="file.uploadProgress == undefined"
+                                            (click)="deleteExisting(file, 'old', i)">
+                                            <img src="../../../../../assets/media/icons/svg/Profile/bin.svg">
+                                        </div>
+
+                                        <div class="mt-2 mr-2 point"
+                                            *ngIf="file.uploadProgress != undefined"
+                                            style="cursor: not-allowed;"
+                                            [matTooltip]="'this file is being processed, you can delete it after processing'">
+                                            <img src="../../../../../assets/media/icons/svg/Profile/bin.svg">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="tablet-detail"
+                                *ngIf="innerWidth < 1025">
+                                <div class="tabletName"
+                                    matTooltip="{{file.title}}">
+                                    {{file.title | nameTrim}}
+                                </div>
+                                <div class="tabletSize">
+                                    {{bytesToBigUnits(file.size)}}
+                                </div>
+                            </div>
+                        </ng-template>
+                    </div>
+                </ng-container>
+            </div>
+            <!-- existing files Ends -->
+
+            <div *ngIf="loading && !loadMore"
+                style="justify-content: center;"
+                class="d-flex mb-4">
+                <div class="sidebarLoader"
+                    *ngIf="loading">
+                    <div class="spinner-border text-primary"
+                        role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex mb-5" *ngIf="loadMore"
+                style="flex-direction: row-reverse;">
+                <button (click)="fetchAttachment()"
+                    class="btn loadMoreButton"
+                    [class.dis]="loading || !loadMore"
+                    [disabled]="!loadMore || loading">Load More..</button>
+                <div style="flex: 1 1 auto; justify-content: center;" class="d-flex">
+                    <div class="sidebarLoader"
+                        *ngIf="loading">
+                        <div class="spinner-border text-primary"
+                            role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<kt-select-from-cloud *ngIf="cloudFileSelect" [forAttachment]="true" (close)="cloudSelectClosed($event)" ></kt-select-from-cloud>

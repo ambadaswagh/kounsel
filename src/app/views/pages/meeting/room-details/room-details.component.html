@@ -1,0 +1,81 @@
+<div id="roomDetailCont"
+    class="d-flex flex-column main-cont"
+    [class.hide]="displayParticipantDetail || showBillingMethod">
+
+    <div class="d-flex sb px-4 pb-3 room-detail-head">
+        <div class="Room-Details" translate="MEETING.roomDetails.title"></div>
+        <!-- <img src="assets/media/icons/svg/meeting/participants.svg" alt=""> -->
+    </div>
+
+    <perfect-scrollbar
+        (psYReachEnd)="handelScroll()">
+        
+
+        <kt-add-participant #addParticipant
+            ($selectBilling)="this.showBillingMethod = true;"
+            ($displayParticipantDetail)="displayParticipant()"></kt-add-participant>
+
+
+        <div class="mx-4 mt-5">
+            <div class="Existing-participant" translate="MEETING.roomDetails.existingParticipants"></div>
+            <div class="d-flex" style="margin-top: 10px"
+                *ngFor="let user of meeting.participants">
+                <div class="participant-img point"
+                    (click)="showParticipantDetail(user)">
+                    <img [src]="user.image_url">
+                </div>  
+                <div class="d-flex sb participant-info ml-3 point part-out" (click)="showParticipantDetail(user)">
+                    <div class="d-flex part-in">
+                        <div class="userName ">
+                            {{(user.name || translateService.instant('COMMON.unknown'))}}
+                            <!-- <span *ngIf="user.user_type != 0">
+                                    <span *ngIf="user.client == 2" class="client" >(client)</span>
+                                    <span *ngIf="user.client == 2" class="counselor">(counselor)</span>
+                                </span> -->
+                        </div>
+                        <div *ngIf="user.participant_type" class="userName-type  ml-2">
+                            <ng-container *ngIf="user.participant_type == pType.CLIENT">
+                                ({{translateService.instant('MEETING.common.paid')}})
+                            </ng-container>
+                            <ng-container *ngIf="user.participant_type == pType.COUNSELOR">
+                                ({{translateService.instant('MEETING.common.counselor')}})
+                            </ng-container>
+                            <ng-container *ngIf="user.participant_type == pType.GUEST">
+                                ({{translateService.instant('MEETING.common.free')}})
+                            </ng-container>
+                        </div>
+                    </div>
+
+                    <div>
+                        <img class="point"
+                            src="assets/media/icons/svg/meeting/menu.svg">
+                    </div>
+                </div>
+            </div>
+            <div class="vc ml-3 mt-3"
+                *ngIf="meeting.participantPagination.loading">
+                <div>
+                    <div class="vc">
+                        <mat-spinner diameter="40"></mat-spinner>
+                    </div>
+                    <div style="margin-left: 1rem;" translate="COMMON.loading"></div>
+                </div>
+            </div>
+
+        </div>
+    </perfect-scrollbar>
+
+    <div class="d-flex btn-grp mt-4 mx-4 mb-3 flex-row-reverse">
+        <button class="btn cancel h-100 w-50" type="cancel" (click)="close()" translate="COMMON.close" ></button>
+    </div>
+
+</div>
+
+
+
+<kt-participant-detail *ngIf="displayParticipantDetail"
+    ($back)="closeParticipantDetail($event)"></kt-participant-detail>
+<kt-billing-method
+    *ngIf="showBillingMethod"
+    ($back)="showBillingMethod = false"
+    ($billingStatus)="addParticipant.billingMethodSelected($event); showBillingMethod = false;"></kt-billing-method>

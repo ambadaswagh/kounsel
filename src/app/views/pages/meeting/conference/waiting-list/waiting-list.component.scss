@@ -1,0 +1,122 @@
+.waiting-list {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: calc(100% - 100px);
+    z-index: 1030;
+    background-color: #fff;
+    width: 30%;
+    min-width: 350px;
+    max-width: 416px;
+    margin: 0px;
+}
+
+.waiting-heading {
+    font-family: GothamRounded-Medium;
+    font-weight: 500;
+    letter-spacing: -0.42px;
+    color: #002452;
+    font-size: 20px;
+    margin-left: 24px;
+}
+
+.waiting-sub-heading {
+    font-family: GothamRounded-Book;
+    font-size: 14px;
+    line-height: 1.29;
+    letter-spacing: -0.5px;
+    color: #7d96b3;
+    margin-left: 24px;
+}
+
+.img-container {
+    height: 36px;
+    width: 36px;
+    border-radius: 8px;
+    background-color: #e9edf3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .image-present {
+        height: 36px;
+        width: 36px;
+        border-radius: 8px;
+    }
+}
+
+.name {
+    font-family: GothamRounded-Book;
+    font-size: 16px;
+    line-height: 1.25;
+    letter-spacing: -0.5px;
+    color: #002452;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.add {
+    font-family: GothamRounded-Book;
+    font-size: 14px;
+    line-height: 1.36;
+    letter-spacing: 0.09px;
+    color: #1565c0;
+}
+
+.btn {
+    font-family: GothamRounded-Medium;
+}
+
+.btn-add {
+    width: auto !important;
+    height: 36px !important;
+    padding: 0.375rem 0.75rem !important;
+}
+
+.cancel {
+    &:hover {
+        color: #002452;
+    }
+}
+
+.btn-grp{
+    padding: 24px;
+    padding-top: 12px;
+    button{
+        width: 100%;
+    }
+}
+
+.admit-button{
+    width: 62px !important;
+    height: 28px !important;
+    margin: 4px 4px 11px 1px;
+    padding: 8px 12px !important;
+    border-radius: 8px;
+    border: solid 1px #1565c0;
+    font-family: 'GothamRounded-Medium';
+    font-size: 12px;
+    font-weight: 500;
+    background-color: #fff;
+    color: #1565c0;
+    &:hover{
+        color: #1565c0;
+        border: solid 1px #1565c0;
+    }
+    margin-bottom: 0.5rem;
+}
+
+.reject-button{
+    font-family: 'GothamRounded-Medium';
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+    color: #1565c0;
+    background-color: #fff;
+    &:hover{
+        color: #1565c0;
+    }
+}

@@ -1,0 +1,762 @@
+<div class="kt-container-wrp h-100">
+    <div class=" d-flex mx-0 h-100">
+        <!-- left side -->
+        <!-- class="col-md-3 px-0 col-sm-4" -->
+        <div>
+            <div class="left-side h-100">
+                <div class=" d-flex align-items-center head _tab">
+                    <h4 class="Profile mt-3">Profile</h4>
+                    <div class="head-base-red ml-3 mt-3">
+                        <span class="{{ getProfileStatus().class }}">{{getProfileStatus().display}}</span>
+                    </div>
+                </div>
+                <div class="left-side-menu-list mt-5">
+                    <span class="sub-title"
+                        *ngIf="completed.size > 0">COMPLETED</span>
+                    <ul class="side-menu-ul mb-4"
+                        *ngIf="completed.size > 0">
+                        <li *ngIf="completed.has('basic-profile')">
+                            <a href="javascript:void(0);"
+                                class="d-flex align-items-center"
+                                [class.active]="isActiveLink('basic-profile')"
+                                (click)="activateLink('basic-profile')">
+                                <i class="mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24">
+                                        <g fill="none"
+                                            fill-rule="evenodd"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="1.5">
+                                            <path
+                                                d="M8.686 10.971c-.667-.273-1.418-.557-2.224-.869-.682-.264-.57-2.121-.268-2.468.973-1.1 1.45-2.582 1.31-4.072.084-.928-.218-1.85-.828-2.53-.61-.68-1.471-1.056-2.364-1.03-.894-.026-1.755.349-2.366 1.03-.61.68-.912 1.602-.829 2.53-.14 1.49.337 2.972 1.31 4.072.302.347.415 2.2-.267 2.468-.78.302-1.506.577-2.16.843M11.576 8.614L20.612 8.614M11.576 5.471L20.612 5.471M11.576 2.186L20.612 2.186"
+                                                transform="translate(1.6 7.746)" />
+                                        </g>
+                                    </svg>
+                                </i>
+                                <span>Basic Profile</span>
+                            </a>
+                        </li>
+                        <li *ngIf="completed.has('image-profile')">
+                            <a href="javascript:void(0);"
+                                class="d-flex align-items-center"
+                                [class.active]="isActiveLink('image-profile')"
+                                (click)="activateLink('image-profile'); selectCategory = false;">
+                                <i class="mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24">
+                                        <g fill="none"
+                                            fill-rule="evenodd"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="1.5"
+                                            transform="translate(4 3)">
+                                            <path
+                                                d="M15.23 17.308H1.386C.62 17.308 0 16.688 0 15.923V2.077C0 1.312.62.692 1.385.692H15.23c.764 0 1.384.62 1.384 1.385v13.846c0 .765-.62 1.385-1.384 1.385z" />
+                                            <circle cx="5.712"
+                                                cy="6.231"
+                                                r="2.077" />
+                                            <path
+                                                d="M16.615 14.192l-3.31-4.966c-.19-.286-.51-.46-.853-.463-.343-.004-.666.162-.863.443l-2.762 3.948-1.711-1.37c-.228-.181-.521-.259-.809-.214-.287.044-.543.208-.705.45l-3.525 5.288" />
+                                        </g>
+                                    </svg>
+
+                                </i>
+                                <span>Profile Image</span>
+                            </a>
+                        </li>
+                        <li *ngIf="completed.has('location')">
+                            <a href="javascript:void(0);"
+                                class="d-flex align-items-center"
+                                [class.active]="isActiveLink('location')"
+                                (click)="activateLink('location'); selectCategory = false;">
+                                <i class="mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24">
+                                        <g fill="none"
+                                            fill-rule="evenodd"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="1.5"
+                                            transform="translate(6 2)">
+                                            <circle cx="6.364"
+                                                cy="6.364"
+                                                r="1.818" />
+                                            <path
+                                                d="M6.364.455c3.442 0 6.231 2.79 6.231 6.232 0 2.923-4.492 10.168-5.849 12.288-.083.13-.227.21-.382.21s-.3-.08-.383-.21C4.625 16.855.13 9.612.13 6.687c0-1.653.657-3.238 1.826-4.407C3.125 1.111 4.71.455 6.364.455h0z" />
+                                        </g>
+                                    </svg>
+                                </i>
+                                <span>Location Info</span>
+                            </a>
+                        </li>
+                        <li *ngIf="completed.has('availability')">
+                            <a href="javascript:void(0);"
+                                class="d-flex align-items-center"
+                                [class.active]="isActiveLink('availability')"
+                                (click)="activateLink('availability'); selectCategory = false;">
+                                <i class="mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24">
+                                        <g fill="none"
+                                            fill-rule="evenodd"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="1.5"
+                                            transform="translate(3 3)">
+                                            <circle cx="8.999"
+                                                cy="9.001"
+                                                r="8.625" />
+                                            <path d="M9 4.876L9 9.001 13.5 13.126" />
+                                        </g>
+                                    </svg>
+                                </i>
+                                <span>Availability</span>
+                            </a>
+                        </li>
+                        <li *ngIf="completed.has('skills')">
+                            <a href="javascript:void(0);"
+                                class="d-flex align-items-center"
+                                [class.active]="isActiveLink('skills')"
+                                (click)="activateLink('skills'); selectCategory = false;">
+                                <i class="mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24">
+                                        <g fill="none"
+                                            fill-rule="evenodd"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="1.5"
+                                            transform="translate(3 2)">
+                                            <path d="M9.231 0.769L9.231 15.385" />
+                                            <circle cx="9.231"
+                                                cy="17.692"
+                                                r="2.308" />
+                                            <circle cx="15.385"
+                                                cy="11.538"
+                                                r="2.308" />
+                                            <circle cx="3.077"
+                                                cy="11.538"
+                                                r="2.308" />
+                                            <path d="M9.23 5.385h3.078c1.699 0 3.077 1.377 3.077 3.077v.769M9.23 5.385H6.155c-1.7 0-3.077 1.377-3.077 3.077v.769" />
+                                        </g>
+                                    </svg>
+                                </i>
+                                <span>Skills</span>
+                            </a>
+                        </li>
+                        <li *ngIf="completed.has('portfolio')">
+                            <a href="javascript:void(0);"
+                                class="d-flex align-items-center"
+                                [class.active]="isActiveLink('portfolio')"
+                                (click)="activateLink('portfolio'); selectCategory = false;">
+                                <i class="mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24">
+                                        <g fill="none"
+                                            fill-rule="evenodd"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="1.5">
+                                            <path
+                                                d="M17.625 13.68c0 .398-.336.72-.75.72H1.125c-.414 0-.75-.322-.75-.72V3.6c0-.398.336-.72.75-.72h15.75c.414 0 .75.322.75.72v10.08zM6 2.88L6.375.36c0-.199.168-.36.375-.36h4.5c.207 0 .375.161.375.36L12 2.88"
+                                                transform="translate(3 5)" />
+                                        </g>
+                                    </svg>
+
+                                </i>
+                                <span>Portfolio</span>
+                            </a>
+                        </li>
+                        <li *ngIf="completed.has('attachment')">
+                            <a href="javascript:void(0);"
+                                class="d-flex align-items-center"
+                                [class.active]="isActiveLink('attachment')"
+                                (click)="activateLink('attachment'); selectCategory = false;">
+                                <i class="mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24">
+                                        <path fill="none"
+                                            fill-rule="evenodd"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="1.5"
+                                            d="M8.348 14.737l7.222-7.09c.426-.436 1.059-.612 1.654-.46.595.153 1.06.61 1.216 1.194.155.585-.024 1.206-.468 1.624l-9.755 9.608c-1.327 1.303-3.479 1.303-4.806 0s-1.327-3.416 0-4.72L13.608 4.887c1.824-1.792 4.782-1.792 6.607 0 1.824 1.79 1.825 4.695 0 6.486l-7.22 7.092" />
+                                    </svg>
+                                </i>
+                                <span>Attachments</span>
+                            </a>
+                        </li>
+                        <li *ngIf="completed.has('keywords')">
+                            <a href="javascript:void(0);"
+                                class="d-flex align-items-center"
+                                [class.active]="isActiveLink('keywords')"
+                                (click)="activateLink('keywords'); selectCategory = false;">
+                                <i class="mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24">
+                                        <g fill="none"
+                                            fill-rule="evenodd"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="1.5"
+                                            transform="translate(2 2)">
+                                            <circle cx="4.583"
+                                                cy="15.417"
+                                                r="1.25" />
+                                            <path
+                                                d="M17.083.417L8.932 8.569c-2.555-1.322-5.692-.584-7.39 1.737-1.698 2.322-1.45 5.535.584 7.569s5.247 2.281 7.568.583c2.322-1.697 3.06-4.834 1.738-7.389l2.735-2.736h1.25v-1.25l.416-.416h1.25v-1.25L17.5 5h1.25V3.75l.833-.833v-2.5h-2.5z" />
+                                        </g>
+                                    </svg>
+                                </i>
+                                <span>Keywords</span>
+                            </a>
+                        </li>
+                        <li *ngIf="completed.has('description')">
+                            <a href="javascript:void(0);"
+                                class="d-flex align-items-center"
+                                [class.active]="isActiveLink('description')"
+                                (click)="activateLink('description'); selectCategory = false;">
+                                <i class="mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24">
+                                        <g fill="none"
+                                            fill-rule="evenodd"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="1.5">
+                                            <path
+                                                d="M7.083 19.583H1.25c-.46 0-.833-.373-.833-.833V1.25c0-.46.373-.833.833-.833h11.078c.22 0 .432.088.589.244l3.089 3.089c.156.156.244.368.244.59v2.743M19.067 12.6l-6.359 6.358-3.125.625.625-3.125 6.359-6.358c.33-.331.779-.517 1.246-.517.468 0 .917.186 1.247.517l.007.007c.33.33.517.779.517 1.246 0 .468-.186.917-.517 1.247z"
+                                                transform="translate(2 2)" />
+                                        </g>
+                                    </svg>
+                                </i>
+                                <span>Description</span>
+                            </a>
+                        </li>
+                        <li *ngIf="completed.has('license')">
+                            <a href="javascript:void(0);"
+                                class="d-flex align-items-center"
+                                [class.active]="isActiveLink('license')"
+                                (click)="activateLink('license'); selectCategory = false;">
+                                <i class="mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24">
+                                        <g fill="none"
+                                            fill-rule="evenodd"
+                                            stroke-width="1.5"
+                                            transform="translate(2 1)">
+                                            <path stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                d="M3.438 6.188L12.375 6.188M3.438 10.313L8.938 10.313M3.438 14.438L8.938 14.438M13.891 14.612L13.246 21.313 16.592 19.938 19.938 21.313 19.3 14.698M10.313 18.563h-8.25c-.76 0-1.376-.616-1.376-1.376V2.062c0-.759.616-1.375 1.375-1.375h9.671c.409 0 .796.182 1.057.496l2.702 3.247c.206.247.319.559.319.88v2.253" />
+                                            <circle cx="16.5"
+                                                cy="11.917"
+                                                r="3.667" />
+                                        </g>
+                                    </svg>
+                                </i>
+                                <span>Licence</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <span class="sub-title"
+                        *ngIf="incomplete.size > 0">INCOMPLETE</span>
+
+                    <ul class="side-menu-ul mb-4"
+                        *ngIf="incomplete.size > 0">
+                        <li *ngIf="incomplete.has('basic-profile')">
+                            <a href="javascript:void(0);"
+                                class="d-flex align-items-center "
+                                [class.active]="isActiveLink('basic-profile')"
+                                (click)="activateLink('basic-profile')">
+                                <i class="mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24">
+                                        <g fill="none"
+                                            fill-rule="evenodd"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="1.5">
+                                            <path
+                                                d="M8.686 10.971c-.667-.273-1.418-.557-2.224-.869-.682-.264-.57-2.121-.268-2.468.973-1.1 1.45-2.582 1.31-4.072.084-.928-.218-1.85-.828-2.53-.61-.68-1.471-1.056-2.364-1.03-.894-.026-1.755.349-2.366 1.03-.61.68-.912 1.602-.829 2.53-.14 1.49.337 2.972 1.31 4.072.302.347.415 2.2-.267 2.468-.78.302-1.506.577-2.16.843M11.576 8.614L20.612 8.614M11.576 5.471L20.612 5.471M11.576 2.186L20.612 2.186"
+                                                transform="translate(1.6 7.746)" />
+                                        </g>
+                                    </svg>
+                                </i>
+                                <span>Basic Profile</span>
+                            </a>
+                        </li>
+                        <li *ngIf="incomplete.has('image-profile')">
+                            <a href="javascript:void(0);"
+                                class="d-flex align-items-center"
+                                [class.active]="isActiveLink('image-profile')"
+                                (click)="activateLink('image-profile'); selectCategory = false;">
+                                <i class="mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24">
+                                        <g fill="none"
+                                            fill-rule="evenodd"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="1.5"
+                                            transform="translate(4 3)">
+                                            <path
+                                                d="M15.23 17.308H1.386C.62 17.308 0 16.688 0 15.923V2.077C0 1.312.62.692 1.385.692H15.23c.764 0 1.384.62 1.384 1.385v13.846c0 .765-.62 1.385-1.384 1.385z" />
+                                            <circle cx="5.712"
+                                                cy="6.231"
+                                                r="2.077" />
+                                            <path
+                                                d="M16.615 14.192l-3.31-4.966c-.19-.286-.51-.46-.853-.463-.343-.004-.666.162-.863.443l-2.762 3.948-1.711-1.37c-.228-.181-.521-.259-.809-.214-.287.044-.543.208-.705.45l-3.525 5.288" />
+                                        </g>
+                                    </svg>
+
+                                </i>
+                                <span>Profile Image</span>
+                            </a>
+                        </li>
+                        <li *ngIf="incomplete.has('location')">
+                            <a href="javascript:void(0);"
+                                class="d-flex align-items-center"
+                                [class.active]="isActiveLink('location')"
+                                (click)="activateLink('location'); selectCategory = false;">
+                                <i class="mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24">
+                                        <g fill="none"
+                                            fill-rule="evenodd"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="1.5"
+                                            transform="translate(6 2)">
+                                            <circle cx="6.364"
+                                                cy="6.364"
+                                                r="1.818" />
+                                            <path
+                                                d="M6.364.455c3.442 0 6.231 2.79 6.231 6.232 0 2.923-4.492 10.168-5.849 12.288-.083.13-.227.21-.382.21s-.3-.08-.383-.21C4.625 16.855.13 9.612.13 6.687c0-1.653.657-3.238 1.826-4.407C3.125 1.111 4.71.455 6.364.455h0z" />
+                                        </g>
+                                    </svg>
+                                </i>
+                                <span>Location Info</span>
+                            </a>
+                        </li>
+                        <li *ngIf="incomplete.has('availability')">
+                            <a href="javascript:void(0);"
+                                class="d-flex align-items-center"
+                                [class.active]="isActiveLink('availability')"
+                                (click)="activateLink('availability'); selectCategory = false;">
+                                <i class="mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24">
+                                        <g fill="none"
+                                            fill-rule="evenodd"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="1.5"
+                                            transform="translate(3 3)">
+                                            <circle cx="8.999"
+                                                cy="9.001"
+                                                r="8.625" />
+                                            <path d="M9 4.876L9 9.001 13.5 13.126" />
+                                        </g>
+                                    </svg>
+                                </i>
+                                <span>Availability</span>
+                            </a>
+                        </li>
+                        <li *ngIf="incomplete.has('skills')">
+                            <a href="javascript:void(0);"
+                                class="d-flex align-items-center"
+                                [class.active]="isActiveLink('skills')"
+                                (click)="activateLink('skills'); selectCategory = false;">
+                                <i class="mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24">
+                                        <g fill="none"
+                                            fill-rule="evenodd"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="1.5"
+                                            transform="translate(3 2)">
+                                            <path d="M9.231 0.769L9.231 15.385" />
+                                            <circle cx="9.231"
+                                                cy="17.692"
+                                                r="2.308" />
+                                            <circle cx="15.385"
+                                                cy="11.538"
+                                                r="2.308" />
+                                            <circle cx="3.077"
+                                                cy="11.538"
+                                                r="2.308" />
+                                            <path d="M9.23 5.385h3.078c1.699 0 3.077 1.377 3.077 3.077v.769M9.23 5.385H6.155c-1.7 0-3.077 1.377-3.077 3.077v.769" />
+                                        </g>
+                                    </svg>
+                                </i>
+                                <span>Skills</span>
+                            </a>
+                        </li>
+                        <li *ngIf="incomplete.has('portfolio')">
+                            <a href="javascript:void(0);"
+                                class="d-flex align-items-center"
+                                [class.active]="isActiveLink('portfolio')"
+                                (click)="activateLink('portfolio'); selectCategory = false;">
+                                <i class="mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24">
+                                        <g fill="none"
+                                            fill-rule="evenodd"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="1.5">
+                                            <path
+                                                d="M17.625 13.68c0 .398-.336.72-.75.72H1.125c-.414 0-.75-.322-.75-.72V3.6c0-.398.336-.72.75-.72h15.75c.414 0 .75.322.75.72v10.08zM6 2.88L6.375.36c0-.199.168-.36.375-.36h4.5c.207 0 .375.161.375.36L12 2.88"
+                                                transform="translate(3 5)" />
+                                        </g>
+                                    </svg>
+
+                                </i>
+                                <span>Portfolio</span>
+                            </a>
+                        </li>
+                        <li *ngIf="incomplete.has('attachment')">
+                            <a href="javascript:void(0);"
+                                class="d-flex align-items-center"
+                                [class.active]="isActiveLink('attachment')"
+                                (click)="activateLink('attachment'); selectCategory = false;">
+                                <i class="mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24">
+                                        <path fill="none"
+                                            fill-rule="evenodd"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="1.5"
+                                            d="M8.348 14.737l7.222-7.09c.426-.436 1.059-.612 1.654-.46.595.153 1.06.61 1.216 1.194.155.585-.024 1.206-.468 1.624l-9.755 9.608c-1.327 1.303-3.479 1.303-4.806 0s-1.327-3.416 0-4.72L13.608 4.887c1.824-1.792 4.782-1.792 6.607 0 1.824 1.79 1.825 4.695 0 6.486l-7.22 7.092" />
+                                    </svg>
+                                </i>
+                                <span>Attachments</span>
+                            </a>
+                        </li>
+                        <li *ngIf="incomplete.has('keywords')">
+                            <a href="javascript:void(0);"
+                                class="d-flex align-items-center"
+                                [class.active]="isActiveLink('keywords')"
+                                (click)="activateLink('keywords'); selectCategory = false;">
+                                <i class="mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24">
+                                        <g fill="none"
+                                            fill-rule="evenodd"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="1.5"
+                                            transform="translate(2 2)">
+                                            <circle cx="4.583"
+                                                cy="15.417"
+                                                r="1.25" />
+                                            <path
+                                                d="M17.083.417L8.932 8.569c-2.555-1.322-5.692-.584-7.39 1.737-1.698 2.322-1.45 5.535.584 7.569s5.247 2.281 7.568.583c2.322-1.697 3.06-4.834 1.738-7.389l2.735-2.736h1.25v-1.25l.416-.416h1.25v-1.25L17.5 5h1.25V3.75l.833-.833v-2.5h-2.5z" />
+                                        </g>
+                                    </svg>
+                                </i>
+                                <span>Keywords</span>
+                            </a>
+                        </li>
+                        <li *ngIf="incomplete.has('description')">
+                            <a href="javascript:void(0);"
+                                class="d-flex align-items-center"
+                                [class.active]="isActiveLink('description')"
+                                (click)="activateLink('description'); selectCategory = false;">
+                                <i class="mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24">
+                                        <g fill="none"
+                                            fill-rule="evenodd"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="1.5">
+                                            <path
+                                                d="M7.083 19.583H1.25c-.46 0-.833-.373-.833-.833V1.25c0-.46.373-.833.833-.833h11.078c.22 0 .432.088.589.244l3.089 3.089c.156.156.244.368.244.59v2.743M19.067 12.6l-6.359 6.358-3.125.625.625-3.125 6.359-6.358c.33-.331.779-.517 1.246-.517.468 0 .917.186 1.247.517l.007.007c.33.33.517.779.517 1.246 0 .468-.186.917-.517 1.247z"
+                                                transform="translate(2 2)" />
+                                        </g>
+                                    </svg>
+                                </i>
+                                <span>Description</span>
+                            </a>
+                        </li>
+                        <li *ngIf="incomplete.has('license')">
+                            <a href="javascript:void(0);"
+                                class="d-flex align-items-center"
+                                [class.active]="isActiveLink('license')"
+                                (click)="activateLink('license'); selectCategory = false;">
+                                <i class="mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24">
+                                        <g fill="none"
+                                            fill-rule="evenodd"
+                                            stroke-width="1.5"
+                                            transform="translate(2 1)">
+                                            <path stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                d="M3.438 6.188L12.375 6.188M3.438 10.313L8.938 10.313M3.438 14.438L8.938 14.438M13.891 14.612L13.246 21.313 16.592 19.938 19.938 21.313 19.3 14.698M10.313 18.563h-8.25c-.76 0-1.376-.616-1.376-1.376V2.062c0-.759.616-1.375 1.375-1.375h9.671c.409 0 .796.182 1.057.496l2.702 3.247c.206.247.319.559.319.88v2.253" />
+                                            <circle cx="16.5"
+                                                cy="11.917"
+                                                r="3.667" />
+                                        </g>
+                                    </svg>
+                                </i>
+                                <span>Licence</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="width-fix">
+
+            <div *ngIf="isActiveLink('basic-profile')"
+                class="middle-side h-100 ">
+                <div class="row max-width-web-view">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="tag-head d-flex align-items-center mt-3">
+                            <span>Profile</span>
+                            <span>Basic Profile</span>
+                        </div>
+                        <div class="basic-profile mt-5">
+                            <div class="sub-title">
+                                <h5>Basic Profile</h5>
+                            </div>
+                            <div class="basic-profile-form mt-3">
+                                <form [formGroup]="profileForm"
+                                    (ngSubmit)="onSubmit()">
+                                    <ul>
+                                        <li class="d-block mb-4">
+                                            <label>Full Name</label>
+                                            <input type="text"
+                                                class="form-control"
+                                                maxlength="32"
+                                                (input)="profileForm.controls.name.setValue($event.target.value.substr(0,32))"
+                                                formControlName="name" />
+                                            <small style="color: red; position: absolute;"
+                                                *ngIf="profileForm.controls.name.errors && profileForm.controls.name.touched">Name is required</small>
+                                        </li>
+                                        <li class="d-block mb-4">
+                                            <label>Profession</label>
+                                            <input type="text"
+                                                maxlength="32"
+                                                class="form-control"
+                                                (input)="profileForm.controls.profession.setValue($event.target.value.substr(0,32))"
+                                                formControlName="profession" />
+                                            <small style="color: red; position: absolute;"
+                                                *ngIf="profileForm.controls.profession.errors && profileForm.controls.profession.touched">Profession is required</small>
+                                        </li>
+                                        <li class="d-block mb-4">
+                                            <label>Category</label>
+                                            <input (focus)="openCategorySelection()"
+                                                placeholder="Select"
+                                                type="text"
+                                                readonly
+                                                class="form-control"
+                                                formControlName="category" />
+                                            <small style="color: red; position: absolute;"
+                                                *ngIf="profileForm.controls.category.errors && profileForm.controls.category.touched">Category is required</small>
+                                        </li>
+                                        <li class="d-block mb-4">
+                                            <label>Speak</label>
+                                            <ng-select [ngModelOptions]="{standalone: true}"
+                                                (focus)="languageDirty = true"
+                                                [(ngModel)]="selectedLanguage"
+                                                [searchFn]="customSearch"
+                                                class="custom"
+                                                [closeOnSelect]="false"
+                                                [items]="languages"
+                                                [clearSearchOnAdd]="true"
+                                                bindValue="name"
+                                                bindLabel="name"
+                                                [multiple]="true"
+                                                placeholder="Select">
+
+                                                <ng-template ng-label-tmp
+                                                    let-item="item">
+                                                    {{item.name}}
+                                                    <span *ngIf="!isLast(item.name)"
+                                                        style="margin-left: -5px">,</span>
+                                                </ng-template>
+                                                <ng-template ng-option-tmp
+                                                    let-item="item"
+                                                    let-item$="item$"
+                                                    let-index="index">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input [ngModelOptions]="{standalone: true}"
+                                                            id="item-{{index}}"
+                                                            type="checkbox"
+                                                            [ngModel]="item$.selected"
+                                                            class="custom-control-input">
+                                                        <label class="custom-control-label">{{item.name}}</label>
+                                                    </div>
+                                                </ng-template>
+                                            </ng-select>
+                                            <small style="color: red; position: absolute;"
+                                                *ngIf="selectedLanguage.length == 0 && languageDirty">Minimum 1 language is required</small>
+                                        </li>
+                                        <li class="d-block mb-4">
+                                            <label>Rate</label>
+                                            <input type="text"
+                                                (focus)="moveToEnd($event)"
+                                                (click)="rateDirty = true"
+                                                currencyMask
+                                                [options]="{ prefix: '$ ', thousands: ',', decimal: '.', allowNegative: false, nullable: false }"
+                                                placeholder="$0.00"
+                                                class="form-control"
+                                                formControlName="rate" />
+                                            <small style="color: red; position: absolute;"
+                                                *ngIf="(profileForm.controls.rate.errors || !profileForm.controls.rate.value) && rateDirty">
+                                                Rate must be between 0.01 to 1,000.00
+                                            </small>
+                                        </li>
+                                    </ul>
+                                    <div class="d-flex my-3">
+                                        <button type="submit"
+                                            [disabled]=" !profileChanged() || !profileForm.valid || selectedLanguage.length == 0 || !profileForm.controls.rate.value"
+                                            class="btn btn-save">Save</button>
+                                        <button type="button"
+                                            *ngIf="profileForm"
+                                            [disabled]="!profileChanged()"
+                                            class="btn btn-cancel ml-10"
+                                            (click)="revertProfile()">Cancel</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="isActiveLink('image-profile')"
+                class="middle-side h-100">
+                <kt-profile-image (update)="profileInfo.cover = $event;toggleToComplete('image-profile')"
+                    [coverMeta]="profileInfo.cover"></kt-profile-image>
+                <!-- <div class="row max-width-web-view">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="tag-head d-flex align-items-center">
+                            <span>Profile</span>
+                            <span>Image Profile</span>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+            <div *ngIf="isActiveLink('skills')"
+                class="middle-side h-100 ">
+                <kt-skills (skillCompleted)="toggleToComplete('skills')"
+                    (skillIncomplete)="toggleToIncomplete('skills')"
+                    [profile]="profileInfo.profile || {}"
+                    [skills]="profileInfo.profile?.skills || []"></kt-skills>
+            </div>
+
+            <div *ngIf="isActiveLink('portfolio')"
+                class="middle-side h-100">
+                <kt-portfolio (completed)="toggleToComplete('portfolio'); newProfile = false"
+                    (incomplete)="toggleToIncomplete('portfolio')"
+                    [newProfile]="newProfile"
+                    [profile]="profileInfo.profile || {}"></kt-portfolio>
+            </div>
+
+            <div *ngIf="isActiveLink('keywords')"
+                class="middle-side h-100">
+                <kt-keywords (complete)="toggleToComplete('keywords'); newProfile = false"
+                    [newProfile]="newProfile"
+                    (inComplete)="toggleToIncomplete('keywords')"
+                    [profile]="profileInfo.profile || {}"></kt-keywords>
+            </div>
+
+            <div *ngIf="isActiveLink('description')"
+                class="middle-side h-100">
+                <kt-description (complete)="toggleToComplete('description'); newProfile = false"
+                    [newProfile]="newProfile"
+                    (inComplete)="toggleToIncomplete('description')"
+                    [profile]="profileInfo.profile || {}"></kt-description>
+            </div>
+
+            <div *ngIf="isActiveLink('license')"
+                class="middle-side h-100">
+                <kt-license (complete)="toggleToComplete('license')"
+                    (inComplete)="toggleToIncomplete('license')"
+                    (onUpdate)="profileInfo.license = $event"
+                    [license]="profileInfo.license || {}"></kt-license>
+            </div>
+
+            <div *ngIf="isActiveLink('availability')"
+                class="middle-side h-100">
+                <kt-availability (complete)="toggleToComplete('availability')"
+                    (inComplete)="toggleToIncomplete('availability')"></kt-availability>
+            </div>
+
+            <div *ngIf="isActiveLink('location')"
+                class="middle-side h-100">
+                <kt-location (complete)="toggleToComplete('location'); newProfile = false"
+                    [newProfile]="newProfile"
+                    [profile]="profileInfo.profile || {}"></kt-location>
+            </div>
+
+
+
+            <div *ngIf="isActiveLink('attachment')"
+                class="middle-side h-100">
+                <kt-attachment (complete)="toggleToComplete('attachment')"
+                    [attachment]="profileInfo.attachment"
+                    (inComplete)="toggleToIncomplete('attachment')"></kt-attachment>
+            </div>
+
+
+
+        </div>
+
+    </div>
+</div>
+
+<kt-selection *ngIf="selectCategory && isActiveLink('basic-profile')"
+    [title]="'Select Category'"
+    [data]="categoryMetaData.data"
+    [selectedValue]="profileInfo?.profile?.category || ''"
+    (closeWihoutSave)="selectCategory = false"
+    (close)="saveCategory($event)"></kt-selection>

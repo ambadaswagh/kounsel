@@ -1,0 +1,16 @@
+<div class="p-4">
+    <div class="add-name" translate="MEETING.conference.addName.title"></div>
+
+    <div class="form-group mt-3">
+        <label translate="MEETING.conference.addName.name"></label>
+        <input type="text"
+            id="nameChangeInput"
+            required
+            class="form-control"
+            [(ngModel)]="name"
+            [placeholder]="translateService.instant('MEETING.conference.addName.name')">
+    </div>
+    <div class="d-flex btn-grp mt-4 mb-2">
+        <button [disabled]="!isValid()" (click)="continue()" class="btn btn-save" translate="MEETING.conference.addName.continue"></button>
+    </div>
+</div>

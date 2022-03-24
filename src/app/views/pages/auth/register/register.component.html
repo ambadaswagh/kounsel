@@ -1,0 +1,156 @@
+<!--begin::Body-->
+<div class="kt-login__body vc">
+	<div class="kt-login__form">
+		<div class="kt-login__title mb-5"
+			style="margin-top: 0px;">
+			<h3 class="signup">Sign Up to Kounsel</h3>
+		</div>
+
+		<div [hidden]="!signUpError"
+			class="alert alert-danger"
+			style="border-radius: 8px !important;
+					background-color: rgba(238,184,180,0.53) !important;
+					color: #ef2a2a !important;
+					border: none;"
+			role="alert">
+			<img src="./assets/media/icons/svg/login/error.svg">
+			<span class="alert-text ml-3"
+				style="color: #ef2a2a !important;
+					font-family: GothamRounded-Book; flex-grow: 0 !important">{{signUpError}}</span>
+		</div>
+
+		<div [hidden]="!successMessage"
+			class="alert alert-danger"
+			style="border-radius: 8px !important;
+			background-color: #E8F5E9 !important;
+			color: #009688 !important;
+			border: none;"
+			role="alert">
+			<span class="alert-text ml-3"
+				style="color: #009688 !important;
+				font-family: GothamRounded-Book;
+				flex-grow: 0 !important;">You have signed up successfully, verification link is sent please check your email. <a routerLink="/auth/login">login</a></span>
+				
+		</div>
+
+		<form class="kt-login__form " style="width: 100% !important; margin: auto"
+			(ngSubmit)="submit()"
+			[formGroup]="registerForm"
+			autocomplete="off">
+
+			<div class="form-group custom-margin">
+				<label class="_label">First name</label>
+				<input type="text"
+					class="form-control input_"
+					formControlName="firstName"
+					placeholder="First Name">
+				<small style="color: red; position: absolute;"
+					*ngIf="!registerForm.get('firstName').valid && !registerForm.get('firstName').pristine">
+					First name is required
+				</small>
+			</div>
+
+			<!-- <div class="form-group custom-margin">
+				<label class="_label">Last name</label>
+				<input type="text"
+					class="form-control input_"
+					formControlName="lastName"
+					placeholder="Last Name">
+			</div> -->
+
+			<div class="form-group custom-margin">
+				<label class="_label">Email</label>
+				<input type="email"
+					class="form-control input_"
+					formControlName="email"
+					placeholder="Email">
+				<small style="color: red; position: absolute;"
+					*ngIf="!registerForm.get('email').valid && !registerForm.get('email').pristine;">
+					Email is required and must be valid
+				</small>
+			</div>
+
+			<div class="form-group custom-margin">
+				<label class="_label">Password</label>
+				<div style="position: relative;">
+					<input [type]="showPassword?'text':'password'"
+						class="form-control input_"
+						formControlName="password"
+						placeholder="Password">
+					<span (click)="showPassword = !showPassword"
+						[class.fa-eye]="!showPassword"
+						[class.fa-eye-slash]="showPassword"
+						class="fa fa-fw field-icon eye_ point"></span>
+				</div>
+				<small style="color: red; position: absolute;"
+					*ngIf="!registerForm.get('password').valid && !registerForm.get('password').pristine;">
+					Password must be at least 6 character long
+				</small>
+			</div>
+
+			<div class="form-group mb-4">
+				<label class="_label">Confirm Password</label>
+				<div style="position: relative;">
+					<input type="password"
+						[type]="showConfirmPassword?'text':'password'"
+						class="form-control input_"
+						formControlName="confirmPassword"
+						placeholder="Confirm Password">
+
+					<span (click)="showConfirmPassword = !showConfirmPassword"
+						[class.fa-eye]="!showConfirmPassword"
+						[class.fa-eye-slash]="showConfirmPassword"
+						class="fa fa-fw field-icon eye_ point"></span>
+				</div>
+
+				<small style="color: red; position: absolute;"
+					*ngIf="registerForm.hasError('passwordMisMatch') && !registerForm.get('confirmPassword').pristine;">
+					Both passwords should match
+				</small>
+			</div>
+
+			<div class="d-flex signup_button">
+				<button class="btn btn-primary btn-elevate"
+					[ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}"
+					type="submit"
+					[disabled]="!registerForm.valid || loading">Sign Up</button>
+			</div>
+
+		</form>
+
+		<div class="kt-login__divider"
+			style="margin: 2rem 0 1.85rem 0;">
+			<div class="kt-divider">
+				<span></span>
+				<span class="d-inline-flex"
+					style="color: #b5b2c3; font-family: Poppins; font-size: 13px">OR</span>
+				<span></span>
+			</div>
+		</div>
+
+		<div class="kt-login__options">
+			<span class="btn kt-btn w-100"
+				(click)="googleSignUp()">
+				<img src="./assets/media/icons/svg/login/google-light.svg" />
+				<label class="g_sty">Google</label>
+			</span>
+
+		</div>
+
+	</div>
+</div>
+
+<!-- Modal -->
+<div class="modal"
+	id="registerTermCondition"
+	tabindex="-1"
+	role="dialog"
+	aria-labelledby="exampleModalCenterTitle"
+	aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered term-box "
+		role="document">
+		<div class="modal-content">
+			<kt-terms-condition (close)="closeTermCondition($event)"></kt-terms-condition>
+		</div>
+	</div>
+</div>

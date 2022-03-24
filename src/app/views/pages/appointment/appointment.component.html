@@ -1,0 +1,36 @@
+<div class="appointment-content">
+    <div class="calendar-wrapper">
+        <div class="calendar-wrapper-header">
+            <h2 class="appointment-title">Appointment</h2>
+            <!-- <select>
+                <option value="">July</option>
+            </select> -->
+            <div class="d-flex p-1" style="justify-content: space-between;margin-right: 10px;">
+                <div style="display: flex;">
+                    <ng-select class="custom-ng-dropdown" [(ngModel)]="selectedMonth" [closeOnSelect]='true'
+                        (change)="calendarDurationSelection($event)" bindLabel="name" bindValue="value"
+                        [items]="monthList"></ng-select>
+                    <button type="button" class="btn btn-default btn-sm today-btn" data-action="move-today"
+                        (click)="today()">Today</button>
+                    <button type="button" class="btn btn-default btn-sm  back-arrow-btn" (click)="prev()">
+                        <img src="../../../../assets/media/appointment/calendar/prev.svg">
+                    </button>
+                    <button type="button" class="btn btn-default btn-sm forward-arrow-btn" (click)="next()">
+                        <img src="../../../../assets/media/appointment/calendar/next.svg">
+                    </button>
+                </div>
+
+                <div>
+                    <ng-select class="custom-ng-dropdown" [(ngModel)]="selectedDuration" [closeOnSelect]='true'
+                        (change)="calendarDurationSelection($event)" bindLabel="name" bindValue="value"
+                        [items]="durationList"></ng-select>
+                </div>
+            </div>
+        </div>
+
+        <div id="calendar" class="calendar-1"></div>
+    </div>
+    <kt-appointment-details [appointmentDetail]="appointmentDetail" *ngIf="appointmentDetail"></kt-appointment-details>
+        
+    <kt-book-appointment [bookAppointment]="bookAppointment" *ngIf="bookAppointment"></kt-book-appointment>
+</div>

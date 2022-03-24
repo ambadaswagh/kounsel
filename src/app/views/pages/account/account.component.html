@@ -1,0 +1,386 @@
+<div class="kt-container-wrp h-100">
+    <div class=" d-flex mx-0 h-100">
+        <!-- left side -->
+        <!-- class="col-md-3 px-0 col-sm-4" -->
+        <div>
+            <div class="left-side h-100">
+                <div class="head d-flex align-items-center">
+                    <h4 class="Profile" translate="ACCOUNT.title"></h4>
+                </div>
+                <div class="left-side-menu-list mt-5">
+
+                    <ul class="side-menu-ul mb-4">
+                        <li>
+                            <a class="d-flex align-items-center active"
+                                href="javascript:void(0);">
+                                <i class="mr-3">
+                                    <img alt=""
+                                        src="assets/media/icons/svg/Account/account.svg">
+                                </i>
+                                <span translate="ACCOUNT.title"></span>
+                            </a>
+                        </li>
+                        <!-- <li>
+                            <a class="d-flex align-items-center" href="javascript:void(0);">
+                                <i class="mr-3">
+                                    <img alt="" src="assets/media/icons/svg/Account/get-paid.svg">
+                                </i>
+                                <span>Get Paid</span>
+                            </a>
+                        </li> -->
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <!-- MAIN CONTENT STARTS -->
+        <!-- right side -->
+        <!-- class="col-md-9 px-0 col-sm-8" -->
+
+
+        <div class="d-flex flex-row w-100">
+            <div class="w-100">
+
+                <div class="middle-side h-100 ">
+                    <div class="row max-width-web-view">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="tag-head d-flex align-items-center">
+                                <div class="profiles d-flex flex-row">
+                                    <div class="profile-pic d-flex flex-column">
+                                        <div class="image">
+                                            <img [src]="imageURL"
+                                                alt="./assets/media/users/100_1.jpg"
+                                                class="profileImage">
+                                        </div>
+                                        <span (click)="imageEditing = !imageEditing;" class="change-image point" translate="ACCOUNT.changeImage"></span>
+                                    </div>
+                                    <div class="online-status d-flex flex-column">
+                                        <span class="status border-0" translate="ACCOUNT.status"></span>
+                                        <span class="online border-0">{{getAccountStatus()}}</span>
+                                        <span class="rating border-0" translate="ACCOUNT.rating"></span>
+                                        <div class="rating-star d-flex flex-row">
+                                            <div class="star d-flex flex-row mr-3">
+                                                <img *ngFor="let _ of getRating()"
+                                                    src="assets/media/icons/svg/Account/star.svg">
+                                                <img *ngFor="let _ of getNotRated()"
+                                                    src="assets/media/icons/svg/Account/star-copy-4.svg">
+                                            </div>
+                                            <span class="review-text">
+                                                {{accountInfo.account.review_count || 0}}
+                                                {{ translate.instant('ACCOUNT.reviews') }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="basic-profile mt-5">
+                                <div class="basic-profile-form mt-3">
+                                    <form [formGroup]="accountForm">
+                                        <ul>
+                                            <li class="d-block margin-bottom24">
+                                                <label translate="ACCOUNT.fullName"></label>
+                                                <input [placeholder]="translate.instant('ACCOUNT.enterName')"
+                                                    readonly
+                                                    class="form-control"
+                                                    formControlName="name"
+                                                    type="text" />
+                                            </li>
+                                            <li class="d-block margin-bottom24">
+                                                <label translate="ACCOUNT.email"></label>
+                                                <div class="email-icon">
+                                                    <input [placeholder]="translate.instant('ACCOUNT.enterEmail')"
+                                                        readonly
+                                                        class="form-control"
+                                                        formControlName="email"
+                                                        type="email">
+                                                    <img alt=""
+                                                        *ngIf="accountInfo.account.email_verified == 10"
+                                                        class="icon"
+                                                        src="assets/media/icons/svg/Account/check-circle-1-1.svg">
+                                                </div>
+                                            </li>
+                                            <li class="d-block margin-bottom24">
+                                                <label translate="ACCOUNT.card"></label>
+                                                <input [placeholder]="translate.instant('ACCOUNT.enterCard')"
+                                                    readonly
+                                                    class="form-control"
+                                                    type="text" />
+                                            </li>
+                                            <li class="d-block margin-bottom24">
+                                                <label translate="ACCOUNT.bank"></label>
+                                                <input [placeholder]="translate.instant('ACCOUNT.enterBank')"
+                                                    readonly
+                                                    class="form-control"
+                                                    type="text" />
+                                            </li>
+                                            <li class="d-block margin-bottom24">
+                                                <label translate="ACCOUNT.phoneNumber"></label>
+                                                <input [placeholder]="translate.instant('ACCOUNT.enterPhone')"
+                                                    readonly
+                                                    class="form-control"
+                                                    formControlName="phone"
+                                                    type="text" />
+                                            </li>
+                                            <li class="d-block margin-bottom24">
+                                                <label class="connectedWith" translate="ACCOUNT.connectedWith"></label>
+
+                                                <div class="d-flex flex-row"
+                                                    [class._tablet]="innerWidth < 1025">
+                                                    <div class="margin-right8 d-flex flex-row connected-button">
+                                                        <span class="icon">
+                                                            <img alt=""
+                                                                src="assets/media/icons/svg/Account/facebook.svg">
+                                                        </span>
+                                                        <span *ngIf="getLoggedInMethod() == 'facebook';else nofb"
+                                                            class="nannie-moreno"> {{accountInfo.account.name}} </span>
+                                                        <ng-template #nofb>
+                                                            <span class="nannie-moreno" translate="ACCOUNT.facebook"></span>
+                                                        </ng-template>
+
+                                                        <span class="icon">
+                                                            <img alt=""
+                                                                *ngIf="getLoggedInMethod() == 'facebook'"
+                                                                src="assets/media/icons/svg/Account/check-circle-1-1.svg">
+
+                                                            <img src="assets/media/icons/svg/Account/group-18.svg"
+                                                                *ngIf="getLoggedInMethod() != 'facebook'"
+                                                                alt="">
+
+                                                        </span>
+                                                    </div>
+
+                                                    <div class="margin-left8 d-flex flex-row connected-button">
+                                                        <span class="icon">
+                                                            <img height="18"
+                                                                width="18"
+                                                                src="assets/media/icons/svg/Account/google-icon.svg"
+                                                                alt="">
+                                                        </span>
+                                                        <span *ngIf="getLoggedInMethod() == 'google';else noGO"
+                                                            class="nannie-moreno"> {{accountInfo.account.name}} </span>
+                                                        <ng-template #noGO>
+                                                            <span class="google" translate="ACCOUNT.google"></span>
+                                                        </ng-template>
+                                                        <span class="icon">
+                                                            <img alt=""
+                                                                *ngIf="getLoggedInMethod() == 'google'"
+                                                                src="assets/media/icons/svg/Account/check-circle-1-1.svg">
+
+                                                            <img src="assets/media/icons/svg/Account/group-18.svg"
+                                                                *ngIf="getLoggedInMethod() != 'google'"
+                                                                alt="">
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <div class="d-flex flex-row mt-5">
+                                            <div class="d-flex flex-row sign-out-button">
+                                                <img src="assets/media/icons/svg/Account/logout-1-1.svg"
+                                                    alt="">
+                                                <span class="sign-out"
+                                                    (click)="signOut()" translate="ACCOUNT.signOut"></span>
+                                            </div>
+                                            <!-- <div class="d-flex flex-row delete" (click)="deleteAccount()">
+                                                <img src="assets/media/icons/svg/Account/bin-1.svg" alt="">
+                                                <span class="delete-account">Delete Account</span>
+                                            </div> -->
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div>
+                <div class="right-side d-flex flex-column h-100">
+                    <span class="phone-number">Phone Number</span>
+                    <form>
+                        <ul>
+                            <li class="d-block margin-bottom24">
+                                <label>Phone Number</label>
+                                <div class="d-flex flex-row">
+                                    <input class="form-control country-codes" type="text"/>
+                                    <input class="form-control" type="text"/>
+                                </div>
+                            </li>
+                        </ul>
+                    </form>
+                    <div class="d-flex flex-column verification-number">
+                        <span class="verification-code-text">Verification Code</span>
+                        <span class="verification-code-sub-text">We are sending you a sms with your phone verification code. Please enter the verification code here</span>
+                        <form>
+                            <ul>
+                                <li class="d-block margin-bottom24">
+                                    <label>Code</label>
+                                    <div class="d-flex flex-row">
+                                        <input class="form-control otp" type="text"/>
+                                        <input class="form-control otp" type="text"/>
+                                        <input class="form-control otp" type="text"/>
+                                        <input class="form-control otp" type="text"/>
+                                        <input class="form-control otp" type="text"/>
+                                        <input class="form-control otp" type="text"/>
+                                    </div>
+                                </li>
+                            </ul>
+                        </form>
+                        <div class="d-flex flex-row all-button">
+                            <button class="resend">
+                                <svg class="resend-icon" height="14" viewBox="0 0 14 14" width="14"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <g fill="none" fill-rule="evenodd" opacity=".405" stroke="#FFF"
+                                       stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                       transform="translate(1)">
+                                        <circle cx="6.25" cy="6.75" r="6"/>
+                                        <path d="M8.902 6.75L6.25 6.75 6.25 4.098"/>
+                                    </g>
+                                </svg>
+                                Resend in 60s
+                            </button>
+                            <button class="submit">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>
+
+
+<div *ngIf="imageEditing"
+    class="select-right-sideBar pt-5"
+    [class.tablet-width]="innerWidth < 1025">
+
+
+
+    <div class="select-head" translate="IMAGE.changeImage"></div>
+
+    <perfect-scrollbar id="accountImageSelect" [config]="{}">
+        <div style="flex: 1 1 auto;margin-left: 24px; margin-right: 24px;">
+
+            <div class="dead-center">
+                <!-- [disableClick]="true" -->
+                <div #drop
+                    class="custom-dropzone"
+                    [disabled]="loadingOperation"
+                    [multiple]="false"
+                    ngx-dropzone
+                    [maxFileSize]="'5242880'"
+                    [accept]="'image/*'"
+                    (change)="onSelect($event)">
+                    <ngx-dropzone-label>
+                        <div class="upload-body">
+
+                            <div class=""
+                                *ngIf="loadingOperation">
+                                <div class="d-flex flex-column justify-content-center align-items-center loading-container">
+                                    <mat-spinner diameter="36"></mat-spinner>
+                                    <div class="upload-text uploading" translate="IMAGE.uploading"></div>
+                                </div>
+                            </div>
+
+
+                            <img *ngIf="!loadingOperation"
+                                width="56px"
+                                src="../../../../../assets/media/icons/svg/Profile/upload.svg"
+                                class="upload point">
+
+                            <div *ngIf="!loadingOperation && innerWidth > 1024"
+                                class="upload-text" style="margin-top: 24px;" translate="IMAGE.dropFiles"></div>
+                            <div *ngIf="!loadingOperation && innerWidth < 1025"
+                                class="upload-text" translate="IMAGE.clickToUpload" ></div>
+                            <div *ngIf="!loadingOperation"
+                                class="upload-text or-txt">or</div>
+
+                            <button *ngIf="!loadingOperation"
+                                type="button"
+                                (click)="selectFromCloud($event)"
+                                class="btn upload-btn px-4" style="margin-top: 12px;" translate="IMAGE.selectFromCloud"></button>
+
+                            <div class="upload-lim" >{{translate.instant('IMAGE.maxFiveMb')}}
+                                <br>
+                                {{translate.instant('IMAGE.dimensionExample')}}</div>
+                        </div>
+                    </ngx-dropzone-label>
+                </div>
+            </div>
+            <div class="mx-5 dead-center">
+                <small *ngIf="uploadErrorMessage"
+                    style="color: red">{{uploadErrorMessage}}</small>
+            </div>
+
+            <div class="dead-center mt-4"
+                *ngIf="editImageUrl"
+                [hidden]="loadingOperation">
+                <div>
+                    <div id="cropper"></div>
+                    <!-- <img src="{{editImageUrl}}"
+                        id="cropper"> -->
+                </div>
+            </div>
+
+            <div class="dead-center mb-2"
+                *ngIf="editImageUrl"
+                [hidden]="loadingOperation">
+                <div 
+                    class="d-flex w-100">
+                    <div class="dead-center">
+                        <div class="zoomBtn dead-center point"
+                            (click)="zoomOut()">
+                            <img src="../../../../../assets/media/icons/svg/Profile/cloud-image-1-copy-3.svg">
+                        </div>
+                    </div>
+                    <!-- (change)="onZoomChange($event)" -->
+                    <div style="flex: 1 1 auto;"
+                        class="mx-3"
+                        *ngIf="zoomLoaded">
+                        <mat-slider #slide
+                            style="width: 100%;"
+                            [max]="1.5"
+                            [min]="minZoom"
+                            [step]="0.05"
+                            [value]="zoom"
+                            (input)="onZoomChange($event)">
+                        </mat-slider>
+                    </div>
+                    <div class="dead-center">
+                        <div class="zoomBtn dead-center point"
+                            (click)="zoomIn()">
+                            <img src="../../../../../assets/media/icons/svg/Profile/cloud-image-1-copy-4.svg">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </perfect-scrollbar>
+
+    <div class="dead-center right-sidebar-button-container"
+        [hidden]="loadingOperation">
+        <div class="d-flex skill-buttons w-100">
+            <button type="submit"
+                [disabled]="!(editImageUrl && zoomLoaded)"
+                (click)="submit()"
+                class="btn btn-save mr-3 flex-fill">Save</button>
+            <button type="button"
+                (click)="cancel()"
+                class="btn btn-cancel ml-10 cancel flex-fill">Cancel</button>
+        </div>
+    </div>
+
+</div>
+
+<div *ngIf="imageEditing && !cloudFileSelect"
+    (click)="cancel()"
+    [class.dropShadowForTablet]="innerWidth < 1025">
+</div>
+
+<kt-select-from-cloud [imageOnly]="true" [multiple]="false" *ngIf="imageEditing && cloudFileSelect" (close)="cloudSelectClosed($event)" >
+</kt-select-from-cloud>

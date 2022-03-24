@@ -1,0 +1,92 @@
+<div class="row max-width-web-view">
+    <div class="col-md-12">
+        <div class="tag-head d-flex align-items-center  mt-3">
+            <span>Settings</span>
+            <span>Notification</span>
+        </div>
+        <div class="basic-profile mt-5">
+            <div class="sub-title">
+                <h5>Notification</h5>
+            </div>
+
+
+            <div class="d-flex vp mt-4 w-100">
+                <div>
+                    <div class="txt">Event</div>
+                    <div class="subtxt">Set time limits for apps</div>
+                </div>
+
+                <div class="col-3 sld switch-container">
+                    <label class="switch">
+                        <input type="checkbox"
+                            [ngModel]="info.notification_new_event"
+                            (click)="toggleInfo('notification_new_event')">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="d-flex vp mt-4 w-100">
+                <div>
+                    <div class="txt">Event Status Update</div>
+                    <div class="subtxt">Set time limits for apps</div>
+                </div>
+
+                <div class="col-3 sld switch-container">
+                    <label class="switch">
+                        <input type="checkbox"
+                            [ngModel]="info.notification_event_status"
+                            (click)="toggleInfo('notification_event_status')">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="d-flex vp mt-4 w-100">
+                <div>
+                    <div class="txt">Payment Received</div>
+                    <div class="subtxt">Set time limits for apps</div>
+                </div>
+
+                <div class="col-3 sld switch-container">
+                    <label class="switch">
+                        <input type="checkbox"
+                            [ngModel]="info.notification_payment"
+                            (click)="toggleInfo('notification_payment')">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="d-flex vp mt-4 w-100">
+                <div>
+                    <div class="txt">Message</div>
+                    <div class="subtxt">Set time limits for apps</div>
+                </div>
+
+                <div class="col-3 sld switch-container">
+                    <label class="switch">
+                        <input type="checkbox"
+                            [ngModel]="info.notification_message"
+                            (click)="toggleInfo('notification_message')">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="d-flex vp mt-4 w-100 border-0">
+                <div class="txt">File</div>
+                <div class="col-3 sld switch-container">
+                    <label class="switch">
+                        <input type="checkbox"
+                            [ngModel]="info.notification_file"
+                            (click)="toggleInfo('notification_file')">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>

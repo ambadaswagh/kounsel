@@ -1,0 +1,291 @@
+<div id="gridContainer"
+    (resize)="handelResize()"
+    [style.height]="gridHeight()"
+    class="w-100 d-flex flex-wrap justify-content-center"
+    [class.hide]="amIWaiting || screenBeingShared || connecting || reconnecting">
+
+    <ng-container *ngFor="let tileId of tileIds;let idx = index">
+        <!-- (click)="addTest()" -->
+        <div class="video-container justify-content-center align-items-center d-flex w-100"
+            [style.height]="minHeight"
+            [style.maxWidth]="minWidth"
+            style="position: relative;">
+            <video class="h-100 w-100" [style.background]="bgShades[idx%7]"
+                [id]="tileId"></video>
+            <ng-container *ngIf="!tileVideoState[tileId] || !videoIn">
+                <div class="w-100 h-100 d-flex justify-content-center align-items-center placeholder flex-column"
+                    [style.background]="bgShades[idx%7]"
+                    style="position: absolute;">
+                    <img *ngIf="attendeeAVStatusMap[tileId] && attendeeAVStatusMap[tileId].image_url"
+                        [src]="attendeeAVStatusMap[tileId].image_url"
+                        [style.height]="fetchIconSize(minHeight)"
+                        [style.width]="fetchIconSize(minHeight)"
+                        class="rounded-circle">
+                    <div *ngIf="!(attendeeAVStatusMap[tileId] && attendeeAVStatusMap[tileId].image_url)"
+                        [style.fontSize]="fetchIconSize(minHeight)"
+                        [style.height]="fetchIconSize(minHeight)"
+                        [style.width]="fetchIconSize(minHeight)">
+                        <mat-icon class="persona">account_circle</mat-icon>
+                    </div>
+                    <div style="color: white; border-radius: 8px; font-size: 16px;text-overflow: ellipsis;overflow: hidden;max-width: 70%;white-space: nowrap;"
+                        class="p-3 mx-4 text-center">{{attendeeAVStatusMap[tileId]?.name || ''}}</div>
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="attendeeAVStatusMap[tileId]">
+                <div class="gridDevice" style="position: absolute;">
+                    <img *ngIf="attendeeAVStatusMap[tileId]?.video_out_participant != EquipmentStatus.ON || attendeeAVStatusMap[tileId]?.video_out_counselor != EquipmentStatus.ON" class="mb-2" src="assets/media/icons/svg/meeting/conference/icons-video-offWhite.svg">
+                    <img *ngIf="attendeeAVStatusMap[tileId]?.audio_out_participant != EquipmentStatus.ON || attendeeAVStatusMap[tileId]?.audio_out_counselor != EquipmentStatus.ON" class="mb-2" src="assets/media/icons/svg/meeting/conference/icons-microphone-offWhite.svg">
+                    <img *ngIf="attendeeAVStatusMap[tileId]?.audio_in_participant != EquipmentStatus.ON || attendeeAVStatusMap[tileId]?.audio_in_counselor != EquipmentStatus.ON" class="mb-2" src="assets/media/icons/svg/meeting/conference/iconsSpeakerOffWhite.svg">
+                    <img *ngIf="attendeeAVStatusMap[tileId]?.video_in_participant != EquipmentStatus.ON || attendeeAVStatusMap[tileId]?.video_in_counselor != EquipmentStatus.ON" class="mb-2" src="assets/media/icons/svg/meeting/conference/screenOffWhite.svg">
+                </div>
+            </ng-container>
+
+            <ng-container *ngTemplateOutlet="cMenu; context:{ attendeeId: tileId, screenShare: '' }"></ng-container>      
+        </div>
+    </ng-container>
+</div>
+
+<div [hidden]="!screenBeingShared" [style.height]="gridHeight()"
+    class="conference-grid w-100">
+    <div class="video-container justify-content-center align-items-center d-flex h-100 w-100" style="position: relative;">
+        <video class="w-100 h-100"
+            id="contentTile"></video>
+        
+        <ng-container *ngTemplateOutlet="cMenu; context:{ attendeeId: screenShareAttendeeId, screenShare: 'X' }"></ng-container>
+    </div>
+</div>
+
+<div *ngIf="amIWaiting || connecting || reconnecting"
+    class="conference-grid h-100 w-100 d-flex justify-content-center align-items-center">
+    <div *ngIf="amIWaiting" [hidden]="paymentOpen || nameOpen" style="color: white; border-radius: 8px;"
+        class="p-3 border">
+        <h4 class="m-1">Waiting for admin approval..</h4>
+    </div>
+
+    <div *ngIf="connecting && !amIWaiting && !reconnecting">
+        <div class="d-flex justify-content-center">
+            <mat-spinner color="white"></mat-spinner>
+        </div>
+        <h3 class="text-white mt-5 ml-4">
+            Connecting...
+        </h3>
+    </div>
+
+    <div *ngIf="reconnecting && !connecting && !amIWaiting">
+        <div class="d-flex justify-content-center">
+            <mat-spinner color="white"></mat-spinner>
+        </div>
+        <h3 class="text-white mt-5 ml-4">
+            Reconnecting network lost...
+        </h3>
+    </div>
+</div>
+
+
+
+
+<ng-template #cMenu
+    let-screenShare="screenShare"
+    let-attendeeId="attendeeId">
+    <div *ngIf="isCounselor || attendeeId == myAttendeeId;else onlyName"
+        class="dropdown dropleft tileMenu position-absolute  point mr-4 mt-3"
+        (clickOutside)="contextMenu[attendeeId+screenShare] = false;"
+        [class.show]="contextMenu[attendeeId]">
+
+        <button class="btn  point px-3 mt-2 py-1 context-menu-button"
+            (click)="contextMenu[attendeeId+screenShare] = !contextMenu[attendeeId+screenShare]; contextMenu[attendeeId+screenShare] = contextMenu[attendeeId+screenShare]? (true || $event.stopPropagation()): false">
+            <span class="text-white mr-2"
+                *ngIf="(attendeeAVStatusMap[attendeeId]?.name && tileVideoState[attendeeId]) || screenShareAttendeeId">
+                {{(attendeeAVStatusMap[attendeeId]?.name) | slice:0:20}}
+            </span>
+
+            <img src="assets/media/icons/svg/Files/menu2.svg"
+                class="more">
+        </button>
+
+
+        <div class="dropdown-menu dropdown-menu-right video-context-pos"
+            [class.show]="contextMenu[attendeeId+screenShare]"
+            aria-labelledby="dropdownMenuLink">
+
+            <ng-container *ngIf="myAttendeeId == attendeeId;">
+
+
+                <a class="dropdown-item menu-txt"
+                    *ngIf="attendeeAVStatusMap[attendeeId]?.audio_out_participant != EquipmentStatus.ON || attendeeAVStatusMap[attendeeId]?.audio_out_counselor != EquipmentStatus.ON; else audioOutTemp"
+                    (click)="unmute(attendeeId); contextMenu[attendeeId] = false;">
+                    <span class="context-text" translate="MEETING.conference.grid.unmute"></span>
+                    <img class="context-icon" src="assets/media/icons/svg/meeting/conference/microphone-copy.svg">
+                </a>
+
+                <ng-template #audioOutTemp>
+                    <a class="dropdown-item menu-txt"
+                        *ngIf="attendeeAVStatusMap[attendeeId]?.audio_out_participant == EquipmentStatus.ON && attendeeAVStatusMap[attendeeId]?.audio_out_counselor == EquipmentStatus.ON"
+                        (click)="mute(attendeeId); contextMenu[attendeeId] = false;">
+                        <span class="context-text" translate="MEETING.conference.grid.mute"></span>
+                        <img class="context-icon" src="assets/media/icons/svg/meeting/conference/icons-microphone-off.svg">
+                    </a>
+                </ng-template>
+
+                <a class="dropdown-item menu-txt"
+                    *ngIf="attendeeAVStatusMap[attendeeId]?.audio_in_participant != EquipmentStatus.ON || attendeeAVStatusMap[attendeeId]?.audio_in_counselor != EquipmentStatus.ON;else audioInTemp"
+                    (click)="unmuteMeeting(attendeeId); contextMenu[attendeeId] = false;">
+                    <span class="context-text" translate="MEETING.conference.grid.speakerOn"></span>
+                    <img class="context-icon" src="assets/media/icons/svg/meeting/conference/iconsSpeakerOn.svg">
+                </a>
+                <ng-template #audioInTemp>
+                    <a class="dropdown-item menu-txt"
+                        *ngIf="attendeeAVStatusMap[attendeeId]?.audio_in_participant == EquipmentStatus.ON && attendeeAVStatusMap[attendeeId]?.audio_in_counselor == EquipmentStatus.ON"
+                        (click)="muteMeeting(attendeeId); contextMenu[attendeeId] = false;">
+                        <span class="context-text" translate="MEETING.conference.grid.speakerOff"></span>
+                        <img class="context-icon" src="assets/media/icons/svg/meeting/conference/iconsSpeakerOff.svg">
+                    </a>
+                </ng-template>
+
+
+                <a class="dropdown-item menu-txt"
+                    *ngIf="attendeeAVStatusMap[attendeeId]?.video_out_participant != EquipmentStatus.ON || attendeeAVStatusMap[attendeeId]?.video_out_counselor != EquipmentStatus.ON;else videoOutTemp"
+                    (click)="startVideo(attendeeId); contextMenu[attendeeId] = false;">
+                    <span class="context-text" translate="MEETING.conference.grid.cameraOn"></span>
+                    <img class="context-icon" src="assets/media/icons/svg/meeting/conference/microphone-copy-2.svg">
+                </a>
+                <ng-template #videoOutTemp>
+                    <a class="dropdown-item menu-txt"
+                        *ngIf="attendeeAVStatusMap[attendeeId]?.video_out_participant == EquipmentStatus.ON && attendeeAVStatusMap[attendeeId]?.video_out_counselor == EquipmentStatus.ON"
+                        (click)="stopVideo(attendeeId); contextMenu[attendeeId] = false;">
+                        <span class="context-text" translate="MEETING.conference.grid.cameraOff"></span>
+                        <img class="context-icon" src="assets/media/icons/svg/meeting/conference/icons-video-off.svg">
+                    </a>
+                </ng-template>
+
+
+                <a class="dropdown-item menu-txt"
+                    *ngIf="attendeeAVStatusMap[attendeeId]?.video_in_participant != EquipmentStatus.ON || attendeeAVStatusMap[attendeeId]?.video_in_counselor != EquipmentStatus.ON;else videoInTemp"
+                    (click)="startMeetingVideo(attendeeId); contextMenu[attendeeId] = false;">
+                    <span class="context-text" translate="MEETING.conference.grid.displayOn"></span>
+                    <img class="context-icon" src="assets/media/icons/svg/meeting/conference/screenOn.svg">
+                </a>
+                <ng-template #videoInTemp>
+                    <a class="dropdown-item menu-txt"
+                        *ngIf="attendeeAVStatusMap[attendeeId]?.video_in_participant == EquipmentStatus.ON && attendeeAVStatusMap[attendeeId]?.video_in_counselor == EquipmentStatus.ON"
+                        (click)="stopMeetingVideo(attendeeId); contextMenu[attendeeId] = false;">
+                        <span class="context-text" translate="MEETING.conference.grid.displayOff"></span>
+                        <img class="context-icon" src="assets/media/icons/svg/meeting/conference/screenOff.svg">
+                    </a>
+                </ng-template>
+
+
+                <a class="dropdown-item menu-txt"
+                    *ngIf="attendeeAVStatusMap[attendeeId]?.screen_participant != EquipmentStatus.ON || attendeeAVStatusMap[attendeeId]?.screen_counselor != EquipmentStatus.ON;else screenTemp"
+                    (click)="startScreenShare(attendeeId); contextMenu[attendeeId] = false;">
+                    <span class="context-text" translate="MEETING.conference.grid.screenShareOn"></span>
+                    <img class="context-icon" src="assets/media/icons/svg/meeting/conference/share-screen.svg">
+                </a>
+                <ng-template #screenTemp>
+                    <a class="dropdown-item menu-txt"
+                        *ngIf="attendeeAVStatusMap[attendeeId]?.screen_participant == EquipmentStatus.ON && attendeeAVStatusMap[attendeeId]?.screen_counselor == EquipmentStatus.ON"
+                        (click)="stopScreenShare(attendeeId); contextMenu[attendeeId] = false;">
+                        <span class="context-text" translate="MEETING.conference.grid.screenShareOff"></span>
+                        <img class="context-icon" src="assets/media/icons/svg/meeting/conference/icons-stop-sharing.svg">
+                    </a>
+                </ng-template>
+            </ng-container>
+
+
+            <ng-container *ngIf="attendeeId != myAttendeeId">
+                <a class="dropdown-item menu-txt"
+                    *ngIf="attendeeAVStatusMap[attendeeId]?.audio_out_counselor == EquipmentStatus.ON"
+                    (click)="mute(attendeeId); contextMenu[attendeeId] = false;">
+                    <span class="context-text" translate="MEETING.conference.grid.mute"></span>
+                    <img class="context-icon" src="assets/media/icons/svg/meeting/conference/icons-microphone-off.svg">
+                </a>
+                <a class="dropdown-item menu-txt"
+                    *ngIf="attendeeAVStatusMap[attendeeId]?.audio_out_counselor != EquipmentStatus.ON"
+                    (click)="unmute(attendeeId); contextMenu[attendeeId] = false;">
+                    <span class="context-text" translate="MEETING.conference.grid.unmute"></span>
+                    <img class="context-icon" src="assets/media/icons/svg/meeting/conference/microphone-copy.svg">
+                </a>
+
+
+                <a class="dropdown-item menu-txt"
+                    *ngIf="attendeeAVStatusMap[attendeeId]?.audio_in_counselor == EquipmentStatus.ON"
+                    (click)="muteMeeting(attendeeId); contextMenu[attendeeId] = false;">
+                    <span class="context-text" translate="MEETING.conference.grid.speakerOff"></span>
+                    <img class="context-icon" src="assets/media/icons/svg/meeting/conference/iconsSpeakerOff.svg">
+                </a>
+                <a class="dropdown-item menu-txt"
+                    *ngIf="attendeeAVStatusMap[attendeeId]?.audio_in_counselor != EquipmentStatus.ON"
+                    (click)="unmuteMeeting(attendeeId); contextMenu[attendeeId] = false;">
+                    <span class="context-text" translate="MEETING.conference.grid.speakerOn"></span>
+                    <img class="context-icon" src="assets/media/icons/svg/meeting/conference/iconsSpeakerOn.svg">
+                </a>
+
+
+                <a class="dropdown-item menu-txt"
+                    *ngIf="attendeeAVStatusMap[attendeeId]?.video_out_counselor == EquipmentStatus.ON"
+                    (click)="stopVideo(attendeeId); contextMenu[attendeeId] = false;">
+                    <span class="context-text" translate="MEETING.conference.grid.cameraOff"></span>
+                    <img class="context-icon" src="assets/media/icons/svg/meeting/conference/icons-video-off.svg">
+                </a>
+                <a class="dropdown-item menu-txt"
+                    *ngIf="attendeeAVStatusMap[attendeeId]?.video_out_counselor != EquipmentStatus.ON"
+                    (click)="startVideo(attendeeId); contextMenu[attendeeId] = false;">
+                    <span class="context-text" translate="MEETING.conference.grid.cameraOn"></span>
+                    <img class="context-icon" src="assets/media/icons/svg/meeting/conference/microphone-copy-2.svg">
+                </a>
+
+
+                <a class="dropdown-item menu-txt"
+                    *ngIf="attendeeAVStatusMap[attendeeId]?.video_in_counselor == EquipmentStatus.ON"
+                    (click)="stopMeetingVideo(attendeeId); contextMenu[attendeeId] = false;">
+                    <span class="context-text" translate="MEETING.conference.grid.displayOff"></span>
+                    <img class="context-icon" src="assets/media/icons/svg/meeting/conference/screenOff.svg">
+                </a>
+                <a class="dropdown-item menu-txt"
+                    *ngIf="attendeeAVStatusMap[attendeeId]?.video_in_counselor != EquipmentStatus.ON"
+                    (click)="startMeetingVideo(attendeeId); contextMenu[attendeeId] = false;">
+                    <span class="context-text" translate="MEETING.conference.grid.displayOn"></span>
+                    <img class="context-icon" src="assets/media/icons/svg/meeting/conference/screenOn.svg">
+                </a>
+
+
+                <a class="dropdown-item menu-txt"
+                    *ngIf="attendeeAVStatusMap[attendeeId]?.screen_counselor == EquipmentStatus.ON"
+                    (click)="stopScreenShare(attendeeId); contextMenu[attendeeId] = false;">
+                    <span class="context-text" translate="MEETING.conference.grid.screenShareOff"></span>
+                    <img class="context-icon" src="assets/media/icons/svg/meeting/conference/icons-stop-sharing.svg">
+                </a>
+                <a class="dropdown-item menu-txt"
+                    *ngIf="attendeeAVStatusMap[attendeeId]?.screen_counselor != EquipmentStatus.ON"
+                    (click)="startScreenShare(attendeeId); contextMenu[attendeeId] = false;">
+                    <span class="context-text" translate="MEETING.conference.grid.screenShareOn"></span>
+                    <img class="context-icon" src="assets/media/icons/svg/meeting/conference/share-screen.svg">
+                </a>
+            </ng-container>
+
+            <a *ngIf="myAttendeeId != attendeeId && isCounselor"
+                class="dropdown-item menu-txt"
+                (click)="leaveMeeting(attendeeId)">
+                <!-- Remove Participant -->
+                <span class="context-text" translate="MEETING.conference.grid.removeParticipant"></span>
+                <img class="context-icon" src="assets/media/icons/svg/meeting/conference/bin.svg">
+            </a>
+            <!-- <a *ngIf="myAttendeeId == attendeeId"
+                class="dropdown-item menu-txt"
+                (click)="leaveMeeting(attendeeId)">
+                End Call
+            </a> -->
+        </div>
+    </div>
+
+    <ng-template #onlyName>
+
+        <span class="text-white only-name mr-4 mt-3"
+            *ngIf="attendeeAVStatusMap[attendeeId]?.name && tileVideoState[attendeeId]">
+            <button class="btn px-3 py-1 mt-2 context-menu-button">
+                <span class="text-white mr-2">{{attendeeAVStatusMap[attendeeId]?.name}}</span>
+            </button>
+        </span>
+    </ng-template>
+</ng-template>

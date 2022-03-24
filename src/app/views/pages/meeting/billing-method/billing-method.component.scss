@@ -1,0 +1,64 @@
+.billing-method {
+    padding-top: 5rem;
+}
+
+* {
+    font-family: GothamRounded-Book;
+}
+
+.Add-Participants {
+    font-family: GothamRounded-Medium;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: -0.42px;
+    color: #002452;
+    border-bottom: 1px solid #e9edf3;
+}
+
+._radio {
+    display: flex;
+    flex-direction: column;
+
+    mat-radio-button {
+        font-size: 16px;
+        color: #002452;
+    }
+}
+
+::ng-deep {
+    .mat-radio-outer-circle {
+        border-color: #E0E0E0;
+        border-width: 1.5px !important;
+    }
+
+    .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+        border-color: #1565c0;
+    }
+
+    .mat-radio-inner-circle {
+        background-color: #1565c0;
+    }
+}
+
+.select-lb {
+    margin-left: 2.2rem;
+    font-size: 14px;
+    letter-spacing: 0.25px;
+    color: #7d96b3;
+}
+
+div>label {
+    font-size: 16px;
+    color: #002452;
+}
+
+div>input {
+    font-size: 16px;
+    color: #002452;
+}
+
+.cancel{
+    &:hover{
+        color: #002452;
+    }
+}

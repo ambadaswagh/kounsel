@@ -1,0 +1,89 @@
+.add-participant-cont {
+    // padding-top: 5rem;
+    // height: 100vh
+}
+
+* {
+    font-family: GothamRounded-Book;
+}
+
+.Add-Participants {
+    font-family: GothamRounded-Medium;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: -0.42px;
+    color: #002452;
+    border-bottom: 1px solid #e9edf3;
+}
+
+.Share-link-with-peop {
+    font-size: 14px;
+    line-height: 1.29;
+    letter-spacing: -0.5px;
+    color: #7d96b3;
+}
+
+.Title-Copy-5 {
+    font-size: 16px;
+    line-height: 1.38;
+    letter-spacing: -0.38px;
+    color: #002452;
+}
+
+.user-type {
+    height: 94px;
+    width: 94px;
+
+    img {
+        height: 94px;
+        width: 94px;
+    }
+}
+
+.img-lb {
+    font-size: 14px;
+    letter-spacing: -0.34px;
+    text-align: center;
+    color: #002452;
+}
+
+.Access-Details {
+    font-size: 14px;
+    font-weight: 500;
+    color: #7d96b3;
+}
+
+.detail-label {
+    font-family: GothamRounded-Book;
+    font-size: 16px;
+    letter-spacing: 0.15px;
+    color: #002452;
+}
+
+.detail-val {
+    font-family: GothamRounded-Book;
+    font-size: 14px;
+    letter-spacing: 0.25px;
+    color: rgba(0, 36, 82, 0.6);
+    border-bottom: solid 1px #e9edf3;
+}
+
+.hide{
+    display: none !important;
+}
+
+.cancel{
+    &:hover{
+        color: #002452;
+    }
+}
+
+.add-participant-btn {
+    width: 100%;
+}
+
+::ng-deep{
+    #addPartButton > mat-spinner > svg > circle{
+        stroke: white !important;
+    }
+}

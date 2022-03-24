@@ -1,0 +1,154 @@
+<div *ngIf="!osType" >
+	<!--begin::Head-->
+	<!-- <div class="kt-login__head">
+        <span class="kt-login__signup-label">Don't have an account yet?</span>&nbsp;&nbsp;
+        <a href="javascript:;" routerLink="/auth/register"
+            class="kt-link kt-login__signup-link">{{ 'AUTH.GENERAL.SIGNUP_BUTTON' | translate }}</a>
+    </div> -->
+	<!--end::Head-->
+	<!--begin::Body-->
+	<div class="kt-login__body vc" style="height: auto;">
+		<!--begin::Signin-->
+		<div class="kt-login__form">
+			<!-- style="width: 454px !important;" -->
+			<div class="login-title">
+				<h3 class="Sign-In-to-Kounsel">Login to Kounsel</h3>
+			</div>
+
+			<kt-auth-notice></kt-auth-notice>
+
+			<!--begin::Form class="kt-form" -->
+			<form [formGroup]="loginForm"
+				autocomplete="off">
+
+				<div class="form-group">
+					<label for="email"
+						class="login_label">Email</label>
+					<input [placeholder]="'AUTH.INPUT.EMAIL' | translate"
+						type="text"
+						class="form-control login_field"
+						id="email"
+						name="email"
+						formControlName="email">
+
+					<div style="position: absolute;">
+						<mat-error *ngIf="!loginForm.get('email').valid && !loginForm.get('email').pristine">That format doesn't look right. Make sure there aren't any typos.</mat-error>
+						<!-- <mat-error *ngIf="isControlHasError('email','required')">
+							<strong>That format doesn't look right. Make sure there aren't any typos.</strong>
+						</mat-error>
+						<mat-error *ngIf="isControlHasError('email','email')">
+							<strong>That format doesn't look right. Make sure there aren't any typos.</strong>
+						</mat-error>
+						<mat-error *ngIf="isControlHasError('email','minlength')">
+							<strong>That format doesn't look right. Make sure there aren't any typos.</strong>
+						</mat-error>
+						<mat-error *ngIf="isControlHasError('email','maxlength')">
+							<strong>That format doesn't look right. Make sure there aren't any typos.</strong>
+						</mat-error> -->
+					</div>
+
+					<div class="login_tablet_design d-flex align-items-center justify-content-between mt-3">
+						<label for="password"
+							class="login_label"
+							style="margin-top:12px;">Password</label>
+						<div class="forgotPassword text-right">
+							<!-- <a href="javascript:;"
+								routerLink="/auth/forgot-password"
+								class="kt-link kt-login__link-forgot forgot-password">
+								{{ 'AUTH.GENERAL.FORGOT_BUTTON' | translate }}
+							</a> -->
+						</div>
+					</div>
+					<input [placeholder]="'AUTH.INPUT.PASSWORD' | translate"
+						[type]="passwordTypeToggle ? 'password' : 'text'"
+						class="form-control login_field"
+						id="password"
+						name="password"
+						formControlName="password">
+
+					<div>
+						<span (click)="passwordTypeToggle = !passwordTypeToggle"
+							[class.fa-eye]="passwordTypeToggle"
+							[class.fa-eye-slash]="!passwordTypeToggle"
+							class="fa fa-fw field-icon-i toggle-password"></span>
+						
+						<div style="position: absolute;">
+							<mat-error *ngIf="isControlHasError('password','required')"  >
+								{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}
+							</mat-error>
+							<mat-error *ngIf="isControlHasError('password','minlength')" >
+								{{ 'AUTH.VALIDATION.MIN_LENGTH_FIELD' | translate }} 6
+							</mat-error>
+							<mat-error *ngIf="isControlHasError('password','maxlength')" >
+								{{ 'AUTH.VALIDATION.MAX_LENGTH_FIELD' | translate }} 100
+							</mat-error>
+						</div>
+					</div>
+				</div>
+
+				<div class="kt-login__actions row px-2 sb">
+					<!-- style="width: 420px !important;" -->
+					<!-- <div class="forgotPassword">
+						<a href="javascript:;"
+							routerLink="/auth/forgot-password"
+							class="kt-link kt-login__link-forgot forgot-password">
+							{{ 'AUTH.GENERAL.FORGOT_BUTTON' | translate }}
+						</a>
+					</div> -->
+
+					<div class="vc f-password-container">
+						<a href="javascript:;"
+							routerLink="/auth/forgot-password"
+							class="f-password ml-1">
+							Forgot your password?
+						</a>
+					</div>
+					<div class="loginbtn">
+						<button (click)="submit()"
+							[ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}"
+							[style.opacity]="loginForm.invalid ? 0.5 : ''"
+							id="kt_login_signin_submit"
+							class="btn btn-primary btn-elevate kt-login__btn-primary signin">{{ 'AUTH.LOGIN.BUTTON' | translate }}</button>
+					</div>
+				</div>
+				<!--end::Action-->
+			</form>
+			<!--end::Form-->
+
+			<!--begin::Divider-->
+			<div class="kt-login__divider mt-3">
+				<div class="kt-divider">
+					<span></span>
+					<span class="d-inline-flex">OR<span class="kt-join-with">&nbsp;JOIN WITH</span></span>
+					<span></span>
+				</div>
+			</div>
+			<!--end::Divider-->
+
+			<!--begin::Options-->
+			<div class="kt-login__options mt-4 d-flex sb">
+				<span (click)="doGoogleLoginAsync()"
+					class="btn kt-btn w-49">
+					<img src="./assets/media/icons/svg/login/google-light.svg" />
+					<label>Google</label>
+				</span>
+
+				<span (click)="doFacebookLoginAsync()"
+					class="btn kt-btn w-49">
+					<img src="./assets/media/icons/svg/login/facebook.svg" />
+					<label>Facebook</label>
+				</span>
+				<!-- <a href="https://twitter.com/keenthemes/" target="_blank" class="btn btn-info kt-btn">
+                    <i class="fab fa-twitter"></i>
+                    Twitter
+                </a> -->
+			</div>
+			<!--end::Options-->
+		</div>
+		<!--end::Signin-->
+	</div>
+	<!--end::Body-->
+</div>
+<kt-app-download-screen *ngIf="osType"
+	[osType]="osType"
+	(closeGetApp)="closeGetApp()"></kt-app-download-screen>

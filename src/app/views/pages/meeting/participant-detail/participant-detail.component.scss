@@ -1,0 +1,88 @@
+.participant-detail {
+    padding-top: 5rem;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.participant-detail-img {
+    border-bottom: solid 1px #e9edf3;
+    .participant-detail-img-cont {
+        height: 55px;
+        width: 55px;
+        border-radius: 4px;
+        border: solid 1px #e9edf3;
+
+        img {
+            height: 55px;
+            width: 55px;
+            border-radius: 4px;
+        }
+    }
+
+}
+
+.details {
+    font-family: GothamRounded-Medium;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: -0.42px;
+    color: #002452;
+}
+
+.-Subtitle-1 {
+    font-family: GothamRounded-Book;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: 0.15px;
+    color: #002452;
+}
+
+.-Subtitle-2 {
+    font-family: GothamRounded-Book;
+    font-size: 14px;
+    line-height: 1.36;
+    letter-spacing: 0.09px;
+    color: #7d96b3;
+}
+
+.subtitle-cont {
+    flex: 1;
+}
+
+.Access-History {
+    font-family: GothamRounded-Book;
+    font-size: 16px;
+    font-weight: 500;
+    color: #7d96b3;
+}
+
+.detail-label {
+    font-family: GothamRounded-Book;
+    font-size: 16px;
+    letter-spacing: 0.15px;
+    color: #002452;
+}
+
+.detail-val {
+    font-family: GothamRounded-Book;
+    font-size: 14px;
+    letter-spacing: 0.25px;
+    color: rgba(0, 36, 82, 0.6);
+    border-bottom: solid 1px #e9edf3;
+}
+
+.red-btn {
+    border-radius: 6px;
+    border: solid 1px #ef2a2a;
+    background-color: #ffffff;
+    color: #ef2a2a;
+    &:hover{
+        color: #ef2a2a;
+    }
+}
+
+.cancel{
+    &:hover{
+        color: #212529;
+    }
+}

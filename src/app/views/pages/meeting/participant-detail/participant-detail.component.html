@@ -1,0 +1,135 @@
+<div id="participant-detail"
+    class="participant-detail d-flex flex-column"
+    style="position: relative;">
+    <div class="d-flex sb px-4 pb-3 mb-3"
+        style="border-bottom: solid 1px #e9edf3;">
+        <div class="details" translate="MEETING.participantDetails.roomDetails"></div>
+        <!-- <img *ngIf="access" src="assets/media/icons/svg/meeting/share.svg"
+            class="point"
+            (click)="downloadDetails()"> -->
+    </div>
+
+    <perfect-scrollbar>
+        <div>
+            <div class="d-flex participant-detail-img mx-4"
+                style="padding-bottom: 10px;">
+                <div class="participant-detail-img-cont">
+                    <img *ngIf="participant"
+                        [src]="participant.image_url">
+                    <img *ngIf="access"
+                        src="assets/media/profile_images/profile-placeholder-300x300.png">
+                </div>
+                <div style="max-width: calc(100% - 20px);overflow: hidden;text-overflow: ellipsis;"
+                    class="v-center ml-4 pt-2 pb-2 subtitle-cont">
+                    <div style="max-width: 100%;overflow: hidden;text-overflow: ellipsis;">
+                        <div *ngIf="participant"
+                            style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
+                            class="-Subtitle-1">{{participant.name || translateService.instant('MEETING.common.notAvailable')}}</div>
+                        <div *ngIf="access"
+                            class="-Subtitle-1" translate="MEETING.common.notAvailable"></div>
+                        <!-- <div class="-Subtitle-2" *ngIf="">{{user.category || 'User Category'}}</div> -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="mx-4 Access-History mt-4" translate="MEETING.participantDetails.accessHistory"></div>
+
+            <div class="mx-4 mt-3">
+                <div class="detail-label" translate="MEETING.participantDetails.issued"></div>
+                <div *ngIf="participant"
+                    class="detail-val pb-2">{{participant.issue_date | date}}</div>
+                <div *ngIf="access"
+                    class="detail-val pb-2">{{access.issue_date | date}}</div>
+            </div>
+
+            <div class="mx-4 mt-3">
+                <div class="detail-label" translate="MEETING.participantDetails.expires"></div>
+                <div *ngIf="participant"
+                    class="detail-val pb-2">{{participant.expiration_date | date}}</div>
+                <div *ngIf="access"
+                    class="detail-val pb-2">{{access.expiration_date | date}}</div>
+            </div>
+
+            <div class="mx-4 mt-3">
+                <div class="detail-label" translate="MEETING.participantDetails.participated"></div>
+                <div *ngIf="participant"
+                    class="detail-val pb-2">
+                    <span *ngIf="participant.duration">
+                        {{toWords(participant.duration)}}
+                    </span>
+                    <span *ngIf="!participant.duration" translate="MEETING.participantDetails.none"></span>
+                </div>
+                <div *ngIf="access"
+                    class="detail-val pb-2" translate="MEETING.participantDetails.none"></div>
+            </div>
+
+            <div class="mx-4 mt-3">
+                <div class="detail-label" translate="MEETING.common.paid"></div>
+                <div *ngIf="participant"
+                    class="detail-val pb-2">
+                    <ng-container *ngIf="participant.participant_type == 3 || participant.participant_type == 5">
+                        $ {{ formatAmount(participant.total_paid) || '0.00'}}
+                    </ng-container>
+                    <ng-container *ngIf="participant.participant_type == 2">
+                        {{ translateService.instant('MEETING.participantDetails.freeUser') }}
+                    </ng-container>
+                </div>
+                <div *ngIf="access"
+                    class="detail-val pb-2">
+                    <ng-container *ngIf="access.participant_type == 3 || access.participant_type == 5">
+                        $ 0.00
+                    </ng-container>
+                    <ng-container *ngIf="access.participant_type == 2" translate="MEETING.participantDetails.freeUser">
+                    </ng-container>
+                </div>
+            </div>
+
+
+            <div class="d-flex mx-4 mt-5 v-center justify-content-between">
+                <div class=" Access-History " translate="MEETING.participantDetails.accessDetails">
+                </div>
+                <div class="v-center point"
+                    *ngIf="access"
+                    (click)="downloadDetails()">
+                    <mat-icon style="color: #002452;">content_copy</mat-icon>
+                </div>
+            </div>
+
+            <div class="mx-4 mt-3">
+                <div class="detail-label" translate="MEETING.participantDetails.meetingId"></div>
+                <div class="detail-val pb-2">{{meeting.personalRoomDetails.room_id}}</div>
+            </div>
+
+            <div class="mx-4 mt-3">
+                <div class="detail-label" translate="MEETING.participantDetails.code"></div>
+                <div *ngIf="participant"
+                    class="detail-val pb-2">{{meeting.personalRoomDetails.code || translateService.instant('MEETING.common.notAvailable')}}</div>
+                <div *ngIf="access"
+                    class="detail-val pb-2">{{access.access_code || translateService.instant('MEETING.common.notAvailable')}}</div>
+            </div>
+
+            <div class="mx-4 mt-3">
+                <div class="detail-label" translate="MEETING.participantDetails.join"></div>
+                <div class="detail-val pb-2">
+                    <a translate="MEETING.participantDetails.meetingLink"></a>
+                </div>
+            </div>
+        </div>
+    </perfect-scrollbar>
+
+    <div class="d-flex btn-grp mt-4 mx-4 mb-3">
+        <button [disabled]="revokingAccess"
+            class="btn btn-save flex-fill red-btn h-100"
+            (click)="revokeData()" translate="MEETING.participantDetails.revokeAccess"></button>
+        <button [disabled]="revokingAccess"
+            class="btn cancel ml-3 flex-fill h-100"
+            type="cancel"
+            (click)="back()" translate="COMMON.back"></button>
+    </div>
+
+    <div *ngIf="revokingAccess"
+        class="vc ml-3"
+        style="position: absolute; top: 0; bottom: 0; left:0; right: 0">
+        <mat-spinner diameter="40"></mat-spinner>
+    </div>
+</div>

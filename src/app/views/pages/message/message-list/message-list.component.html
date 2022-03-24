@@ -1,0 +1,96 @@
+<ng-container *ngIf="_chatHistory.length <= 0 && !initialLoad">
+
+    <div class="vc ml-3"
+        style="position: absolute;
+            top: 0px;
+            height: 100%;
+            width: 100%;">
+            <div>
+                <div class="vc"><mat-spinner diameter="40"></mat-spinner></div>
+                <div style="margin-left: 1rem;">Loading...</div>
+            </div>
+    </div>
+
+</ng-container>
+
+
+<ng-container *ngFor="let item of _chatHistory; let i = index">
+    <div (click)="toggleActive(i)"
+        class="chatListTime d-flex pt-3 point"
+        *ngIf="!item.groupChat"
+        [class.active]="item.opened">
+        <div class="img-cont mr-3">
+            <img [src]="item.otherUser.image_url || 'assets/media/profile_images/profile-placeholder-300x300.png'"
+                alt="">
+        </div>
+        <div class="grow s-cont pb-3" style="width: 80%;">
+            <div class="d-flex sb">
+                <div>
+                    <ng-container *ngIf="item.topic.name; else NoTopic">
+                        <div class="title">{{item.topic.name | slice:0:18}}</div>
+
+                        <!-- not sure from where this will come -->
+                        <div class="subTitle">{{item.otherUser.name | slice:0:18}}</div>
+                    </ng-container>
+
+                    <ng-template #NoTopic>
+                        <div class="title">{{item.otherUser.name | slice:0:18}}</div>
+                    </ng-template>
+
+                </div>
+                <div class="d-flex">
+
+                    <!-- not sure from where this will come -->
+                    <!-- <div class="vt mr-2"
+                        *ngIf="item.doubleCheck==1 || item.doubleCheck==2">
+                        <img *ngIf="item.doubleCheck==2"
+                            src="assets/media/icons/svg/message/double-check_blue.svg"
+                            alt="">
+                        <img *ngIf="item.doubleCheck==1"
+                            src="assets/media/icons/svg/message/double-check.svg"
+                            alt="">
+                    </div> -->
+                    <div class="time vt d-flex mr-3">{{item.chat._time | messageList}}</div>
+                </div>
+            </div>
+            <div class="d-flex mt-2">
+                <!-- not sure from where this typing info will come -->
+                <!-- <div *ngIf="!item.typing"
+                    class="grow msg">{{item.lastMessage | messageListLimit}}</div>
+                <div *ngIf="item.typing"
+                    class="grow msg">Typing...</div> -->
+                <div class="msg">{{item.chat.message | messageListLimit}}</div>
+                <div class="vc mr-3" 
+                    *ngIf="item.chat.unread > 0">
+                    <div class="notRead px-2">
+                        {{item.chat.unread}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>
+
+<div *ngIf="messageLoading && _chatHistory.length > 0"
+    class="vc mt-5"
+    style="height: 36px;">
+    <div>
+        <div class="vc"><mat-spinner diameter="40"></mat-spinner></div>
+        <div style="margin-left: 1rem;">Loading...</div>
+    </div>
+</div>
+<!-- <div *ngIf="messageLoading"
+    class="vc"
+    style="height: 100px;">
+    <div class="loading">
+        <div class="spinner-border text-primary"
+            role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</div> -->
+
+<div class="no-msg"
+    *ngIf="!messageLoading && _chatHistory.length == 0">
+    You have not chat with anyone, but once you do all message will display here
+</div>

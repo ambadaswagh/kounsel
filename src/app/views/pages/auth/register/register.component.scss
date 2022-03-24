@@ -1,0 +1,134 @@
+.signup {
+    height: 28px;
+    font-family: "GothamRounded-Bold";
+    font-size: 28px !important;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: 0.21px;
+    text-align: center;
+    color: #002452 !important;
+}
+
+.input_ {
+    height: 37px !important;
+    opacity: 0.8 !important;
+    font-family: GothamRounded-Light !important;
+    font-size: 14px !important;
+    font-weight: 300 !important;
+    font-stretch: normal !important;
+    font-style: normal !important;
+    line-height: 20px !important;
+    letter-spacing: normal !important;
+    color: #002452 !important;
+    padding-right: 32px !important;
+    border-radius: 8px !important;
+    border-color: rgba(21, 101, 192, 0.1) !important;
+}
+
+._label {
+    height: 21px !important;
+    font-family: GothamRounded-Book !important;
+    font-stretch: normal !important;
+    font-style: normal !important;
+    line-height: 21px !important;
+    letter-spacing: normal !important;
+    color: #002452 !important;
+    font-size: 14px !important;
+}
+
+.eye_ {
+    position: absolute;
+    right: 10px;
+    top: 33%;
+    opacity: 0.8;
+    color: #7d96b3 !important;
+    margin-top: 0px !important;
+}
+
+.signup_button {
+    flex-direction: row-reverse;
+
+    button {
+        width: 99% !important;
+        height: 40px !important;
+        border-radius: 8px !important;
+        background-color: #1565c0 !important;
+        padding: 0px !important;
+        box-shadow: 0px 4px 16px 0px rgba(88, 103, 221, 0.15);
+        font-weight: 500;
+        font-size: 1rem;
+        color: #ffffff;
+    }
+}
+
+.kt-login__options {
+    .kt-btn {
+        height: 40px !important;
+        border-radius: 8px !important;
+        border: solid 1px #dae2eb !important;
+        background-color: #ffffff !important;
+        cursor: pointer;
+    }
+}
+
+@media (max-width: 1024px) and (min-width: 768px) {
+    .kt-login__options {
+        flex-direction: column;
+        margin-bottom: 0 !important;
+    }
+}
+
+@media (max-width: 1024px) and (min-width: 768px) {
+    .kt-login__form {
+        max-width: 316px !important;
+    }
+}
+
+@media (max-width: 1024px) and (min-width: 768px) {
+    .kt-login__form .kt-login__options .kt-btn {
+        width: 100% !important;
+        margin-bottom: 13px;
+    }
+}
+
+.g_sty {
+    font-family: GothamRounded-Medium;
+    font-size: 14px;
+    font-weight: 500;
+    color: #1565c0;
+    cursor: pointer;
+}
+
+.bck-drop {
+    background-color: rgba(0, 36, 82, 0.4);
+}
+
+.ttl {
+    font-family: GothamRounded-Book;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: -0.42px;
+    color: #002452;
+}
+
+.term-box {
+    max-width: 53vw;
+}
+
+@media (max-width: 1024px) {
+    .term-box {
+        max-width: 66vw;
+    }
+}
+
+.custom-margin{
+    margin-bottom: 1.25rem !important;
+}
+
+
+.kt-login__form{
+    width: 90%;
+    max-width: 375px !important;
+}

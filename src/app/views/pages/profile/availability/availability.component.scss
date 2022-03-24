@@ -1,0 +1,372 @@
+.max-width-web-view {
+    max-width: 554px;
+}
+
+* {
+    font-family: GothamRounded-Book;
+}
+
+.tag-head {
+    span {
+        font-family: GothamRounded-Book;
+        font-size: 14px;
+        font-weight: normal;
+        letter-spacing: -0.5px;
+        color: #7d96b3;
+        padding-right: 10px;
+        margin-right: 10px;
+        border-right: 1px solid rgba(125, 150, 179, 0.3);
+
+        &:last-child {
+            border-right: none;
+        }
+    }
+}
+
+.basic-profile {
+    .sub-title {
+        h5 {
+            font-family: GothamRounded-Medium;
+            font-size: 20px;
+            font-weight: 500;
+            letter-spacing: -0.42px;
+            color: #002452;
+        }
+    }
+}
+
+.available-now {
+    font-size: 14px;
+    font-weight: 500;
+    color: #002452;
+}
+
+.switch-container {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 56px;
+    height: 29px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #e9edf3;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 1px;
+    bottom: 1.3px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: #1565c0;
+}
+
+//   input:focus + .slider {
+//     box-shadow: 0 0 1px #1565c0;
+//   }
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(28px);
+    -ms-transform: translateX(28px);
+    transform: translateX(28px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+::ng-deep {
+    .custom {
+        ::ng-deep .ng-select-container {
+            // height: 44px !important;
+            border-radius: 6px;
+            border: solid 1px #e9edf3;
+            background-color: #ffffff;
+
+            .ng-value {
+                .ng-value-label {
+                    font-family: GothamRounded-Book;
+                    font-size: 16px;
+                    color: #002452;
+                    opacity: 0.5;
+                }
+            }
+
+            .ng-value-container {
+                .ng-input {
+                    input {
+                        font-family: GothamRounded-Book;
+                        font-size: 16px;
+                        color: #002452;
+                    }
+                }
+            }
+        }
+
+        ng-dropdown-panel {
+            .ng-dropdown-panel-items {
+                div {
+                    .ng-option {
+                        .ng-option-label {
+                            font-family: GothamRounded-Book;
+                            font-size: 14px;
+                            color: #002452;
+                            vertical-align: middle;
+                            line-height: 24px;
+                        }
+                    }
+                }
+            }
+        }
+
+        // .ng-select.ng-select-single .ng-select-container
+    }
+}
+
+
+.time-zone {
+    font-size: 14px;
+    color: #002452;
+}
+
+.ya {
+    font-size: 14px;
+    font-weight: 600;
+    color: #002452;
+}
+
+.day {
+    border-radius: 10px;
+    border: solid 1px #e9edf3;
+    background-color: #ffffff;
+    justify-content: space-between;
+
+    .dayName {
+        font-size: 16px;
+        color: #002452;
+    }
+}
+
+.slot {
+    font-size: 14px;
+    text-align: right;
+    color: #002452;
+}
+
+.add {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1565c0;
+}
+
+.select-right-sideBar {
+    position: fixed;
+    top: 0;
+    z-index: 96;
+    right: 0;
+    // height: 100vh;
+    bottom: 0;
+    background: #ffffff;
+    box-shadow: 0 2px 4px 0 rgba(0, 36, 82, 0.1);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    min-width: 350px;
+    max-width: 416px;
+
+    .select-head {
+        font-family: GothamRounded-Medium;
+        font-size: 20px;
+        font-weight: 500;
+        letter-spacing: -0.42px;
+        color: #002452;
+        margin-top: 2rem;
+        padding-left: 1.5rem;
+        border-bottom: 1px solid #dfdfdf;
+    }
+}
+
+.dead-center {
+    display: flex;
+    justify-content: center;
+}
+
+.dropShadowForTablet {
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    z-index: 95;
+    background-color: rgba(0, 36, 82, 0.4);
+}
+
+.dead-center {
+    display: flex;
+    justify-content: center;
+}
+
+.btn {
+    font-family: GothamRounded-Medium;
+    width: 368px;
+    height: 48px;
+    border-radius: 6px;
+    background-color: #1565c0;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    color: #ffffff;
+}
+
+
+.value-drop {
+    width: 100%;
+}
+
+.custom-icons-pos {
+    position: absolute;
+    top: 28%;
+    right: 0px;
+}
+
+
+.inp-lb {
+    font-size: 14px;
+    color: #002452;
+}
+
+.inp-brd {
+    border-radius: 6px;
+    border: solid 1px #e9edf3;
+    background-color: #ffffff;
+    font-family: GothamRounded-Book;
+    font-size: 16px;
+    color: #002452;
+}
+
+.cstm-a:active {
+    background-color: white;
+}
+
+.slts {
+    font-size: 14px;
+    font-weight: 500;
+    color: #002452;
+    position: relative;
+}
+
+
+::ng-deep {
+
+    .btn.btn-link:focus,
+    .btn.btn-link:hover,
+    .btn.btn-link.active,
+    a.btn.btn-label:focus,
+    a.btn.btn-label:hover,
+    a.btn.btn-label.active,
+    button.btn.btn-label:focus,
+    button.btn.btn-label:hover,
+    button.btn.btn-label.active,
+    input.btn.btn-label:focus,
+    input.btn.btn-label:hover,
+    input.btn.btn-label.active {
+        background-color: white !important;
+        color: #5867dd !important;
+    }
+}
+
+.time-pick-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.slotBox {
+    border-radius: 10px;
+    border: solid 1px #e9edf3;
+    background-color: #ffffff;
+    justify-content: space-between;
+    align-items: center;
+
+    .slotTime {
+        font-family: GothamRounded-Book;
+        font-size: 14px;
+        color: #002452;
+    }
+}
+
+.sidebarLoader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    background: rgba(158, 158, 158, 0.12)
+}
+
+
+.btn-cl {
+    background-color: #e9edf3;
+    color: #002452;
+}
+
+.av-head {
+    // font-family: GothamRounded-Light;
+    font-size: 14px;
+    line-height: 1.29;
+    letter-spacing: -0.2px;
+    color: #7d96b3;
+}
+
+.newSB {
+    border: 1.5px solid #4CAF50 !important;
+}
+
+.dis {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+}

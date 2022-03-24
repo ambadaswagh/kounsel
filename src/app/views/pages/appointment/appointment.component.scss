@@ -1,0 +1,442 @@
+:host {
+  display: block;
+  background-color: #fcfdfd;
+}
+
+::ng-deep {
+  .tui-full-calendar-week-container {
+    [data-panel-index="0"] {
+      display: none;
+    }
+  }
+
+  .tui-full-calendar-timegrid-right {
+    border-radius: 8px;
+    border: solid 1px #e9edf3;
+    background-color: #fff;
+    position: relative;
+  }
+
+  .tui-full-calendar-timegrid-timezone {
+    border-right: 0 !important;
+  }
+
+  .calendar-week-name {
+    display: flex;
+    flex-direction: column;
+
+    span {
+      font-family: GothamRounded-Light !important;
+      font-size: 12px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: -0.5px;
+      text-align: center;
+      color: #7d96b3;
+
+      &:first-child {
+        font-family: GothamRounded-Medium !important;
+        font-size: 16px;
+      }
+    }
+    &.active {
+      span {
+        color: #1565c0;
+      }
+    }
+  }
+
+  .tui-full-calendar-time-schedule-content {
+    border: 0 !important;
+    font-family: Roboto, Helvetica, sans-serif;
+    font-size: 12px;
+    margin: 0;
+    line-height: 12px;
+    font-weight: 300;
+    overflow: auto;
+    position: relative;
+    text-align: center;
+    padding: 8px 0 0 3px;
+  }
+
+  .tui-full-calendar-dayname-container {
+    overflow: hidden !important;
+  }
+
+  .tui-full-calendar-popup {
+    border: 0;
+    box-shadow: none;
+  }
+
+  .tui-full-calendar-popup-top-line {
+    display: none !important;
+  }
+
+  .tui-full-calendar-popup-detail .tui-full-calendar-popup-container {
+    width: 330px;
+    padding: 24px;
+    padding-bottom: 0;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px 0 rgba(0, 36, 82, 0.06);
+    border: solid 1px #e9edf3;
+    background-color: #fff;
+  }
+
+  .popup-wrapper {
+    font-family: GothamRounded-Book !important;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.6;
+    letter-spacing: 0.25px;
+    color: rgba(0, 36, 82, 0.6);
+
+    h6 {
+      color: #002452;
+      margin: 0;
+      margin-bottom: 4px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .popup-detail {
+      padding: 12px 0;
+      border-bottom: 1px solid;
+      border-color: #dae2eb;
+    }
+
+    button {
+      font-family: GothamRounded-Medium !important;
+      font-size: 16px;
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: -0.33px;
+      text-align: center;
+      color: #1565c0;
+      background-color: transparent;
+      margin: 0 auto;
+      padding: 16px 0;
+      display: block;
+    }
+  }
+
+  .tui-full-calendar-popup-detail .tui-full-calendar-schedule-title {
+    font-family: GothamRounded-Medium !important;
+    font-size: 20px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: -0.42px;
+    color: #002452;
+    margin-bottom: 15px;
+  }
+
+  .tui-full-calendar-popup-detail .tui-full-calendar-section-detail {
+    margin-bottom: 0 !important;
+  }
+  .tui-full-calendar-popup-section {
+    min-height: 0px;
+  }
+  .tui-full-calendar-popup-detail .tui-full-calendar-content {
+    height: 0px;
+  }
+  .tui-full-calendar-popup-detail img {
+    width: 24px;
+    height: 24px;
+    margin: 0 8px 12px 2px;
+    border-radius: 4px;
+  }
+}
+
+.appointment-content {
+  display: flex;
+
+  .calendar-wrapper {
+    width: 100%;
+    height: 100vh;
+
+    .appointment-title {
+      font-family: GothamRounded-Medium !important;
+      font-size: 32px;
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: -0.67px;
+      color: #002452;
+      margin-top: 0;
+      margin-bottom: 20px;
+    }
+
+    #calendar {
+      width: 100%;
+      height: calc(100% - 185px);
+    }
+
+    &-header {
+      padding-top: 75px;
+      padding-left: 80px;
+
+      select {
+        font-family: GothamRounded-Medium !important;
+        font-size: 16px;
+        font-weight: 500;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: -0.42px;
+        color: #002452;
+        border: 0;
+        background-color: transparent;
+        margin-bottom: 30px;
+        outline: none;
+        padding-right: 10px;
+      }
+    }
+  }
+}
+
+.section-appointment {
+  width: 350px;
+  min-width: 350px;
+  max-width: 350px;
+  height: 100vh;
+  overflow: auto;
+  padding: 76px 0 20px 24px;
+  box-sizing: border-box;
+  float: right;
+  position: relative;
+  z-index: 9999;
+  box-shadow: 0 2px 4px 0 rgba(0, 36, 82, 0.1);
+  background-color: #fff;
+  color: #002452;
+  font-family: GothamRounded-Medium !important;
+
+  p {
+    color: #7d96b3;
+    font-size: 14px;
+  }
+
+  &-title {
+    font-size: 20px;
+  }
+
+  &-name {
+    margin: 32px 0 0 18px;
+    width: 100%;
+    border-bottom: 1px solid #dae2eb;
+
+    h5 {
+      font-size: 18px;
+      margin: 0px;
+      letter-spacing: -1px;
+    }
+
+    p {
+      margin-bottom: 12px;
+      letter-spacing: 0.09px;
+    }
+  }
+
+  .list-group {
+    margin-top: 20px;
+
+    .list-group-item {
+      padding: 11px 0 0;
+      border-color: #dae2eb;
+
+      &:first-child {
+        border-top: 0;
+      }
+
+      h5 {
+        margin-bottom: 2px;
+      }
+
+      p {
+        margin-bottom: 0;
+      }
+
+      textarea,
+      input {
+        width: 100%;
+        padding-bottom: 12px;
+        border: 0;
+        color: #7d96b3;
+        font-family: GothamRounded-Medium !important;
+        font-size: 14px;
+        &:focus {
+          outline: none;
+        }
+      }
+
+      textarea {
+        padding-right: 25%;
+        margin-bottom: -6px;
+      }
+    }
+  }
+
+  &-subtitle {
+    margin: 30px 0 0 0;
+    color: #e59937;
+    letter-spacing: -1.38px;
+    font-size: 18px;
+
+    img {
+      width: 24px;
+      margin-right: 4px;
+    }
+  }
+
+  &-form {
+    width: 300px;
+    height: 310px;
+    margin: 24px 0 40px 0;
+    padding: 48px 0 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 10px;
+    border: dashed 1px rgba(21, 101, 192, 0.25);
+    background-color: #fff;
+
+    img {
+      margin: 15px 0;
+      width: 56px;
+    }
+
+    p {
+      margin-bottom: 6px;
+    }
+
+    button {
+      font-size: 12px;
+      padding: 12px 24px;
+      border-radius: 6px;
+      background-color: #e9edf3;
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      text-align: center;
+      margin: 4px 0 0;
+    }
+
+    small {
+      margin-top: auto;
+      font-size: 12px;
+      color: #7d96b3;
+    }
+  }
+
+  &-buttons {
+    padding-right: 24px;
+
+    button {
+      background-color: #1565c0;
+      color: #fff;
+      border-radius: 6px;
+      margin-right: 12px;
+
+      &:last-child {
+        background-color: #e9edf3;
+        margin-right: 0;
+        color: #002452;
+      }
+    }
+  }
+}
+
+.back-arrow-btn {
+  width: 36px;
+  background-color: #1565c0;
+  margin: 0px 3px;
+  height: 36px;
+  border-radius: 25px;
+  color: #ffffff
+}
+
+.forward-arrow-btn {
+  width: 36px;
+  background-color: #1565c0;
+  border-radius: 25px;
+  height: 36px;
+  color: #ffffff
+}
+.today-btn {
+  background-color: #1565c0;
+  border-radius: 25px;
+  height: 36px;
+  margin-left: 3px;
+  color: white;
+}
+.btn.btn-default:hover {
+  box-shadow: 0 10px 20px 0 rgba(0, 36, 82, 0.16);
+  background-color: #1565c0;
+  border-color: #1565c0;
+}
+
+.btn.btn-default:focus {
+  box-shadow: 0 0 4px 0 #1565c0;
+  border: solid 1px #1565c0;
+  background-color: #1565c0;
+}
+::ng-deep {
+  .custom-ng-dropdown {
+    ::ng-deep .ng-select-container {
+      // height: 44px !important;
+      // border-radius: 6px;
+      border: solid 1px #e9edf3;
+      // background-color: #ffffff;
+
+      border-radius: 25px !important;
+      background-color: #fcfdfd;
+      min-width: 120px;
+
+      .ng-value {
+        .ng-value-label {
+          font-family: GothamRounded-Book;
+          font-size: 16px;
+          color: #002452;
+          opacity: 0.5;
+        }
+      }
+
+      .ng-value-container {
+        .ng-input {
+          input {
+            font-family: GothamRounded-Book;
+            font-size: 16px;
+            color: #002452;
+          }
+        }
+      }
+    }
+
+    ng-dropdown-panel {
+      .ng-dropdown-panel-items {
+        div {
+          .ng-option {
+            .ng-option-label {
+              font-family: GothamRounded-Book;
+              font-size: 14px;
+              color: #002452;
+              vertical-align: middle;
+              line-height: 24px;
+            }
+          }
+        }
+      }
+    }
+
+    // .ng-select.ng-select-single .ng-select-container
+  }
+}

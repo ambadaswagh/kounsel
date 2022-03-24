@@ -1,0 +1,112 @@
+.left-side {
+    background: #fff;
+    padding-top: 65px;
+    padding-left: 24px;
+    padding-right: 16px;
+    border-right: 1px solid #f1f5f8;
+
+    .head {
+        .Profile {
+            font-family: GothamRounded-Medium;
+            font-size: 32px;
+            font-weight: 500;
+            line-height: normal;
+            letter-spacing: -0.67px;
+            color: #002452;
+            margin-bottom: 0;
+            padding-left: 9px;
+        }
+
+        .head-base {
+            span {
+                font-family: GothamRounded-Medium;
+                font-size: 14px;
+                font-weight: 500;
+                line-height: normal;
+                letter-spacing: -0.5px;
+                text-align: center;
+                color: #ef2a2a;
+                border-radius: 5px;
+                background-color: rgba(239, 42, 42, 0.1);
+                padding: 8px 16px;
+            }
+        }
+    }
+
+    .left-side-menu-list {
+        .sub-title {
+            font-family: GothamRounded-Medium;
+            font-size: 12px;
+            font-weight: 500;
+            color: #7d96b3;
+            margin-bottom: 12px;
+            padding-left: 9px;
+            display: block;
+        }
+
+        .side-menu-ul {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+
+            li {
+                a {
+                    padding: 9px;
+
+                    svg {
+                        stroke: #002452;
+                    }
+
+                    span {
+                        font-family: GothamRounded-Book;
+                        font-size: 16px;
+                        font-weight: normal;
+                        letter-spacing: -0.57px;
+                        color: #002452;
+                    }
+
+
+                }
+            }
+        }
+    }
+}
+
+
+.middle-side {
+    background: #fcfdfd;
+    padding-top: 65px;
+    padding-left: 45px;
+    padding-right: 60px;
+}
+
+
+.fill-space {
+    flex: 1 1 auto;
+}
+
+.min-menu-width {
+    min-width: 220px;
+}
+
+.counc-sub-menu {
+    list-style: disc;
+
+    li {
+        font-family: GothamRounded-Book;
+        font-size: 15px;
+        letter-spacing: -0.54px;
+        color: #7d96b3;
+        cursor: pointer;
+    }
+}
+
+.active {
+    border-radius: 6px;
+    background-color: rgba(233, 237, 243, 0.5);
+}
+
+.bottom-clear {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}

@@ -1,0 +1,46 @@
+// :host {
+// 	::ng-deep {
+// 		ngb-tabset > .nav-tabs {
+// 			display: none;
+// 		}
+// 	}
+// }
+
+.dashboard {
+	padding-top: 128px;
+	padding-left: 6rem;
+	padding-right: 5rem;
+}
+
+.Kounsel-Web-Preview {
+	font-family: GothamRounded-Medium;
+	font-size: 20px;
+	font-weight: 500;
+	letter-spacing: -0.42px;
+	color: #002452;
+}
+
+.This-is-the-preview {
+	max-width: 684px;
+	opacity: 0.8;
+	font-family: GothamRounded-Light;
+	font-size: 16px;
+	font-weight: 300;
+	line-height: 1.5;
+	color: #002452;
+}
+
+.Note-You-must-insta {
+	max-width: 684px;
+	opacity: 0.8;
+	font-family: GothamRounded-Light;
+	font-size: 16px;
+	font-weight: 300;
+	line-height: 1.38;
+	color: #002452;
+}
+
+.highlighted {
+	font-weight: 500;
+	font-family: GothamRounded-Book;
+}

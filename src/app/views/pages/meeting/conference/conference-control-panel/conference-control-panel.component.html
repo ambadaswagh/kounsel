@@ -1,0 +1,105 @@
+<div class="control-panel d-flex justify-content-between pt-3 pb-2 px-4">
+    <div class="left-controls d-flex">
+
+
+        <div  class="d-flex flex-column align-items-center point" (click)="stopLocalVideo()" [class.hide]="noLocalVideo" [class.disable]="amIWaiting" >
+            <div class="icon-container vc" >
+                <img src="assets/media/icons/svg/meeting/conference/icons-video-off.svg">
+            </div>
+            <div class="icon-txt" translate="MEETING.conference.controlPanel.stopVideo"></div>
+        </div>
+        <div class="d-flex flex-column align-items-center point" (click)="startLocalVideo()" [class.hide]="!noLocalVideo" [class.disable]="amIWaiting" >
+            <div class="icon-container vc">
+                <img src="assets/media/icons/svg/meeting/conference/microphone-copy-2.svg">
+            </div>
+            <div class="icon-txt" translate="MEETING.conference.controlPanel.startVideo"></div>
+        </div>
+
+
+        <div class="d-flex flex-column align-items-center ml-4 point" (click)="stopAudio()" [class.hide]="muted" [class.disable]="amIWaiting" >
+            <div class="icon-container vc" >
+                <img src="assets/media/icons/svg/meeting/conference/icons-microphone-off.svg"
+                    alt="">
+            </div>
+            <div class="icon-txt" translate="MEETING.conference.controlPanel.mute"></div>
+        </div>
+        <div class="d-flex flex-column align-items-center ml-4 point" (click)="startAudio()" [class.hide]="!muted" [class.disable]="amIWaiting" >
+            <div class="icon-container vc">
+                <img src="assets/media/icons/svg/meeting/conference/microphone-copy.svg"
+                    alt="">
+            </div>
+            <div class="icon-txt" translate="MEETING.conference.controlPanel.unmute"></div>
+        </div>
+
+
+        <div *ngIf="!localUserSharingContent" (click)="startScreenShare()"  class="d-flex flex-column align-items-center ml-4 point" [class.disable]="amIWaiting || screenSharing">
+            <div class="icon-container vc">
+                <img src="assets/media/icons/svg/meeting/conference/share-screen.svg"
+                    alt="">
+            </div>
+            <div class="icon-txt" translate="MEETING.conference.controlPanel.shareScreen"></div>
+        </div>
+
+        <div *ngIf="localUserSharingContent" (click)="stopScreenShare()" class="d-flex flex-column align-items-center ml-4 point" [class.disable]="amIWaiting">
+            <div class="icon-container vc">
+                <img src="assets/media/icons/svg/meeting/conference/icons-stop-sharing.svg"
+                    alt="">
+            </div>
+            <div class="icon-txt" translate="MEETING.conference.controlPanel.stopSharing" ></div>
+        </div>
+    </div>
+    <div class="center-controls d-flex">
+        <div *ngIf="!chatOpen" class="d-flex flex-column align-items-center point" (click)="openChat()" [class.disable]="amIWaiting || guest">
+            <div class="icon-container vc">
+                <img src="assets/media/icons/svg/meeting/conference/messages-bubble-copy.svg">
+            </div>
+            <div class="icon-txt" translate="MEETING.conference.controlPanel.chat"></div>
+        </div>
+
+        <div *ngIf="chatOpen" class="d-flex flex-column align-items-center point" (click)="closeChat()" >
+            <div class="icon-container vc">
+                <img src="assets/media/icons/svg/meeting/conference/messages-bubble-copy.svg">
+            </div>
+            <div class="icon-txt" translate="MEETING.conference.controlPanel.closeChat"></div>
+        </div>
+
+
+        <div class="d-flex flex-column align-items-center ml-4 point" [class.disable]="true">
+            <div class="icon-container vc">
+                <img src="assets/media/icons/svg/meeting/conference/participatns.svg"
+                    alt="">
+            </div>
+            <div class="icon-txt" translate="MEETING.conference.controlPanel.participant"></div>
+        </div>
+        
+    </div>
+    <div class="d-flex">
+        <div *ngIf="!fullScreen && !isFullScreen()" class="d-flex flex-column align-items-center point" (click)="toggleFullScreen()" [class.disable]="amIWaiting">
+            <div class="icon-container vc">
+                <img src="assets/media/icons/svg/meeting/conference/expand-full.svg">
+            </div>
+            <div class="icon-txt" translate="MEETING.conference.controlPanel.fullScreen"></div>
+        </div>
+        <div *ngIf="fullScreen || isFullScreen()" class="d-flex flex-column align-items-center point" (click)="toggleFullScreen()" [class.disable]="amIWaiting">
+            <div class="icon-container vc">
+                <img src="assets/media/icons/svg/meeting/conference/expand-full.svg">
+            </div>
+            <div class="icon-txt" translate="MEETING.conference.controlPanel.exitFullScreen"></div>
+        </div>
+
+        <div class="d-flex flex-column align-items-center ml-4 point" [class.disable]="true">
+            <div class="icon-container vc">
+                <img src="assets/media/icons/svg/meeting/conference/grid-mode.svg"
+                    alt="">
+            </div>
+            <div class="icon-txt" translate="MEETING.conference.controlPanel.gridMode"></div>
+        </div>
+        <div class="d-flex flex-column align-items-center ml-4 point" (click)="leaveSession()" >
+            <div class="icon-container vc close-call">
+                <img src="assets/media/icons/svg/meeting/conference/call-copy.svg"
+                    alt="">
+            </div>
+            <div class="icon-txt txt-red" translate="MEETING.conference.controlPanel.endCall"></div>
+        </div>
+    </div>
+</div>

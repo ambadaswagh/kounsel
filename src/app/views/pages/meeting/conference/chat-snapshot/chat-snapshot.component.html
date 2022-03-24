@@ -1,0 +1,103 @@
+<ng-container *ngIf="_chatHistory.length <= 0 && !initialLoad">
+
+    <div class="vc ml-3"
+        style="position: absolute;
+            top: 0px;
+            height: 100%;
+            width: 100%;">
+            <div>
+                <div class="vc"><mat-spinner diameter="40"></mat-spinner></div>
+                <div style="margin-left: 1rem;" translate="COMMON.loading"></div>
+            </div>
+    </div>
+
+</ng-container>
+
+<div (click)="openGroupChat()" *ngIf="!messageLoading" class="chatListTime d-flex pt-3 point" [class.active]="groupChatOpened">
+    <div class="img-cont mr-3">
+        <img [src]="groupChatMeta.image_url || 'assets/media/profile_images/profile-placeholder-300x300.png'" alt="">
+    </div>
+    <div class="grow s-cont pb-3" style="width: 80%;">
+        <div class="d-flex sb">
+            <div>
+                <div class="title">Meeting</div>
+            </div>
+        </div>
+
+        <div class="d-flex mt-2">
+            <div class="msg">{{ groupChatMeta.message | slice:0:20}}</div>
+            <div class="vc" >
+                <!-- <div class="notRead px-2">
+                    1
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-container *ngFor="let item of _chatHistory; let i = index">
+    <!-- {{item.groupChat}} - TEST -->
+    
+    
+
+
+    <div (click)="toggleActive(i)"
+        class="chatListTime d-flex pt-3 point"
+        [class.active]="item.opened">
+        <div class="img-cont mr-3">
+            <img [src]="item?.otherUser?.image_url || 'assets/media/profile_images/profile-placeholder-300x300.png'"
+                alt="">
+        </div>
+        <div class="grow s-cont pb-3" style="width: 80%;">
+            <div class="d-flex sb">
+                <div>
+                    <ng-container *ngIf="item.topic?.name; else NoTopic">
+                        <div class="title">{{(item?.topic?.name || '') | slice:0:18}}</div>
+
+                        <div class="subTitle">{{(item?.otherUser?.name) | slice:0:18}}</div>
+                    </ng-container>
+
+                    <ng-template #NoTopic>
+                        <div class="title">{{item?.otherUser?.name | slice:0:18}}</div>
+                    </ng-template>
+
+                </div>
+                <div class="d-flex" >
+                    <div *ngIf="item.chat" class="time vt d-flex">{{item.chat?._time | date:'short'}}</div>
+                </div>
+            </div>
+            <div *ngIf="item.chat" class="d-flex mt-2">
+                <div class="msg">{{(item?.chat?.message || '') | slice:0:20}}</div>
+                <div class="vc" 
+                    *ngIf="item.chat.unread > 0">
+                    <div class="notRead px-2">
+                        {{item.chat.unread}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>
+
+<div *ngIf="messageLoading && _chatHistory.length > 0"
+    class="vc mt-5"
+    style="height: 36px;">
+    <div>
+        <div class="vc"><mat-spinner diameter="40"></mat-spinner></div>
+        <div style="margin-left: 1rem;" translate="COMMON.loading"></div>
+    </div>
+</div>
+<!-- <div *ngIf="messageLoading"
+    class="vc"
+    style="height: 100px;">
+    <div class="loading">
+        <div class="spinner-border text-primary"
+            role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</div> -->
+
+<!-- <div class="no-msg" translate="MEETING.conference.chatSnapshot.noChat"
+    *ngIf="!messageLoading && _chatHistory.length == 0">
+</div> -->

@@ -1,0 +1,55 @@
+<div class="row max-width-web-view">
+    <div class="col-md-12">
+        <div class="tag-head d-flex align-items-center  mt-3">
+            <span>Settings</span>
+            <span>Email</span>
+        </div>
+        <div class="basic-profile mt-5">
+            <div class="sub-title">
+                <h5>Email</h5>
+            </div>
+
+            <div class="new-inq mt-5">APPOINTMENT</div>
+
+            <mat-radio-group aria-label="Select an option"
+                [(ngModel)]="email_appointment"
+                (change)="updateSetting()"
+                class="_radio">
+                <mat-radio-button class="mt-3"
+                    value="2">New appointment</mat-radio-button>
+                <mat-radio-button class="mt-3"
+                    value="3">Appointment Status Update</mat-radio-button>
+            </mat-radio-group>
+
+
+            <div class="new-inq mt-5">MESSAGE</div>
+
+            <mat-radio-group aria-label="Select an option"
+                [(ngModel)]="email_message"
+                (change)="updateSetting()"
+                class="_radio">
+                <mat-radio-button class="mt-3"
+                    value="2">New message</mat-radio-button>
+                <mat-radio-button class="mt-3"
+                    value="3">All message</mat-radio-button>
+            </mat-radio-group>
+
+
+            <div class="new-inq mt-5">FILE</div>
+
+            <div class="d-flex vp mt-4 w-100 border-0">
+                <div class="txt">File Share</div>
+                <div class="col-3 sld switch-container">
+                    <label class="switch">
+                        <input type="checkbox"
+                            [ngModel]="email_file"
+                            (click)="email_file = !email_file; updateSetting()">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
